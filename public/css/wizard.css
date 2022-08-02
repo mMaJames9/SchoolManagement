@@ -1,0 +1,242 @@
+ul
+{
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.wizard > .steps .current-info, .wizard > .steps .number
+{
+    display: none;
+}
+
+#wizard
+{
+    min-height: 834px;
+    background: #fff;
+    margin-right: 60px;
+    padding: 107px 75px 65px;
+}
+
+.steps
+{
+    margin-bottom: 5rem;
+}
+.steps ul
+{
+    display: flex;
+    position: relative;
+}
+.steps ul li
+{
+    width: 20.16%;
+    margin-right: 10px;
+}
+.steps ul li a
+{
+    display: inline-block;
+    width: 100%;
+    height: 7px;
+    background: #e6e6e6;
+    border-radius: 3.5px;
+}
+.steps ul li.first a, .steps ul li.checked a
+{
+    background: #435ebe;
+}
+.steps ul:before
+{
+    content: "Informations Personnelles";
+    font-size: 22px;
+    color: #333;
+    top: -38px;
+    position: absolute;
+}
+.steps ul.step-2:before
+{
+    content: "Informations supplémentaires";
+}
+.steps ul.step-3:before
+{
+    content: "Parents";
+}
+
+.option
+{
+    color: #999;
+}
+
+.actions ul
+{
+    display: flex;
+    margin-top: 30px;
+    justify-content: space-between;
+}
+.actions ul.step-last
+{
+    justify-content: flex-end;
+}
+.actions ul.step-last li:first-child
+{
+    display: none;
+}
+.actions li a
+{
+    padding: 0;
+    border: none;
+    display: inline-flex;
+    height: 51px;
+    width: 135px;
+    align-items: center;
+    background: #435ebe;
+    cursor: pointer;
+    position: relative;
+    padding-left: 41px;
+    color: #333;
+    font-weight: 400;
+}
+
+.actions li a:hover
+{
+    background: #d9bda3;
+}
+
+.actions li[aria-disabled="true"] a
+{
+    display: none;
+}
+.actions li:first-child a
+{
+    background: #e6e6e6;
+    padding-left: 48px;
+}
+
+.actions li:first-child a:hover
+{
+    background: #ccc;
+}
+.actions li:last-child a
+{
+    padding-left: 29px;
+    width: 167px;
+    font-weight: 400;
+}
+.actions li:last-child a:before
+{
+    right: 30px;
+}
+
+
+.product
+{
+    margin-bottom: 33px;
+}
+
+.item
+{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 30px;
+    border-bottom: 1px solid #e6e6e6;
+    margin-bottom: 30px;
+}
+.item:last-child
+{
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border: none;
+}
+.item .left
+{
+    display: flex;
+    align-items: center;
+}
+.item .thumb
+{
+    display: inline-flex;
+    width: 100px;
+    height: 90px;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #f2f2f2;
+}
+.item .purchase
+{
+    display: inline-block;
+    margin-left: 21px;
+}
+.item .purchase h6
+{
+    font-size: 16px;
+    margin-bottom: 4px;
+    font-weight: 500;
+}
+.item .purchase h6 a
+{
+    color: #333;
+}
+.item .price
+{
+    font-size: 16px;
+}
+
+.checkout
+{
+    margin-bottom: 44px;
+}
+.checkout span.heading
+{
+    font-weight: 500;
+    margin-right: 5px;
+}
+.checkout .subtotal
+{
+    margin-bottom: 18px;
+}
+.checkout .shipping
+{
+    margin-bottom: 19px;
+}
+.checkout .shipping span.heading
+{
+    margin-right: 4px;
+}
+.checkout .total-price
+{
+    color: #333;
+    font-weight: 700;
+}
+
+
+@media (max-width: 1199px)
+{
+
+    #wizard
+    {
+        margin-right: 40px;
+        min-height: 829px;
+        padding-left: 60px;
+        padding-right: 60px;
+    }
+}
+@media (max-width: 991px)
+{
+
+    #wizard
+    {
+        margin-right: 0;
+        padding-left: 40px;
+        padding-right: 40px;
+    }
+}
+@media (max-width: 767px)
+{
+
+    #wizard
+    {
+        min-height: unset;
+        padding: 70px 20px 40px;
+    }
+
+}
