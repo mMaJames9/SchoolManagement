@@ -21,9 +21,9 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
         'email',
         'password',
+        'personnel_id'
     ];
 
     /**
@@ -49,5 +49,10 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Role::class, 'model_has_roles', 'model_id', 'role_id')
         ->withPivot('model_type');
+    }
+
+    public function personnel()
+    {
+        return $this->belongsTo(Personnel::class);
     }
 }

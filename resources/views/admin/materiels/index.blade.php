@@ -1,203 +1,133 @@
 <x-app-layout>
 
-    <div class="page-title">
-        <div class="row mb-3">
-            <div class="col-12 col-md-6 order-md-1 order-last">
-                <h3>Liste des materiels</h3>
-                <p class="text-subtitle text-muted">Liste de tout le matériel utilisé dans l'école</p>
-            </div>
-            <div class="col-12 col-md-6 order-md-2 order-first">
-                @role('Fondateur')
-                <div class="float-start float-lg-end">
-                    <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createMateriel" data-bs-backdrop="true">
-                        <i class="bi bi-plus bi-middle"></i>
-                        <span>Ajouter un nouveau materiel</span>
-                    </a>
+    @include('admin.materiels.create')
+
+    <div class="jumbotron" data-pages="parallax">
+        <div class=" container-fluid container-fixed-lg sm-p-l-0 sm-p-r-0">
+            <div class="inner">
+                <!-- START BREADCRUMB -->
+                <ol class="breadcrumb mt-5">
+                    <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Accueil</a></li>
+                    <li class="breadcrumb-item active">Materiels</li>
+                </ol>
+                <!-- END BREADCRUMB -->
+                <div class="card card-transparent">
+                    <div class="card-body">
+                        <h3>Materiels</h3>
+                        <p>Liste de tout le matériel utilisé dans l'école. </p>
+                    </div>
                 </div>
-
-                @include('admin.materiels.create')
-
-                @endrole
             </div>
         </div>
     </div>
 
-    <section class="section">
+    <div class=" container-fluid container-fixed-lg">
+        <!-- START card -->
+        <div class="card card-transparent">
+            <div class="card-header mb-4 mb-4 ">
+                <div class="pull-left">
+                    <div class="col-xs-12">
+                        <button id="show-modal" class="btn btn-primary btn-cons" data-target="#addNewAsset" data-toggle="modal">
+                            <span class="fa fa-plus mr-2"></span>
+                            <span>Ajouter un nouveau matériel</span>
+                        </button>
+                    </div>
+                </div>
 
-        <div class="row">
-            <div class="col-6 col-lg-3 col-md-6">
-                <div class="card">
-                    <div class="card-body px-3 py-4-5">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="stats-icon purple">
-                                    <i class="iconly-boldShow"></i>
-                                </div>
-                            </div>
-                            <div class="col-md-8">
-                                <h6 class="text-muted font-semibold">Profile Views</h6>
-                                <h6 class="font-extrabold mb-0">112.000</h6>
-                            </div>
-                        </div>
+                <div class="pull-right">
+                    <div class="col-xs-12">
+                        <input type="text" id="search-table" class="form-control pull-right" placeholder="Rechercher">
                     </div>
                 </div>
-            </div>
-            <div class="col-6 col-lg-3 col-md-6">
-                <div class="card">
-                    <div class="card-body px-3 py-4-5">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="stats-icon blue">
-                                    <i class="iconly-boldProfile"></i>
-                                </div>
-                            </div>
-                            <div class="col-md-8">
-                                <h6 class="text-muted font-semibold">Followers</h6>
-                                <h6 class="font-extrabold mb-0">183.000</h6>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-6 col-lg-3 col-md-6">
-                <div class="card">
-                    <div class="card-body px-3 py-4-5">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="stats-icon green">
-                                    <i class="iconly-boldAdd-Materiel"></i>
-                                </div>
-                            </div>
-                            <div class="col-md-8">
-                                <h6 class="text-muted font-semibold">Following</h6>
-                                <h6 class="font-extrabold mb-0">80.000</h6>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-6 col-lg-3 col-md-6">
-                <div class="card">
-                    <div class="card-body px-3 py-4-5">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="stats-icon red">
-                                    <i class="iconly-boldBookmark"></i>
-                                </div>
-                            </div>
-                            <div class="col-md-8">
-                                <h6 class="text-muted font-semibold">Saved Post</h6>
-                                <h6 class="font-extrabold mb-0">112</h6>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
 
-        <div class="card">
+                <div class="clearfix"></div>
+            </div>
             <div class="card-body">
-                <table class="table table-striped" id="tableMateriel">
+                <table class="table table-hover demo-table-search table-responsive-block" id="tableWithSearch">
                     <thead>
                         <tr>
-                            <th></th>
                             <th>Nom</th>
                             <th>Date Achat</th>
                             <th>Prix</th>
                             <th>Destination</th>
-                            <th>Créé le</th>
-                            <th class="text-center">Actions</th>
+                            <th>Date Prochain Achat</th>
+                            <th class="text-lg-center">Actions</th>
                         </tr>
                     </thead>
-                    <tbody>
-
+                    <tbody class="bg-white">
                         @foreach($materiels as $key => $materiel)
                         <tr>
-                            <td class="text-center">{{ $loop->iteration }}</td>
-
-                            <td>
-                                {{ $materiel->nom_materiel }}
+                            <td class="v-align-middle text-nowrap" style="width: 25%">
+                                <p>{{ ucwords($materiel->nom_materiel) }}</p>
                             </td>
 
-                            <td>
-                                {{ date('d F Y', strtotime($materiel->date_achat)) }}
+                            <td class="v-align-middle text-nowrap" style="width: 15%">
+                                <p>{{ date('d F Y', strtotime($materiel->date_achat)) }}</p>
                             </td>
 
-                            <td>
-                                {{ $materiel->prix_materiel }} FCFA
+                            <td class="v-align-middle text-nowrap" style="width: 10%">
+                                <p>{{ number_format($materiel->prix_materiel, 0, ",", " ") }} FCFA</p>
                             </td>
 
-                            <td>
-                                {{ $materiel->destination }}
+                            <td class="v-align-middle text-nowrap" style="width: 20%">
+                                <p>{{ ucwords($materiel->destination) }}</p>
                             </td>
 
-                            <td>
-                                {{ $materiel->created_at }}
+                            <td class="v-align-middle text-nowrap" style="width: 15%">
+                                <p>{{ date('d F Y', strtotime($materiel->date_prochain_achat)) }}</p>
                             </td>
 
-                            <td class="text-center">
-                                @role('Fondateur')
-                                <div class="modal-danger me-1 mb-1 d-inline-block">
-                                    <a type="button" class="btn icon icon-left btn-danger" data-bs-toggle="modal" data-bs-target="#DeleteMateriel{{ $materiel->id }}">
-                                        <i class="bi bi-trash bi-middle"></i>
-                                    </a>
+                            <td class="v-align-middle text-nowrap text-lg-center" style="width: 15%">
 
-                                    <!--Danger theme Modal -->
-                                    <div class="modal fade text-left" id="DeleteMateriel{{ $materiel->id }}" tabindex="-1" role="dialog" aria-labelledby="myModalDelteMateriel" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
-                                            <div class="modal-content">
-                                                <form action="{{ route('materiels.destroy', $materiel->id) }}" method="POST" enctype="multipart/form-data">
+                                <a href="{{ route('materiels.edit', $materiel->id) }}" class="btn btn-sm btn-info" data-target="#editMateriel{{ $materiel->id }}" data-toggle="modal">
+                                    <span class="fa fa-paste" data-toggle="tooltip" data-placement="top" data-original-title="Modifier les informations de ce matériel"></span>
+                                </a>
+
+                                <button id="show-modal" class="btn btn-sm btn-danger" data-target="#deleteMateriel{{ $materiel->id }}" data-toggle="modal">
+                                    <span class="fa fa-trash" data-toggle="tooltip" data-placement="top" data-original-title="Supprimer ce matériel"></span>
+                                </button>
+
+                            </td>
+                        </tr>
+
+                        <div class="modal fade slide-up disable-scroll" id="deleteMateriel{{ $materiel->id }}" tabindex="-1" role="dialog" aria-labelledby="deleteMateriel{{ $materiel->id }}" aria-hidden="false">
+                            <div class="modal-dialog ">
+                                <div class="modal-content-wrapper">
+                                    <div class="modal-content">
+                                        <div class="modal-header clearfix text-left">
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                                <i class="pg-close fs-14"></i>
+                                            </button>
+                                            <h5>Confirmer <span class="semi-bold">Suppression</span></h5>
+                                            <p class="p-b-10">Etes-vous sûr que vous voulez supprimer {{ strtoupper($materiel->nom_materiel ?? '' ) }} ?</p>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form class="form" action="{{ route('materiels.destroy', $materiel->id) }}" method="POST">
                                                 @csrf
                                                 @method('DELETE')
-                                                    <div class="modal-header bg-danger">
-                                                        <h5 class="modal-title white" id="myModalDelteMateriel">
-                                                            Supprimer materiel
-                                                        </h5>
-                                                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                                                            <i data-feather="x"></i>
-                                                        </button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        Êtes-vous sûr de vouloir supprimer <span class="fw-bold">{{ ucwords($materiel->nom_materiel) }}</span> ?
-                                                    </div>
 
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
-                                                            <i class="bx bx-x d-block d-sm-none"></i>
-                                                            <span class="d-none d-sm-block">Non</span>
-                                                        </button>
-                                                        <input type="hidden" name="_method" value="DELETE">
-                                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                                        <button type="submit" class="btn btn-danger ml-1">
-                                                            <i class="bx bx-check d-block d-sm-none"></i>
-                                                            <span class="d-none d-sm-block">Oui</span>
-                                                        </button>
-                                                    </div>
-                                                </form>
-                                            </div>
+                                                <div class="pull-right">
+                                                    <button type="button" class="btn btn-secondary m-t-5" data-dismiss="modal">Annuler</button>
+                                                    <input type="hidden" name="_method" value="DELETE">
+                                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                                    <button type="submit" class="btn btn-danger m-t-5">Supprimer</button>
+                                                </div>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
-                                @endrole
-                            </td>
-                        </tr>
+                            </div>
+                        </div>
+
+                        @include('admin.materiels.edit')
 
                         @endforeach
 
                     </tbody>
                 </table>
+
             </div>
         </div>
-
-    </section>
-
-    @section('custimize')
-
-    <script>
-        // Simple Datatable
-        let tableMateriel = document.querySelector('#tableMateriel');
-        let dataTable = new simpleDatatables.DataTable(tableMateriel);
-    </script>
-    @endsection
+    </div>
 
 </x-app-layout>

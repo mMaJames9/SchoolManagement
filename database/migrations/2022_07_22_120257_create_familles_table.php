@@ -16,9 +16,9 @@ class CreateFamillesTable extends Migration
         Schema::create('familles', function (Blueprint $table) {
             $table->id();
             $table->string('nom_pere')->nullable();
-            $table->string('num_tel_pere')->nullable();
+            $table->string('num_tel_pere')->unique()->nullable();
             $table->string('nom_mere')->nullable();
-            $table->string('num_tel_mere')->nullable();
+            $table->string('num_tel_mere')->unique()->nullable();
             $table->string('domicile_famille')->nullable();
             $table->timestamps();
             $table->softDeletes();

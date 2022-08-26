@@ -31,9 +31,13 @@ class EnseignantStoreRequest extends FormRequest
             'nom_enseignant' => ['required', 'string', 'max:255'],
             'matricule_enseignant' => ['required', 'string', 'min:10', 'unique:enseignants'],
             'prenom_enseignant' => ['required', 'string', 'max:255'],
-            'age_enseignant'  => ['integer', 'min:21', 'max:70'],
-            'experience_enseignant' => ['required', 'file', 'mimes:doc,docx,pdf', 'max:5120'],
+            'birthday_enseignant'  => ['required', 'string', 'max:255'],
+            'experience_enseignant' => ['required', 'integer'],
+            'cv_enseignant' => ['required', 'file', 'mimes:doc,docx,pdf', 'max:5120'],
             'photo_profil_enseignant' => ['required', 'image', 'max:3072'],
+            'debut_contrat'  => ['nullable', 'string', 'max:255'],
+            'fin_contrat'  => ['nullable', 'string', 'max:255'],
+            'salaire' => ['required', 'integer', 'min:25'],
         ];
     }
 }

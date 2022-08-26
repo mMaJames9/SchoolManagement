@@ -19,6 +19,12 @@ class AddForeignKeysToBulletinsTable extends Migration
             ->constrained('eleves')
             ->onUpdate('cascade')
             ->onDelete('cascade');
+
+            $table->foreignId('annee_id')
+            ->nullable()
+            ->constrained('annees')
+            ->onUpdate('cascade')
+            ->onDelete('cascade');
         });
     }
 
@@ -31,6 +37,7 @@ class AddForeignKeysToBulletinsTable extends Migration
     {
         Schema::table('bulletins', function (Blueprint $table) {
             $table->dropForeign(['eleve_id']);
+            $table->dropForeign(['annee_id']);
         });
     }
 }

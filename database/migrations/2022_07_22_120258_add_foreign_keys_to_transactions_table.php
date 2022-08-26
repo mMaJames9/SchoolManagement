@@ -19,6 +19,12 @@ class AddForeignKeysToTransactionsTable extends Migration
             ->constrained('materiels')
             ->onUpdate('cascade')
             ->onDelete('cascade');
+
+            $table->foreignId('user_id')
+            ->nullable()
+            ->constrained('users')
+            ->onUpdate('cascade')
+            ->onDelete('cascade');
         });
     }
 
@@ -31,6 +37,7 @@ class AddForeignKeysToTransactionsTable extends Migration
     {
         Schema::table('transactions', function (Blueprint $table) {
             $table->dropForeign(['materiel_id']);
+            $table->dropForeign(['user_id']);
         });
     }
 }

@@ -1,115 +1,138 @@
-<div id="sidebar" class="active">
-    <div class="sidebar-wrapper active">
-        <div class="sidebar-header">
-            <div class="d-flex justify-content-between">
-                <div class="logo">
-                    <a href="index.html"><img src="{{ asset('assets/images/logo/logo.png') }}" alt="Logo" srcset=""></a>
-                </div>
-                <div class="toggler">
-                    <a href="#" class="sidebar-hide d-xl-none d-block"><i class="bi bi-x bi-middle"></i></a>
-                </div>
-            </div>
+<nav class="page-sidebar" data-pages="sidebar">
+
+    <div class="sidebar-header">
+        <img src="{{ asset('assets/img/logo_white.png') }}" alt="logo" class="brand" data-src="{{ asset('assets/img/logo_white.png') }}" data-src-retina="{{ asset('assets/img/logo_white_2x.png') }}" width="50%">
+        <div class="sidebar-header-controls">
+            <button type="button" class="btn btn-link d-lg-inline-block d-xlg-inline-block d-md-inline-block d-sm-none d-none" data-toggle-pin="sidebar">
+                <i class="fa fs-12"></i>
+            </button>
         </div>
-        <div class="sidebar-menu">
-            <ul class="menu">
-
-                <li class="sidebar-item {{ request()->is('dashboard') ? 'active' : '' }} ">
-                    <a href="{{ route('dashboard') }}" class='sidebar-link'>
-                        <i class="bi bi-house-fill"></i>
-                        <span>Accueil</span>
-                    </a>
-                </li>
-
-                <li class="sidebar-title text-uppercase fw-light">Gestion du personnel</li>
-
-                <li class="sidebar-item {{ request()->is('admin/staffmanagement/users') || request()->is('admin/staffmanagement/users/*') ? 'active' : '' }}">
-                    <a href="{{ route('users.index') }}" class='sidebar-link'>
-                        <i class="bi bi-people-fill"></i>
-                        <span>Utilisateurs</span>
-                    </a>
-                </li>
-
-                <li class="sidebar-item {{ request()->is('admin/staffmanagement/enseignants') || request()->is('admin/staffmanagement/enseignants/*') ? 'active' : '' }}">
-                    <a href="{{ route('enseignants.index') }}" class='sidebar-link'>
-                        <i class="bi bi-microsoft-teams"></i>
-                        <span>Enseignants</span>
-                    </a>
-                </li>
-
-                <li class="sidebar-title text-uppercase fw-light">Gestion des élèves</li>
-
-                <li class="sidebar-item {{ request()->is('admin/studentmanagement/eleves') || request()->is('admin/studentmanagement/eleves/*') ? 'active' : '' }}">
-                    <a href="{{ route('eleves.index') }}" class='sidebar-link'>
-                        <i class="bi bi-mortarboard-fill"></i>
-                        <span>Elèves</span>
-                    </a>
-                </li>
-
-                <li class="sidebar-item {{ request()->is('admin/studentmanagement/familles') || request()->is('admin/studentmanagement/familles/*') ? 'active' : '' }}">
-                    <a href="{{ route('familles.index') }}" class='sidebar-link'>
-                        <i class="bi bi-universal-access"></i>
-                        <span>Parents</span>
-                    </a>
-                </li>
-
-                <li class="sidebar-title text-uppercase fw-light">Gestion de l'école</li>
-
-                <li class="sidebar-item {{ request()->is('admin/schoolmanagement/classes') || request()->is('admin/schoolmanagement/classes/*') ? 'active' : '' }}">
-                    <a href="{{ route('classes.index') }}" class='sidebar-link'>
-                        <i class="bi bi-grid-fill"></i>
-                        <span>Classes</span>
-                    </a>
-                </li>
-
-                <li class="sidebar-item {{ request()->is('admin/schoolmanagement/matieres') || request()->is('admin/schoolmanagement/matieres/*') ? 'active' : '' }}">
-                    <a href="{{ route('matieres.index') }}" class='sidebar-link'>
-                        <i class="bi bi-book-fill"></i>
-                        <span>Matières</span>
-                    </a>
-                </li>
-
-                <li class="sidebar-item {{ request()->is('admin/schoolmanagement/bulletins') || request()->is('admin/schoolmanagement/bulletins/*') ? 'active' : '' }}">
-                    <a href="{{ route('bulletins.index') }}" class='sidebar-link'>
-                        <i class="bi bi-receipt"></i>
-                        <span>Bulletins</span>
-                    </a>
-                </li>
-
-                <li class="sidebar-title text-uppercase fw-light">Gestion des finances</li>
-
-                <li class="sidebar-item {{ request()->is('admin/financemanagement/frais') || request()->is('admin/financemanagement/frais/*') ? 'active' : '' }}">
-                    <a href="{{ route('frais.index') }}" class='sidebar-link'>
-                        <i class="bi bi-bank2"></i>
-                        <span>Scolarité</span>
-                    </a>
-                </li>
-
-                <li class="sidebar-item {{ request()->is('admin/financemanagement/salaires') || request()->is('admin/financemanagement/salaires/*') ? 'active' : '' }}">
-                    <a href="{{ route('salaires.index') }}" class='sidebar-link'>
-                        <i class="bi bi-wallet2"></i>
-                        <span>Salaires</span>
-                    </a>
-                </li>
-
-                <li class="sidebar-title text-uppercase fw-light">Gestion des stocks</li>
-
-                <li class="sidebar-item {{ request()->is('admin/stockmanagement/materiels') || request()->is('admin/stockmanagement/materiels/*') ? 'active' : '' }}">
-                    <a href="{{ route('materiels.index') }}" class='sidebar-link'>
-                        <i class="bi bi-pass-fill"></i>
-                        <span>Matériels</span>
-                    </a>
-                </li>
-
-                <li class="sidebar-item {{ request()->is('admin/stockmanagement/stocks') || request()->is('admin/stockmanagement/stocks/*') ? 'active' : '' }}">
-                    <a href="{{ route('stocks.index') }}" class='sidebar-link'>
-                        <i class="bi bi-box-seam-fill"></i>
-                        <span>Stocks</span>
-                    </a>
-                </li>
-
-
-            </ul>
-        </div>
-        <button class="sidebar-toggler btn x"><i data-feather="x"></i></button>
     </div>
-</div>
+
+    <div class="sidebar-menu">
+        <ul class="menu-items">
+            <li class="m-t-30 {{ request()->routeIs('dashboard') ? 'active' : '' }}">
+                <a href="{{ route('dashboard') }}">
+                    <span class="fas fa-home mr-2"></span>
+                    <span>Accueil</span>
+                </a>
+            </li>
+
+            <li class="pl-4 my-3">
+                <span class="title text-uppercase">Gestion du Personnel</span>
+            </li>
+
+            <li class="{{ request()->routeIs('users*') ? 'active' : '' }}">
+                <a href="{{ route('users.index') }}">
+                    <span class="fas fa-user mr-2"></span>
+                    <span>Utilisateurs</span>
+                </a>
+            </li>
+
+            <li class="{{ request()->routeIs('personnels*') ? 'active' : '' }}">
+                <a href="{{ route('personnels.index') }}">
+                    <span class="fas fa-user-cog mr-2"></span>
+                    <span>Personnel</span>
+                </a>
+            </li>
+
+            <li class="{{ request()->routeIs('enseignants*') ? 'active' : '' }}">
+                <a href="{{ route('enseignants.index') }}">
+                    <span class="fas fa-chalkboard-teacher mr-2"></span>
+                    <span>Enseignants</span>
+                </a>
+            </li>
+
+            <li class="pl-4 my-3">
+                <span class="title text-uppercase">Gestion des élèves</span>
+            </li>
+
+            <li class="{{ request()->routeIs('eleves*') ? 'active' : '' }}">
+                <a href="{{ route('eleves.index') }}">
+                    <span class="fas fa-user-graduate mr-2"></span>
+                    <span>Eleves</span>
+                </a>
+            </li>
+
+            <li class="{{ request()->routeIs('familles*') ? 'active' : '' }}">
+                <a href="{{ route('familles.index') }}">
+                    <span class="fas fa-people-group mr-2"></span>
+                    <span>Parents</span>
+                </a>
+            </li>
+
+            <li class="pl-4 my-3">
+                <span class="title text-uppercase">Gestion de l'école</span>
+            </li>
+
+            <li class="{{ request()->routeIs('classes*') ? 'active' : '' }}">
+                <a href="{{ route('classes.index') }}">
+                    <span class="fas fa-th mr-2"></span>
+                    <span>Classes</span>
+                </a>
+            </li>
+
+            <li class="{{ request()->routeIs('matieres*') ? 'active' : '' }}">
+                <a href="{{ route('matieres.index') }}">
+                    <span class="fas fa-bookmark mr-2"></span>
+                    <span>Matieres</span>
+                </a>
+            </li>
+
+            <li class="{{ request()->routeIs('bulletins*') ? 'active' : '' }}">
+                <a href="{{ route('bulletins.index') }}">
+                    <span class="fas fa-file-invoice mr-2"></span>
+                    <span>Bulletins</span>
+                </a>
+            </li>
+
+            <li class="pl-4 my-3">
+                <span class="title text-uppercase">Gestion des Finances</span>
+            </li>
+
+
+            <li class="{{ request()->routeIs('paiements*') ? 'active' : '' }}">
+                <a href="{{ route('paiements.index') }}">
+                    <span class="fas fa-piggy-bank mr-2"></span>
+                    <span>Scolarité</span>
+                </a>
+            </li>
+
+            <li class="{{ request()->routeIs('salaires*') ? 'active' : '' }}">
+                <a href="{{ route('salaires.index') }}">
+                    <span class="fas fa-wallet mr-2"></span>
+                    <span>Salaires</span>
+                </a>
+            </li>
+
+            <li class="pl-4 my-3">
+                <span class="title text-uppercase">Gestion du Stock</span>
+            </li>
+
+
+            <li class="{{ request()->routeIs('materiels*') ? 'active' : '' }}">
+                <a href="{{ route('materiels.index') }}">
+                    <span class="fas fa-pen-ruler mr-2"></span>
+                    <span>Matériels</span>
+                </a>
+            </li>
+
+            <li class="{{ request()->routeIs('stocks*') ? 'active' : '' }}">
+                <a href="{{ route('stocks.index') }}">
+                    <span class="fas fa-cubes mr-2"></span>
+                    <span>Stocks</span>
+                </a>
+            </li>
+
+            <li class="{{ request()->routeIs('transactions*') ? 'active' : '' }}">
+                <a href="{{ route('transactions.index') }}">
+                    <span class="fas fa-arrow-right-arrow-left mr-2"></span>
+                    <span>Transactions</span>
+                </a>
+            </li>
+
+        </ul>
+        <div class="clearfix"></div>
+    </div>
+
+</nav>

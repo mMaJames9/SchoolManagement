@@ -31,22 +31,13 @@ class EleveStoreRequest extends FormRequest
             'matricule_eleve' => ['required', 'string', 'min:10', 'unique:eleves'],
             'nom_eleve' => ['required', 'string', 'max:255'],
             'prenom_eleve' => ['required', 'string', 'max:255'],
-            'age_eleve' => ['required', 'integer', 'min:2'],
+            'birthday_eleve' => ['required', 'string', 'max:255'],
+            'lieu_naissance' => ['required', 'string', 'max:255'],
+            'sexe_eleve' => ['required', 'integer', 'min:0', 'max:1'],
             'photo_profil_eleve' => ['required', 'image', 'max:3072'],
-            'maladie_hereditaire' => ['required', 'string', 'max:255'],
             'acte_naissance' => ['required', 'string', 'max:255'],
-            'fiche_renseignement' => ['required', 'string', 'max:255'],
-            'carnet_vaccination' => ['required', 'image', 'max:3072'],
+            'carnet_vaccination' => ['nullable', 'image', 'max:3072'],
             'classe_id' => ['required', 'integer'],
-
-            'nom_pere' => ['string', 'max:255'],
-            'num_tel_pere' => ['string', 'max:255'],
-            'nom_mere' => ['string', 'max:255'],
-            'num_tel_mere' => ['string', 'max:255'],
-            'domicile_famille' => ['required', 'string', 'max:255'],
-
-            'bulletin_precedent' => ['image', 'max:3072'],
-            'nom_etablissement' => ['string', 'max:255'],
         ];
     }
 }

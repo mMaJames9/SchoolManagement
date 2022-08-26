@@ -16,11 +16,16 @@ class CreateEnseignantsTable extends Migration
         Schema::create('enseignants', function (Blueprint $table) {
             $table->id();
             $table->string('matricule_enseignant')->unique();
-            $table->string('nom_enseignant')->nullable();
-            $table->string('prenom_enseignant')->nullable();
-            $table->integer('age_enseignant')->nullable();
-            $table->string('experience_enseignant')->nullable();
-            $table->string('photo_profil_enseignant')->nullable();
+            $table->string('nom_enseignant');
+            $table->string('prenom_enseignant');
+            $table->string('num_tel_enseignant')->unique();;
+            $table->date('birthday_enseignant');
+            $table->integer('experience_enseignant');
+            $table->string('cv_enseignant');
+            $table->string('photo_profil_enseignant', 2048);
+            $table->date('debut_contrat')->nullable();
+            $table->date('fin_contrat')->nullable();
+            $table->integer('salaire')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

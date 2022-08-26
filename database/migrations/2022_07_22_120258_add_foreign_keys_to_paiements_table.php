@@ -22,7 +22,13 @@ class AddForeignKeysToPaiementsTable extends Migration
 
             $table->foreignId('frais_id')
             ->nullable()
-            ->constrained('fraiss')
+            ->constrained('frais')
+            ->onUpdate('cascade')
+            ->onDelete('cascade');
+
+            $table->foreignId('annee_id')
+            ->nullable()
+            ->constrained('annees')
             ->onUpdate('cascade')
             ->onDelete('cascade');
         });
@@ -38,6 +44,7 @@ class AddForeignKeysToPaiementsTable extends Migration
         Schema::table('paiements', function (Blueprint $table) {
             $table->dropForeign(['eleve_id']);
             $table->dropForeign(['frais_id']);
+            $table->dropForeign(['annee_id']);
         });
     }
 }

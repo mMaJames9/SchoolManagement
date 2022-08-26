@@ -55,7 +55,7 @@ class StockController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int  Stock $stock
      * @return \Illuminate\Http\Response
      */
     public function show(Stock $stock)
@@ -70,7 +70,7 @@ class StockController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int  Stock $stock
      * @return \Illuminate\Http\Response
      */
     public function edit(Stock $stock)
@@ -88,7 +88,7 @@ class StockController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  int  Stock $stock
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Stock $stock)

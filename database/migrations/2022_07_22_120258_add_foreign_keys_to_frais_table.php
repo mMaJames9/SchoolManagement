@@ -25,6 +25,12 @@ class AddForeignKeysToFraisTable extends Migration
             ->constrained('cycles')
             ->onUpdate('cascade')
             ->onDelete('cascade');
+
+            $table->foreignId('annee_id')
+            ->nullable()
+            ->constrained('annees')
+            ->onUpdate('cascade')
+            ->onDelete('cascade');
         });
     }
 
@@ -38,6 +44,7 @@ class AddForeignKeysToFraisTable extends Migration
         Schema::table('frais', function (Blueprint $table) {
             $table->dropForeign(['classe_id']);
             $table->dropForeign(['cycle_id']);
+            $table->dropForeign(['annee_id']);
         });
     }
 }

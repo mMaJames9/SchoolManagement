@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UserStoreRequest;
+use App\Http\Requests\UserUpdateRequest;
+use App\Models\Personnel;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -22,11 +24,12 @@ class UserController extends Controller
         abort_if(Gate::denies('user_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $users = User::all()->except(auth()->id())->sortByDesc("created_at");
-        $dataFondateur = User::all()->count();
 
         $roles = Role::all()->pluck('name', 'id');
+        
+        $personnels = Personnel::all()->pluck('nom_personnel', 'id');
 
-        return view('admin.users.index', compact('users', 'roles'));
+        return view('admin.users.index', compact('users', 'roles', 'personnels'));
     }
 
     /**
@@ -48,7 +51,7 @@ class UserController extends Controller
     public function store(UserStoreRequest $request)
     {
         $user = User::create([
-            'name' => $request['name'],
+            'personnel_id' => $request['personnel_id'],
             'email' => $request['email'],
             'password' => Hash::make($request['password']),
         ]);
@@ -78,9 +81,17 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(User $user)
     {
-        //
+        abort_if(Gate::denies('user_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $roles = Role::all()->pluck('name', 'id');
+        
+        $personnels = Personnel::all()->pluck('nom_personnel', 'id');
+
+        $user->load('roles');
+
+        return view('admin.users.edit', compact( 'roles', 'personnels', 'user'));
     }
 
     /**
@@ -90,9 +101,15 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UserUpdateRequest $request, User $user)
     {
-        //
+        $user->roles()->sync($request->input('roles', []));
+
+        $status = 'Mise à jour du rôle de l\'utilisateur réussie.';
+
+        return redirect()->route('users.index')->with([
+            'status' => $status,
+        ]);
     }
 
     /**

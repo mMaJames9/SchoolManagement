@@ -19,8 +19,6 @@ class UserSeeder extends Seeder
     {
         DB::table('users')->insert([
             [
-                'id' => 1,
-                'name' => 'Anthony MISSE',
                 'email' => 'anthonymisse85@gmail.com',
                 'email_verified_at' => null,
                 'password' => Hash::make('1234@1234'),
@@ -28,6 +26,7 @@ class UserSeeder extends Seeder
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
                 'deleted_at' => null,
+                'personnel_id' => 1,
             ],
         ]);
     }

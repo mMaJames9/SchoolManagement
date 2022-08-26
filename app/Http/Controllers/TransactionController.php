@@ -6,6 +6,7 @@ use App\Models\Stock;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 
 class TransactionController extends Controller
@@ -21,7 +22,7 @@ class TransactionController extends Controller
 
         $transactions = Transaction::all();
 
-        return view('transactions.index', compact('transactions'));
+        return view('admin.transactions.index', compact('transactions'));
     }
 
     /**
@@ -48,10 +49,10 @@ class TransactionController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int  Stock $stock
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Stock $stock)
     {
         //
     }
@@ -59,10 +60,10 @@ class TransactionController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int  Stock $stock
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Stock $stock)
     {
         //
     }
@@ -71,10 +72,10 @@ class TransactionController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  int  Stock $stock
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Stock $stock)
     {
         //
     }
@@ -105,11 +106,12 @@ class TransactionController extends Controller
         Transaction::create([
             'stock'    => $sign . $stockAmount,
             'materiel_id' => $stock->materiel->id,
+            'user_id' => Auth::id(),
         ]);
 
         if ($action == 'add') {
             $stock->increment('stock_courant', $stockAmount);
-            $status = $stockAmount . ' article(s) a été ajouté(s) au stock.';
+            $status = $stockAmount . ' article(s) ajouté(s) au stock.';
         }
 
         if ($action == 'remove') {
@@ -120,7 +122,7 @@ class TransactionController extends Controller
             }
 
             $stock->decrement('stock_courant', $stockAmount);
-            $status = $stockAmount . ' article(s) a été retiré du stock.';
+            $status = $stockAmount . ' article(s) retiré du stock.';
         }
 
         return redirect()->route('stocks.index')->with([

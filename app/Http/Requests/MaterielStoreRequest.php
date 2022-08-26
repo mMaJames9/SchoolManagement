@@ -15,7 +15,7 @@ class MaterielStoreRequest extends FormRequest
      */
     public function authorize()
     {
-        abort_if(Gate::denies('enseignant_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('materiel_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return true;
     }
@@ -30,8 +30,10 @@ class MaterielStoreRequest extends FormRequest
         return [
             'nom_materiel' => ['required', 'string', 'max:255'],
             'date_achat' => ['required', 'string', 'max:255'],
+            'quantite_achat' => ['required', 'integer', 'min:1'],
             'destination' => ['required', 'string', 'max:255'],
-            'prix_materiel' => ['required', 'integer'],
+            'prix_materiel' => ['required', 'integer', 'min:25'],
+            'date_prochain_achat' => ['required', 'string', 'max:255'],
         ];
     }
 }

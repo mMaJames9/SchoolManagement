@@ -256,6 +256,33 @@ class MatiereSeeder extends Seeder
                 'updated_at' => Carbon::now(),
                 'deleted_at' => null,
             ],
+            [
+                'id' => 27,
+                'intitule_matiere' => 'Coloriage',
+                'niveau_matiere' => 0,
+                'coef_matiere' => 1,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+                'deleted_at' => null,
+            ],
+            [
+                'id' => 28,
+                'intitule_matiere' => 'Mathématiques',
+                'niveau_matiere' => 0,
+                'coef_matiere' => 1,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+                'deleted_at' => null,
+            ],
+            [
+                'id' => 29,
+                'intitule_matiere' => 'Graphisme',
+                'niveau_matiere' => 0,
+                'coef_matiere' => 1,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+                'deleted_at' => null,
+            ],
         ]);
     }
 }

@@ -17,7 +17,7 @@ class MaterielObserver
     public function created(Materiel $materiel)
     {
         Stock::create([
-            'stock_courant' => 0,
+            'stock_courant' => $materiel->quantite_achat,
             'created_at' => now(),
             'updated_at' => now(),
             'deleted_at' => null,

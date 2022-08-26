@@ -1,9 +1,10 @@
-<footer  class="">
-    <div class="footer clearfix mb-0 text-muted">
-        <div class="float-start">
-            <div class="float-start">
-                <p>2022 &copy; Fondation Fozeu & Magakou</p>
-            </div>
-        </div>
+<div class="container-fluid container-fixed-lg footer">
+    <div class="copyright sm-text-center">
+        <p class="small no-margin pull-left sm-pull-reset">
+            <span class="hint-text">Copyright &copy; 2022</span>
+            <span class="font-montserrat">Fondation Fozeu & Magakou</span>.
+            <span class="hint-text">All rights reserved.</span>
+        </p>
+        <div class="clearfix"></div>
     </div>
-</footer>
+</div>

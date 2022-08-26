@@ -1,167 +1,117 @@
 <x-app-layout>
 
-
-    <div class="page-title">
-        <div class="row mb-3">
-            <div class="col-12 col-md-6 order-md-1 order-last">
-                <h3>Liste du Stock</h3>
-                <p class="text-subtitle text-muted">Liste du matériel ainsi que leur quantité en stock</p>
-            </div>
-            <div class="col-12 col-md-6 order-md-2 order-first">
-                {{-- @role('Fondateur')
-                <div class="float-start float-lg-end">
-                    <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createStock" data-bs-backdrop="true">
-                        <i class="bi bi-plus bi-middle"></i>
-                        <span>Ajouter un nouveau stock</span>
-                    </a>
+    <div class="jumbotron" data-pages="parallax">
+        <div class=" container-fluid container-fixed-lg sm-p-l-0 sm-p-r-0">
+            <div class="inner">
+                <!-- START BREADCRUMB -->
+                <ol class="breadcrumb mt-5">
+                    <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Accueil</a></li>
+                    <li class="breadcrumb-item active">Stocks</li>
+                </ol>
+                <!-- END BREADCRUMB -->
+                <div class="card card-transparent">
+                    <div class="card-body">
+                        <h3>Stocks</h3>
+                        <p>Gérer le stock en augmentant ou diminuant les quantité de stock. </p>
+                    </div>
                 </div>
-
-                @include('admin.stocks.create')
-
-                @endrole --}}
             </div>
         </div>
     </div>
 
-    <section class="section">
+    <div class=" container-fluid container-fixed-lg">
+        <!-- START card -->
+        <div class="card card-transparent">
+            <div class="card-header mb-4 mb-4 ">
 
-        <div class="card">
+                <div class="pull-right">
+                    <div class="col-xs-12">
+                        <input type="text" id="search-table" class="form-control pull-right" placeholder="Rechercher">
+                    </div>
+                </div>
+
+                <div class="clearfix"></div>
+            </div>
             <div class="card-body">
-                <table class="table table-striped" id="tableStock">
+                <table class="table table-hover demo-table-search table-responsive-block" id="tableWithSearch">
                     <thead>
                         <tr>
-                            <th></th>
                             <th>Materiel</th>
                             <th>Stock Actuel</th>
-                            <th class="text-center">Ajouter</th>
-                            <th class="text-center">Supprimer</th>
-                            <th>Créé le</th>
-                            <th class="text-center">Actions</th>
+                            <th class="text-lg-center">Ajouter</th>
+                            <th class="text-lg-center">Retirer</th>
+                            <th>Dernière modification</th>
                         </tr>
                     </thead>
-                    <tbody>
-
+                    <tbody class="bg-white">
                         @foreach($stocks as $key => $stock)
                         <tr>
-                            <td class="text-center">{{ $loop->iteration }}</td>
 
-                            <td>
-                                {{ $stock->materiel->nom_materiel }}
+                            <td class="v-align-middle text-nowrap" style="width: 25%">
+                                <p>{{ ucwords($stock->materiel->nom_materiel) }}</p>
                             </td>
 
-                            <td>
-                                {{ $stock->stock_courant }}
+                            <td class="v-align-middle">
+                                <p>{{ $stock->stock_courant }}</p>
                             </td>
 
-                            <td class="text-center" width="20%">
-                                <form action="{{ route('transactions.storeStock', $stock->id) }}" method="POST" class="form form-horizontal">
+                            <td class="v-align-middle text-nowrap text-lg-center" style="width: 15%">
+                                <form action="{{ route('transactions.storeStock', $stock->id) }}" method="POST" class="form">
                                     @csrf
-                                    <div class="form-body">
-                                        <div class="row">
+
+                                    <div class="row">
+                                        <div class="col-sm-12">
                                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                             <input type="hidden" name="action" value="add">
 
-                                            <div class="col-md-12 mb-1">
-                                                <div class="input-group">
-                                                    <input type="number" id="stock" class="form-control" name="stock" min="1">
-                                                    <button type="submit" class="btn btn-sm btn-success"><i class="bi bi-plus"></i></button>
+                                            <div class="input-group">
+                                                <input type="number" id="stock" class="form-control" name="stock" min="1">
+                                                <div class="input-group-append">
+                                                    <button class="input-group-text success" type="submit">
+                                                        <i class="fa fa-plus" data-toogle="tooltip" data-placement="top" data-original-title="Ajouter des articles au stock"></i>
+                                                    </button>
                                                 </div>
                                             </div>
-
                                         </div>
                                     </div>
-                                </form>
 
+                                </form>
                             </td>
-                            <td class="text-center" width="20%">
-                                <form action="{{ route('transactions.storeStock', $stock->id) }}" method="POST" class="form form-horizontal">
+
+                            <td class="v-align-middle text-nowrap text-lg-center" style="width: 15%">
+                                <form action="{{ route('transactions.storeStock', $stock->id) }}" method="POST" class="form">
                                     @csrf
-                                    <div class="form-body">
-                                        <div class="row">
+
+                                    <div class="row">
+                                        <div class="col-sm-12">
                                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                             <input type="hidden" name="action" value="remove">
 
-                                            <div class="col-md-12 mb-1">
-                                                <div class="input-group">
-                                                    <input type="number" id="stock" class="form-control" name="stock" min="1">
-                                                    <button type="submit" class="btn btn-sm btn-danger"><i class="bi bi-dash"></i></button>
+                                            <div class="input-group">
+                                                <input type="number" id="stock" class="form-control" name="stock" min="1">
+                                                <div class="input-group-append">
+                                                    <button class="input-group-text danger" type="submit">
+                                                        <i class="fa fa-minus" data-toogle="tooltip" data-placement="top" data-original-title="Retirer des articles du stock"></i>
+                                                    </button>
                                                 </div>
                                             </div>
-
                                         </div>
                                     </div>
+
                                 </form>
-
                             </td>
 
-                            <td width="15%">
-                                {{ $stock->created_at }}
-                            </td>
-
-                            <td class="text-center">
-                                @role('Fondateur')
-                                <div class="modal-danger me-1 mb-1 d-inline-block">
-                                    <a type="button" class="btn icon icon-left btn-danger" data-bs-toggle="modal" data-bs-target="#DeleteStock{{ $stock->id }}">
-                                        <i class="bi bi-trash bi-middle"></i>
-                                    </a>
-
-                                    <!--Danger theme Modal -->
-                                    <div class="modal fade text-left" id="DeleteStock{{ $stock->id }}" tabindex="-1" role="dialog" aria-labelledby="myModalDelteStock" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
-                                            <div class="modal-content">
-                                                <form action="{{ route('stocks.destroy', $stock->id) }}" method="POST" enctype="multipart/form-data">
-                                                @csrf
-                                                @method('DELETE')
-                                                    <div class="modal-header bg-danger">
-                                                        <h5 class="modal-title white" id="myModalDelteStock">
-                                                            Supprimer stock
-                                                        </h5>
-                                                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                                                            <i data-feather="x"></i>
-                                                        </button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        Êtes-vous sûr de vouloir supprimer <span class="fw-bold">{{ ucwords($stock->stock_courant) }}</span> ?
-                                                    </div>
-
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
-                                                            <i class="bx bx-x d-block d-sm-none"></i>
-                                                            <span class="d-none d-sm-block">Non</span>
-                                                        </button>
-                                                        <input type="hidden" name="_method" value="DELETE">
-                                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                                        <button type="submit" class="btn btn-danger ml-1">
-                                                            <i class="bx bx-check d-block d-sm-none"></i>
-                                                            <span class="d-none d-sm-block">Oui</span>
-                                                        </button>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                @endrole
+                            <td class="v-align-middle text-nowrap" style="width: 25%">
+                                <p>{{ $stock->updated_at }}</p>
                             </td>
                         </tr>
-
                         @endforeach
 
                     </tbody>
                 </table>
+
             </div>
         </div>
-
-    </section>
-
-    @section('custimize')
-
-
-    <script>
-        // Simple Datatable
-        let tableStock = document.querySelector('#tableStock');
-        let dataTable = new simpleDatatables.DataTable(tableStock);
-    </script>
-    @endsection
+    </div>
 
 </x-app-layout>

@@ -11,21 +11,23 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $matricule_eleve
  * @property string $nom_eleve
  * @property string $prenom_eleve
- * @property integer $age_eleve
+ * @property string $birthday_eleve
+ * @property string $lieu_naissance
  * @property integer $sexe_eleve
+ * @property string $acte_naissance
+ * @property string $carnet_vaccination
  * @property string $photo_profil_eleve
  * @property string $maladie_hereditaire
- * @property string $acte_naissance
- * @property string $fiche_renseignement
- * @property string $carnet_vaccination
- * @property string $date_debut
- * @property string $date_fin
+ * @property string $maladie_chronique
+ * @property string $alergie_aliment
+ * @property string $alergie_medicament
+ * @property string $alergie_substance
  * @property string $created_at
  * @property string $updated_at
  * @property string $deleted_at
  * @property integer $famille_id
  * @property integer $classe_id
- * @property integer $parcours_id
+ * @property integer $annee_id
  */
 class Eleve extends Model
 {
@@ -35,7 +37,28 @@ class Eleve extends Model
     /**
      * @var array
      */
-    protected $fillable = ['matricule_eleve', 'nom_eleve', 'prenom_eleve', 'age_eleve', 'sexe_eleve', 'photo_profil_eleve', 'maladie_hereditaire', 'acte_naissance', 'fiche_renseignement', 'carnet_vaccination', 'date_debut', 'date_fin', 'created_at', 'updated_at', 'deleted_at', 'famille_id', 'classe_id', 'parcours_id'];
+    protected $fillable = [
+        'matricule_eleve',
+        'nom_eleve',
+        'prenom_eleve',
+        'birthday_eleve',
+        'lieu_naissance',
+        'sexe_eleve',
+        'acte_naissance',
+        'carnet_vaccination',
+        'photo_profil_eleve',
+        'maladie_hereditaire',
+        'maladie_chronique',
+        'alergie_aliment',
+        'alergie_medicament',
+        'alergie_substance',
+        'created_at',
+        'updated_at',
+        'deleted_at',
+        'famille_id',
+        'classe_id',
+        'annee_id',
+    ];
 
     public function famille()
     {
@@ -47,8 +70,30 @@ class Eleve extends Model
         return $this->belongsTo(Classe::class);
     }
 
+    public function annee()
+    {
+        return $this->belongsTo(Annee::class);
+    }
+
     public function parcours()
     {
-        return $this->belongsTo(Parcours::class, 'parcours_id', 'id');
+        return $this->hasOne(Parcours::class);
     }
+
+    public function classes()
+    {
+        return $this->belongsToMany(Classe::class, ClasseEleve::class);
+    }
+
+    public function matieres()
+    {
+        return $this->belongsToMany(Matiere::class, EleveMatiere::class);
+    }
+
+    public function paiements()
+    {
+        return $this->HasMany(Paiement::class, 'eleve_id');
+    }
+
+
 }

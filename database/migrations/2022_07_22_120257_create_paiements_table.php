@@ -16,9 +16,7 @@ class CreatePaiementsTable extends Migration
         Schema::create('paiements', function (Blueprint $table) {
             $table->id();
             $table->integer('montant_paiement')->nullable();
-            $table->date('date_paiement')->nullable();
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 

@@ -10,8 +10,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property integer $id
  * @property string $nom_materiel
  * @property string $date_achat
+ * @property integer $quantite_achat
  * @property string $destination
  * @property string $prix_materiel
+ * @property string $date_prochain_achat
  * @property string $created_at
  * @property string $updated_at
  * @property string $deleted_at
@@ -23,5 +25,5 @@ class Materiel extends Model
     /**
      * @var array
      */
-    protected $fillable = ['nom_materiel', 'date_achat', 'destination', 'prix_materiel', 'created_at', 'updated_at', 'deleted_at'];
+    protected $fillable = ['nom_materiel', 'date_achat', 'quantite_achat', 'destination', 'prix_materiel', 'date_prochain_achat', 'created_at', 'updated_at', 'deleted_at'];
 }

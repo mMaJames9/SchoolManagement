@@ -18,8 +18,6 @@ class CreateFraisTable extends Migration
             $table->string('type_frais')->nullable();
             $table->integer('montant_frais')->nullable();
             $table->date('date_echeance')->nullable();
-            $table->date('date_debut')->nullable();
-            $table->date('date_fin')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

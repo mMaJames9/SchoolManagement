@@ -26,9 +26,9 @@ class AddForeignKeysToElevesTable extends Migration
             ->onUpdate('cascade')
             ->onDelete('cascade');
 
-            $table->foreignId('parcours_id')
+            $table->foreignId('annee_id')
             ->nullable()
-            ->constrained('parcourss')
+            ->constrained('annees')
             ->onUpdate('cascade')
             ->onDelete('cascade');
         });
@@ -44,7 +44,7 @@ class AddForeignKeysToElevesTable extends Migration
         Schema::table('eleves', function (Blueprint $table) {
             $table->dropForeign(['famille_id']);
             $table->dropForeign(['classe_id']);
-            $table->dropForeign(['parcours_id']);
+            $table->dropForeign(['annee_id']);
         });
     }
 }

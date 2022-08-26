@@ -19,6 +19,12 @@ class AddForeignKeysToSalairesTable extends Migration
             ->constrained('enseignants')
             ->onUpdate('cascade')
             ->onDelete('cascade');
+
+            $table->foreignId('personnel_id')
+            ->nullable()
+            ->constrained('personnels')
+            ->onUpdate('cascade')
+            ->onDelete('cascade');
         });
     }
 
@@ -31,6 +37,7 @@ class AddForeignKeysToSalairesTable extends Migration
     {
         Schema::table('salaires', function (Blueprint $table) {
             $table->dropForeign(['enseignant_id']);
+            $table->dropForeign(['personnel_id']);
         });
     }
 }

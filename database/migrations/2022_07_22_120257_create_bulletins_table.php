@@ -16,8 +16,6 @@ class CreateBulletinsTable extends Migration
         Schema::create('bulletins', function (Blueprint $table) {
             $table->id();
             $table->string('nom_sequence')->nullable();
-            $table->date('date_debut')->nullable();
-            $table->date('date_fin')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

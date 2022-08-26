@@ -28,11 +28,12 @@ class Classe extends Model
     public function eleves()
     {
         return $this->hasMany(Eleve::class);
+        return $this->belongsToMany(Eleve::class, ClasseEleve::class);
     }
 
     public function enseignant()
     {
-        return $this->belongsTo(Famille::class);
+        return $this->belongsTo(Enseignant::class);
     }
 
     public function cycle()

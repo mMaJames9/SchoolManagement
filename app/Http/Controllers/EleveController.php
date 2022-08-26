@@ -3,16 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\EleveStoreRequest;
+use App\Http\Requests\EleveUpdateRequest;
+use App\Models\Annee;
 use App\Models\Classe;
 use App\Models\Eleve;
 use App\Models\Famille;
 use App\Models\Parcours;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
 
 class EleveController extends Controller
 {
+    private $annee_id;
+
     /**
      * Display a listing of the resource.
      *
@@ -20,6 +25,7 @@ class EleveController extends Controller
      */
     public function index()
     {
+
         abort_if(Gate::denies('eleve_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $eleves = Eleve::all()->sortByDesc("created_at");
@@ -53,20 +59,81 @@ class EleveController extends Controller
      */
     public function store(EleveStoreRequest $request)
     {
+
+        if(Carbon::now()->month >= 8 && Carbon::now()->month <= 12)
+        {
+            $this->annee_id = Annee::where('year_from', Carbon::now()->year)->value('id');
+        }
+        else
+        {
+            $previous_year = Carbon::now()->subYear(1)->year;
+
+            $this->annee_id = Annee::where('year_from', $previous_year)->value('id');
+        }
+
+        // Enregister un élève
+        $eleve = new Eleve;
+        $eleve->matricule_eleve = $request['matricule_eleve'];
+        $eleve->nom_eleve = $request['nom_eleve'];
+        $eleve->prenom_eleve = $request['prenom_eleve'];
+        $eleve->birthday_eleve = $request['birthday_eleve'];
+        $eleve->lieu_naissance = $request['lieu_naissance'];
+        $eleve->sexe_eleve = $request['sexe_eleve'];
+        $eleve->annee_id = $this->annee_id;
+
+        if($request->filled('checkMaladie'))
+        {
+            $this->validate($request, [
+                'maladie_hereditaire' => ['required', 'string', 'max:255'],
+            ]);
+
+            $eleve->maladie_hereditaire = $request['maladie_hereditaire'];
+        }
+
+        if($request->filled('checkChronique'))
+        {
+            $this->validate($request, [
+                'maladie_chronique' => ['required', 'string', 'max:255'],
+            ]);
+
+            $eleve->maladie_chronique = $request['maladie_chronique'];
+        }
+
+        if($request->filled('checkAlergieAliment'))
+        {
+            $this->validate($request, [
+                'alergie_aliment' => ['required', 'string', 'max:255'],
+            ]);
+
+            $eleve->alergie_aliment = $request['alergie_aliment'];
+        }
+
+        if($request->filled('checkAlergieMedicament'))
+        {
+            $this->validate($request, [
+                'alergie_medicament' => ['required', 'string', 'max:255'],
+            ]);
+
+            $eleve->alergie_medicament = $request['alergie_medicament'];
+        }
+
+        if($request->filled('checkAlergieSubstance'))
+        {
+            $this->validate($request, [
+                'alergie_substance' => ['required', 'string', 'max:255'],
+            ]);
+
+            $eleve->alergie_substance = $request['alergie_substance'];
+        }
+
         if ($request->hasFile('photo_profil_eleve'))
         {
-            $profilePath =  $request->bulletin_precedent;
+            $profilePath =  $request->photo_profil_eleve;
             $nameProfile = $profilePath->hashName();
             $picPath = public_path('storage/uploads/profiles/eleves');
             $profilePath->move($picPath, $nameProfile);
-        }
 
-        if ($request->hasFile('bulletin_precedent'))
-        {
-            $ancBulletinPath =  $request->bulletin_precedent;
-            $nameAncBull = $ancBulletinPath->hashName();
-            $abPath = public_path('storage/uploads/documents/bulletins/anciens');
-            $ancBulletinPath->move($abPath, $nameAncBull);
+            $eleve->photo_profil_eleve = $nameProfile;
         }
 
         if ($request->hasFile('carnet_vaccination'))
@@ -75,53 +142,101 @@ class EleveController extends Controller
             $nameCarnet = $vaccPath->hashName();
             $carnetPath = public_path('storage/uploads/documents/carnets');
             $vaccPath->move($carnetPath, $nameCarnet);
+
+            $eleve->carnet_vaccination = $nameCarnet;
         }
 
-        if ($request->has('nom_pere'))
-        {
-            $famille = new Famille;
-            $famille->nom_pere = $request['nom_pere'] ?? null;
-            $famille->num_tel_pere = $request['num_tel_pere'] ?? null;
-            $famille->nom_mere = $request['nom_mere'] ?? null;
-            $famille->num_tel_mere = $request['num_tel_mere'] ?? null;
-            $famille->domicile_famille = $request['domicile_famille'];
-        }
-
-        if($request->has('nom_etablissement'))
-        {
-            $parcours = new Parcours;
-            $parcours->bulletin_precedent = $nameAncBull ?? null;
-            $parcours->nom_etablissement = $request['nom_etablissement'] ?? null;
-        }
-
-        $eleve = new Eleve;
-        $eleve->matricule_eleve = $request['matricule_eleve'];
-        $eleve->nom_eleve = $request['nom_eleve'];
-        $eleve->prenom_eleve = $request['prenom_eleve'];
-        $eleve->age_eleve = $request['age_eleve'];
-        $eleve->sexe_eleve = $request['sexe_eleve'];
-        $eleve->photo_profil_eleve = $nameProfile;
-        $eleve->maladie_hereditaire = $request['maladie_hereditaire'];
         $eleve->acte_naissance = $request['acte_naissance'];
-        $eleve->fiche_renseignement = $request['fiche_renseignement'];
-        $eleve->carnet_vaccination = $nameCarnet;
 
-        if(empty($request->input('nom_pere') && $request->input('nom_mere')))
+        if(empty($request->input('domicile_famille')))
         {
-            $eleve->famille_id = $request['famille_id'] ?? null;
+            $this->validate($request, [
+                'famille_id' => ['required', 'integer'],
+            ]);
+
+            $eleve->famille_id = $request['famille_id'];
         }
 
         $eleve->classe_id = $request['classe_id'];
-        $eleve->save();
 
-        if($request->has('nom_pere') || $request->has('nom_mere'))
+
+        // Enregistrer ses parents
+        if ($request->filled('domicile_famille'))
         {
-            $eleve->famille()->save($famille);
+            $this->validate($request, [
+                'domicile_famille' => ['required', 'string', 'max:255'],
+            ]);
+
+            $famille = new Famille;
+
+            if ($request->filled('checkPere'))
+            {
+                $this->validate($request, [
+                    'nom_pere' => ['required', 'string', 'max:255'],
+                    'num_tel_pere' => ['required', 'string', 'max:255'],
+                ]);
+
+                $famille->nom_pere = $request['nom_pere'];
+                $famille->num_tel_pere = $request['num_tel_pere'];
+            }
+
+            if ($request->filled('checkMere'))
+            {
+                $this->validate($request, [
+                    'nom_mere' => ['required', 'string', 'max:255'],
+                    'num_tel_mere' => ['required', 'string', 'max:255'],
+                ]);
+
+                $famille->nom_mere = $request['nom_mere'];
+                $famille->num_tel_mere = $request['num_tel_mere'];
+            }
+
+            $famille->domicile_famille = $request['domicile_famille'];
+
+            $famille->save();
+
+            $famille->eleves()->save($eleve);
+
+
+        }
+        else
+        {
+            $eleve->save();
         }
 
-        if($request->has('nom_etablissement'))
+        if($request->filled('checkRedouble'))
         {
+            $this->validate($request, [
+                'classe_redouble' => ['required', 'array'],
+                'classe_redouble.*' => ['integer'],
+            ]);
+
+            $eleve->classes()->sync($request->input('classe_redouble', []));
+        }
+
+
+        // Enregister son école
+        if ($request->filled('checkEcole') )
+        {
+            $this->validate($request, [
+                'bulletin_precedent' => ['required', 'image', 'max:3072'],
+                'nom_etablissement' => ['required', 'string', 'max:255'],
+            ]);
+
+            if($request->hasFile('bulletin_precedent'))
+            {
+                $ancBulletinPath =  $request->bulletin_precedent;
+                $nameAncBull = $ancBulletinPath->hashName();
+                $abPath = public_path('storage/uploads/documents/bulletins/anciens');
+                $ancBulletinPath->move($abPath, $nameAncBull);
+            }
+
+            $parcours = new Parcours;
+            $parcours->bulletin_precedent = $nameAncBull;
+            $parcours->nom_etablissement = $request['nom_etablissement'];
+
             $eleve->parcours()->save($parcours);
+
         }
 
         $status = 'Création de l\'élève réussie.';
@@ -134,35 +249,164 @@ class EleveController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int  Eleve $eleve
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Eleve $eleve)
     {
-        //
+        abort_if(Gate::denies('eleve_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $classes = Classe::all()->sortByDesc("created_at");;
+        $sections = Classe::groupBy('nom_section')->pluck('nom_section', 'id');
+
+        $familles = Famille::all();
+        $parcours = Parcours::all();
+
+        $eleve->load('classes');
+
+        return view('admin.eleves.show', compact('classes', 'sections', 'familles', 'eleve', 'parcours'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int  Eleve $eleve
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Eleve $eleve)
     {
-        //
+        abort_if(Gate::denies('eleve_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $classes = Classe::all()->sortByDesc("created_at");;
+        $sections = Classe::groupBy('nom_section')->pluck('nom_section', 'id');
+
+        $eleve->load('classes');
+
+        return view('admin.eleves.edit', compact('classes', 'sections', 'eleve'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  int  Eleve $eleve
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(EleveUpdateRequest $request, Eleve $eleve)
     {
-        //
+        if(Carbon::now()->month >= 8 && Carbon::now()->month <= 12)
+        {
+            $this->annee_id = Annee::where('year_from', Carbon::now()->year)->value('id');
+        }
+        else
+        {
+            $previous_year = Carbon::now()->subYear(1)->year;
+
+            $this->annee_id = Annee::where('year_from', $previous_year)->value('id');
+        }
+
+        $eleve->matricule_eleve = $request['matricule_eleve'];
+        $eleve->nom_eleve = $request['nom_eleve'];
+        $eleve->prenom_eleve = $request['prenom_eleve'];
+        $eleve->birthday_eleve = $request['birthday_eleve'];
+        $eleve->lieu_naissance = $request['lieu_naissance'];
+        $eleve->sexe_eleve = $request['sexe_eleve'];
+        $eleve->annee_id = $this->annee_id;
+
+        if($request->filled('checkMaladie'))
+        {
+            $this->validate($request, [
+                'maladie_hereditaire' => ['required', 'string', 'max:255'],
+            ]);
+
+            $eleve->maladie_hereditaire = $request['maladie_hereditaire'];
+        }
+
+        if($request->filled('checkChronique'))
+        {
+            $this->validate($request, [
+                'maladie_chronique' => ['required', 'string', 'max:255'],
+            ]);
+
+            $eleve->maladie_chronique = $request['maladie_chronique'];
+        }
+
+        if($request->filled('checkAlergieAliment'))
+        {
+            $this->validate($request, [
+                'alergie_aliment' => ['required', 'string', 'max:255'],
+            ]);
+
+            $eleve->alergie_aliment = $request['alergie_aliment'];
+        }
+
+        if($request->filled('checkAlergieMedicament'))
+        {
+            $this->validate($request, [
+                'alergie_medicament' => ['required', 'string', 'max:255'],
+            ]);
+
+            $eleve->alergie_medicament = $request['alergie_medicament'];
+        }
+
+        if($request->filled('checkAlergieSubstance'))
+        {
+            $this->validate($request, [
+                'alergie_substance' => ['required', 'string', 'max:255'],
+            ]);
+
+            $eleve->alergie_substance = $request['alergie_substance'];
+        }
+
+        if ($request->hasFile('photo_profil_eleve'))
+        {
+            $request->validate([
+                'photo_profil_eleve' => ['required', 'image', 'max:3072'],
+            ]);
+
+            if ($oldProfilePath = $eleve->photo_profil_eleve)
+            {
+                unlink(public_path('storage/uploads/profiles/eleves/') . $oldProfilePath);
+            }
+
+            $profilePath =  $request->photo_profil_eleve;
+            $nameProfile = $profilePath->hashName();
+            $picPath = public_path('storage/uploads/profiles/eleves');
+            $profilePath->move($picPath, $nameProfile);
+
+            $eleve->photo_profil_eleve = $nameProfile;
+        }
+
+        if ($request->hasFile('carnet_vaccination'))
+        {
+            $request->validate([
+                'carnet_vaccination' => ['required', 'image', 'max:3072'],
+            ]);
+
+            if ($oldCarnetPath = $eleve->carnet_vaccination)
+            {
+                unlink(public_path('storage/uploads/documents/carnets/') . $oldCarnetPath);
+            }
+
+            $vaccPath =  $request->carnet_vaccination;
+            $nameCarnet = $vaccPath->hashName();
+            $carnetPath = public_path('storage/uploads/documents/carnets');
+            $vaccPath->move($carnetPath, $nameCarnet);
+
+            $eleve->carnet_vaccination = $nameCarnet;
+        }
+
+        $eleve->acte_naissance = $request['acte_naissance'];
+
+        $eleve->classe_id = $request['classe_id'];
+
+        $eleve->save();
+
+        $status = 'Mise à jour de l\'élève réussie.';
+
+        return redirect()->route('eleves.index')->with([
+            'status' => $status,
+        ]);
     }
 
     /**
@@ -176,6 +420,20 @@ class EleveController extends Controller
         abort_if(Gate::denies('eleve_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $eleve = Eleve::FindOrFail($id);
+
+        // $ProfilePath = public_path("storage/uploads/profiles/eleves/{$eleve->photo_profil_eleve}");
+        // $CarnetPath = public_path("storage/uploads/documents/carnets/{$eleve->carnet_vaccination}");
+
+        // if(File::exists($ProfilePath))
+        // {
+        //     File::delete($ProfilePath);
+        // }
+
+        // if(File::exists($CarnetPath))
+        // {
+        //     File::delete($CarnetPath);
+        // }
+
         $eleve->delete();
 
         $status = 'Suppression de l\'élève réussie.';

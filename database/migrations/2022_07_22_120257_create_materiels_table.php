@@ -17,8 +17,10 @@ class CreateMaterielsTable extends Migration
             $table->id();
             $table->string('nom_materiel')->nullable();
             $table->date('date_achat')->nullable();
+            $table->integer('quantite_achat')->nullable();
             $table->string('destination')->nullable();
             $table->string('prix_materiel')->nullable();
+            $table->date('date_prochain_achat')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

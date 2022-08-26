@@ -123,5 +123,7 @@ class PermissionRoleSeeder extends Seeder
         $role3 = Role::create(['name' => 'Secretaire']);
 
         $role4 = Role::create(['name' => 'Fondateur']);
+
+        $role5 = Role::create(['name' => 'Enseignant d\'informatique']);
     }
 }

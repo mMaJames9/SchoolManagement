@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\MaterielStoreRequest;
+use App\Http\Requests\MaterielUpdateRequest;
 use App\Models\Materiel;
+use App\Models\Stock;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
@@ -48,8 +51,10 @@ class MaterielController extends Controller
         $materiel = Materiel::create([
             'nom_materiel' => $request['nom_materiel'] ,
             'date_achat' => $request['date_achat'] ,
+            'quantite_achat' => $request['quantite_achat'] ,
             'destination' => $request['destination'] ,
             'prix_materiel' => $request['prix_materiel'] ,
+            'date_prochain_achat' => $request['date_prochain_achat'] ,
         ]);
 
         $status = 'Ajout du nouveau materiel réussie.';
@@ -62,10 +67,10 @@ class MaterielController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int  Materiel $materiel
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Materiel $materiel)
     {
         //
     }
@@ -73,24 +78,38 @@ class MaterielController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int  Materiel $materiel
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Materiel $materiel)
     {
-        //
+        abort_if(Gate::denies('materiel_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        return view('admin.materiels.edit', compact('materiel'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  int  Materiel $materiel
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(MaterielUpdateRequest $request, Materiel $materiel)
     {
-        //
+        $materiel->nom_materiel = $request['nom_materiel'];
+        $materiel->date_achat = $request['date_achat'];
+        $materiel->destination = $request['destination'];
+        $materiel->prix_materiel = $request['prix_materiel'];
+        $materiel->date_prochain_achat = $request['date_prochain_achat'];
+
+        $materiel->save();
+
+        $status = 'Mise à jour du matériel réussie.';
+
+        return redirect()->route('materiels.index')->with([
+            'status' => $status,
+        ]);
     }
 
     /**
@@ -105,6 +124,12 @@ class MaterielController extends Controller
 
         $materiel = Materiel::FindOrFail($id);
         $materiel->delete();
+
+        $stock = Stock::where('materiel_id', $id);
+        $stock->delete();
+
+        $transaction = Transaction::where('materiel_id', $id);
+        $transaction->delete();
 
         $status = 'Suppression du matériel réussie.';
 

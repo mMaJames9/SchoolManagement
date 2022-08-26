@@ -16,7 +16,7 @@ class CreateSalairesTable extends Migration
         Schema::create('salaires', function (Blueprint $table) {
             $table->id();
             $table->integer('montant_salaire')->nullable();
-            $table->date('date_paiement_salaire')->nullable();
+            $table->dateTime('date_paiement_salaire')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
