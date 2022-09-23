@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\MatiereStoreRequest;
 use App\Http\Requests\MatiereUpdateRequest;
+use App\Models\Competence;
 use App\Models\Matiere;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -16,14 +17,29 @@ class MatiereController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         abort_if(Gate::denies('matiere_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $matieres = Matiere::all()->sortBy("niveau_matiere");
-        $data = Matiere::all()->count();
+        if(isset($request['niveau']))
+        {
+            $selected = $request['niveau'];
+            $competences = Competence::whereHas('matieres', function ($q) use ($selected) {
+                $q->where('niveau_matiere', $selected);
+            })->get();
 
-        return view('admin.matieres.index', compact('matieres'));
+        }
+        else
+        {
+            $selected = null;
+            $competences = Competence::whereHas('matieres', function ($q) use ($selected) {
+                $q->where('niveau_matiere', $selected);
+            })->get();
+        }
+
+        $listCompetences = Competence::all()->pluck('intitule_competence', 'id');
+
+        return view('admin.matieres.index', compact('competences', 'listCompetences', 'selected'));
     }
 
     /**
@@ -44,15 +60,39 @@ class MatiereController extends Controller
      */
     public function store(MatiereStoreRequest $request)
     {
-        $matiere = Matiere::create([
-            'intitule_matiere' => $request['intitule_matiere'] ,
-            'niveau_matiere' => $request['niveau_matiere'] ,
-            'coef_matiere' => $request['coef_matiere'] ,
-        ]);
+        $matiere = new Matiere;
+        $matiere->intitule_matiere = $request['intitule_matiere'];
+        $matiere->niveau_matiere = $request['niveau_matiere'];
+        $matiere->coef_matiere = $request['coef_matiere'];
+
+        if($request->filled('checkCompetence'))
+        {
+            $this->validate($request, [
+                'competence_id' => ['required', 'integer'],
+            ]);
+
+            $matiere->competence_id = $request['competence_id'];
+
+            $matiere->save();
+        }
+        else
+        {
+            $competence = new Competence;
+
+            $this->validate($request, [
+                'intitule_competence' => ['required', 'string', 'max:255', 'unique:competences'],
+            ]);
+
+            $competence->intitule_competence = $request['intitule_competence'];
+
+            $competence->save();
+
+            $competence->matieres()->save($matiere);
+        }
 
         $status = 'Ajout d\'une nouvelle matiere réussie.';
 
-        return redirect()->route('matieres.index')->with([
+        return redirect()->back()->with([
             'status' => $status,
         ]);
     }
@@ -76,9 +116,7 @@ class MatiereController extends Controller
      */
     public function edit(Matiere $matiere)
     {
-        abort_if(Gate::denies('matiere_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('admin.matieres.edit', compact('matiere'));
     }
 
     /**
@@ -93,12 +131,13 @@ class MatiereController extends Controller
         $matiere->intitule_matiere = $request['intitule_matiere'];
         $matiere->niveau_matiere = $request['niveau_matiere'];
         $matiere->coef_matiere = $request['coef_matiere'];
+        $matiere->competence_id = $request['competence_id'];
 
         $matiere->save();
 
         $status = 'Mise à jour de la matière réussie.';
 
-        return redirect()->route('matieres.index')->with([
+        return redirect()->back()->with([
             'status' => $status,
         ]);
     }
@@ -119,7 +158,7 @@ class MatiereController extends Controller
 
         $status = 'Suppression de la matière réussie.';
 
-        return redirect()->route('matieres.index')->with([
+        return redirect()->back()->with([
             'status' => $status,
         ]);
     }

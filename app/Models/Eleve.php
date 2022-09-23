@@ -85,14 +85,19 @@ class Eleve extends Model
         return $this->belongsToMany(Classe::class, ClasseEleve::class);
     }
 
-    public function matieres()
-    {
-        return $this->belongsToMany(Matiere::class, EleveMatiere::class);
-    }
-
     public function paiements()
     {
         return $this->HasMany(Paiement::class, 'eleve_id');
+    }
+
+    public function notes()
+    {
+        return $this->HasMany(Note::class, 'eleve_id');
+    }
+
+    public function notesMensuel()
+    {
+        return $this->notes()->whereRaw("CAST(SUBSTR(mois_bulletin, 6, 2) AS integer) = '".date('n')."'");
     }
 
 

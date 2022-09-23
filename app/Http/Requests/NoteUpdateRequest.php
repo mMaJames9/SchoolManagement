@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
 
-class MatiereUpdateRequest extends FormRequest
+class NoteUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -15,7 +15,7 @@ class MatiereUpdateRequest extends FormRequest
      */
     public function authorize()
     {
-        abort_if(Gate::denies('matiere_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('bulletin_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return true;
     }
@@ -28,10 +28,8 @@ class MatiereUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'intitule_matiere' => ['required', 'string', 'max:255'],
-            'niveau_matiere' => ['required', 'string', 'min:0', 'max:3'],
-            'coef_matiere' => ['required', 'integer', 'min:1'],
-            'competence_id' => ['required', 'integer'],
+            'notes.*'  => ['numeric', 'between:0, 20'],
+            'notes'    => ['required','array'],
         ];
     }
 }

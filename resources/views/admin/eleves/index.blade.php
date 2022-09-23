@@ -22,7 +22,7 @@
     <div class=" container-fluid container-fixed-lg">
         <!-- START card -->
         <div class="card card-transparent">
-            <div class="card-header mb-4 mb-4 ">
+            <div class="card-header mb-4">
                 <div class="pull-left">
                     <div class="col-xs-12">
                         <a id="show-modal" class="btn btn-primary btn-cons" href="{{ route('eleves.create') }}">
@@ -41,7 +41,7 @@
                 <div class="clearfix"></div>
             </div>
             <div class="card-body">
-                <table class="table table-hover demo-table-search table-responsive-lg" id="tableWithSearch">
+                <table class="table table-hover demo-table-search table-responsive-block dataTable no-footer" id="tableWithSearch">
                     <thead>
                         <tr>
                             <th>Nom</th>

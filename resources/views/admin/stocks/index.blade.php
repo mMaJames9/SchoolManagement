@@ -22,7 +22,7 @@
     <div class=" container-fluid container-fixed-lg">
         <!-- START card -->
         <div class="card card-transparent">
-            <div class="card-header mb-4 mb-4 ">
+            <div class="card-header mb-4">
 
                 <div class="pull-right">
                     <div class="col-xs-12">
@@ -33,7 +33,7 @@
                 <div class="clearfix"></div>
             </div>
             <div class="card-body">
-                <table class="table table-hover demo-table-search table-responsive-block" id="tableWithSearch">
+                <table class="table table-hover demo-table-search table-responsive-block dataTable no-footer" id="tableWithSearch">
                     <thead>
                         <tr>
                             <th>Materiel</th>

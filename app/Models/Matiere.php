@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $created_at
  * @property string $updated_at
  * @property string $deleted_at
+ * @property integer $competence_id
  */
 class Matiere extends Model
 {
@@ -22,10 +23,16 @@ class Matiere extends Model
     /**
      * @var array
      */
-    protected $fillable = ['intitule_matiere', 'niveau_matiere', 'coef_matiere', 'created_at', 'updated_at', 'deleted_at'];
+    protected $fillable = ['intitule_matiere', 'niveau_matiere', 'coef_matiere', 'created_at', 'updated_at', 'deleted_at', 'competence_id'];
 
-    public function eleves()
+    public function competence()
     {
-        return $this->belongsToMany(Eleve::class, EleveMatiere::class);
+        return $this->belongsTo(Competence::class);
     }
+
+    public function notes()
+    {
+        return $this->HasMany(Note::class, 'matiere_id');
+    }
+
 }

@@ -19,6 +19,18 @@ class AddForeignKeysToNotesTable extends Migration
             ->constrained('eleves')
             ->onUpdate('cascade')
             ->onDelete('cascade');
+
+            $table->foreignId('matiere_id')
+            ->nullable()
+            ->constrained('matieres')
+            ->onUpdate('cascade')
+            ->onDelete('cascade');
+
+            $table->foreignId('annee_id')
+            ->nullable()
+            ->constrained('annees')
+            ->onUpdate('cascade')
+            ->onDelete('cascade');
         });
     }
 
@@ -31,6 +43,8 @@ class AddForeignKeysToNotesTable extends Migration
     {
         Schema::table('notes', function (Blueprint $table) {
             $table->dropForeign(['eleve_id']);
+            $table->dropForeign(['matiere_id']);
+            $table->dropForeign(['annee_id']);
         });
     }
 }

@@ -5,35 +5,35 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
-        
+
         <title>{{ config('app.name', 'Laravel') }}</title>
-        
+
         <link rel="apple-touch-icon" href="{{ asset('pages/ico/60.png') }}">
         <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('pages/ico/76.png') }}">
         <link rel="apple-touch-icon" sizes="120x120" href="{{ asset('pages/ico/120.png') }}">
         <link rel="apple-touch-icon" sizes="152x152" href="{{ asset('pages/ico/152.png') }}">
         <meta name="apple-mobile-web-app-capable" content="yes">
-        
+
         <meta name="apple-touch-fullscreen" content="yes">
         <meta name="apple-mobile-web-app-status-bar-style" content="default">
         <meta content="" name="description" />
         <meta content="" name="author" />
-        
+
         <link rel="stylesheet" type="text/css" href="{{ asset('assets/plugins/pace/pace-theme-flash.css') }}" />
         <link rel="stylesheet" type="text/css" href="{{ asset('assets/plugins/bootstrap/css/bootstrap.min.css') }}" />
         <link rel="stylesheet" type="text/css" href="{{ asset('assets/plugins/font-awesome/css/all.min.css') }}" />
         <link rel="stylesheet" type="text/css" href="{{ asset('assets/plugins/jquery-scrollbar/jquery.scrollbar.css') }}" media="screen" />
         <link rel="stylesheet" type="text/css" href="{{ asset('assets/plugins/select2/css/select2.min.css') }}" media="screen" />
         <link rel="stylesheet" type="text/css" href="{{ asset('assets/plugins/switchery/css/switchery.min.css') }}" media="screen" />
-        
+
         <link rel="stylesheet" type="text/css" href="{{ asset('pages/css/pages-icons.css') }}" />
         <link rel="stylesheet" type="text/css" href="{{ asset('pages/css/themes/corporate.css') }}" class="main-stylesheet" />
-        
+
         <script defer>
             "use strict";
             window.print();
             window.onafterprint = back;
-            
+
             function back()
             {
                 window.history.back();
@@ -41,9 +41,9 @@
         </script>
     </head>
     <body class="bg-white">
-        
+
         <div class="invoice p-2 p-sm-4 min-vh-100 d-flex flex-column">
-            
+
             <div class="border-bottom pb-4">
                 <div class="pull-left">
                     <img class="invoice-logo w-50" data-src="{{ asset('assets/img/invoice/squarespace.png') }}" src="{{ asset('assets/img/invoice/squarespace2x.png') }}">
@@ -58,7 +58,7 @@
                     <div class="sm-no-padding pt-4">
                         <h2 class="font-montserrat all-caps hint-text">BULLETIN DE PAIE</h2>
                     </div>
-                    
+
                     <div class="sm-no-padding sm-p-b-20 d-flex align-items-start justify-content-start mt-3">
                         <div class="mr-2">
                             <div class="font-montserrat bold all-caps">Année scolaire :</div>
@@ -69,11 +69,11 @@
                             <div class="clearfix"></div>
                         </div>
                     </div>
-                    
+
                 </div>
                 <div class="clearfix"></div>
             </div>
-            
+
             <div class="mt-2">
                 <div class="pull-left sm-m-t-20">
                     <div class="sm-no-padding pt-4">
@@ -119,11 +119,11 @@
                             @endif
                         </div>
                     </div>
-                    
+
                 </div>
                 <div class="clearfix"></div>
             </div>
-            
+
             <div class="table-responsive table-invoice my-4">
                 <table class="table border-top">
                     <thead>
@@ -134,7 +134,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        
+
                         @foreach ($salaires->where(isset($salaire->enseignant_id) ? 'enseignant_id' : 'personnel_id', isset($salaire->enseignant_id) ? $salaire->enseignant->id : $salaire->personnel->id) as $key => $paiement)
                         <tr>
                             <td class="">
@@ -143,18 +143,18 @@
                             <td class="text-center">{{ number_format($paiement->montant_salaire, 0, ",", " ") }} FCFA</td>
                             <td class="text-center">{{ date('d F Y', strtotime($paiement->created_at)) }}</td>
                         </tr>
-                        
+
                         @endforeach
                     </tbody>
                 </table>
             </div>
-            
+
             <div class="d-flex justify-content-between mt-auto">
                 <div class="">
                     <img width="30%" class="invoice-signature" src="{{ asset('assets/img/invoice/signature2x.png') }}">
                     <p>Mme. {{ strtoupper(Auth::user()->personnel->nom_personnel) }}</p>
                 </div>
-                
+
                 <div class="bg-dark px-5 text-right text-nowrap py-3">
                     <h5 class="font-montserrat all-caps small no-margin hint-text text-white bold">Total</h5>
                     <h2 class="no-margin text-white semi-bold">
@@ -172,6 +172,6 @@
 
             <p class="small hint-text border-top mt-5">Document à conserver sans limitation de durée. Aucun duplicatat ne pourra être délivré.</p>
         </div>
-        
+
     </body>
 </html>

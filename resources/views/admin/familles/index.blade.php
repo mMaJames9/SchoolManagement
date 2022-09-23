@@ -33,7 +33,7 @@
             </div>
 
             <div class="card-body">
-                <table class="table table-hover demo-table-search table-responsive-block" id="tableWithSearch">
+                <table class="table table-hover demo-table-search table-responsive-block dataTable no-footer" id="tableWithSearch">
                     <thead>
                         <tr>
                             <th>Parent</th>

@@ -12,7 +12,7 @@
                     @else
                     <li class="breadcrumb-item active">Frais de scolarité</li>
                     @endif
-                    
+
                 </ol>
                 <!-- END BREADCRUMB -->
                 <div class="card card-transparent">
@@ -28,11 +28,11 @@
     <div class=" container-fluid container-fixed-lg">
         <!-- START card -->
         <div class="card card-transparent">
-            <div class="card-header mb-4 mb-4 ">
+            <div class="card-header mb-4">
 
                 <div class="pull-left">
                     <div class="col-xs-12">
-                       
+
                         <form class="d-flex" action="{{ URL::current() }}" method="GET">
 
                             <div class="mr-2">
@@ -44,21 +44,21 @@
                                         @if($section == $classe->nom_section)
                                         <option value="{{ $classe->id }}" {{ ($classe ? $classe->id : old('classe')) == $selected    ? 'selected' : '' }}>{{ ucwords($classe->nom_classe) }}</option>
                                         @endif
-                                        
+
                                         @endforeach
                                     </optgroup>
                                     @endforeach
                                 </select>
                             </div>
-                        
-                            
+
+
                             <button type="submit" class="btn btn-info">
-                                <span>Rechercher</span>
+                                <span>Filtrer</span>
                             </button>
                         </form>
                     </div>
                 </div>
-                    
+
                 <div class="pull-right">
                     <div class="col-xs-12">
                         <input type="text" id="search-table" class="form-control pull-right" placeholder="Rechercher">
@@ -68,7 +68,7 @@
                 <div class="clearfix"></div>
             </div>
             <div class="card-body">
-                <table class="table table-hover demo-table-search table-responsive-lg" id="tableWithSearch">
+                <table class="table table-hover demo-table-search table-responsive-block dataTable no-footer" id="tableWithSearch">
                     <thead>
                         <tr>
                             <th>Nom</th>
@@ -76,7 +76,7 @@
                             <th class="text-lg-center">Inscription</th>
                             <th class="text-lg-center">1ere Tranche</th>
                             <th class="text-lg-center">2e Tranche</th>
-                            <th class="text-lg-center">3e Tranche</th> 
+                            <th class="text-lg-center">3e Tranche</th>
                             <th class="text-lg-center">Actions</th>
                         </tr>
                     </thead>
@@ -88,7 +88,7 @@
                         ->where('type_frais', 'Inscription')->sum('montant_frais');
                         $id_inscription = $frais->where('annee_id', $annee_id)
                         ->where('type_frais', 'Inscription')->value('id');
-                        
+
                         if(!empty($eleve->classe->cycle_id))
                         {
                             $corr = $eleve->classe->cycle_id;
@@ -126,7 +126,7 @@
                         else
                         {
                             $corr = $eleve->classe_id;
-                            
+
                             $tranche_1 = $frais->where('annee_id', $annee_id)
                             ->where('type_frais', '1ere Tranche')
                             ->where('classe_id', $corr)
@@ -157,9 +157,9 @@
                             ->where('classe_id', $corr)
                             ->value('id');
                         }
-                        
+
                         $versement = $eleve->paiements->sum('montant_paiement');
-                        
+
                         @endphp
 
                         <tr>
@@ -189,7 +189,7 @@
                                 @php
                                     $montant_restant = $inscription - $versement;
                                 @endphp
-                                
+
                                 @if($eleve->paiements->where('frais_id', $id_inscription)->sum('montant_paiement') == 0)
                                 <span class="label label-sm label-danger">Pas payé</span>
                                 @elseif ($eleve->paiements->where('frais_id', $id_inscription)->sum('montant_paiement') < $inscription)
@@ -197,7 +197,7 @@
                                 @else
                                 <span class="label label-sm label-success">Complet</span>
                                 @endif
-                                
+
                             </td>
 
                             <td class="v-align-middle text-nowrap text-lg-center" style="width: 10%">
@@ -205,7 +205,7 @@
                                 @php
                                     $montant_restant = ($inscription + $tranche_1) - $versement;
                                 @endphp
-                                
+
                                 @if($eleve->paiements->where('frais_id', $id_tranche_1)->sum('montant_paiement') == 0)
                                 <span class="label label-sm label-danger">Pas payé</span>
                                 @elseif ($eleve->paiements->where('frais_id', $id_tranche_1)->sum('montant_paiement') < $tranche_1)
@@ -213,7 +213,7 @@
                                 @else
                                 <span class="label label-sm label-success">Complet</span>
                                 @endif
-                                
+
                             </td>
 
                             <td class="v-align-middle text-nowrap text-lg-center" style="width: 10%">
@@ -221,7 +221,7 @@
                                 @php
                                     $montant_restant = ($inscription + $tranche_1 + $tranche_2) - $versement;
                                 @endphp
-                                
+
                                 @if($eleve->paiements->where('frais_id', $id_tranche_2)->sum('montant_paiement') == 0)
                                 <span class="label label-sm label-danger">Pas payé</span>
                                 @elseif ($eleve->paiements->where('frais_id', $id_tranche_2)->sum('montant_paiement') < $tranche_2)
@@ -229,7 +229,7 @@
                                 @else
                                 <span class="label label-sm label-success">Complet</span>
                                 @endif
-                                
+
                             </td>
 
                             <td class="v-align-middle text-nowrap text-lg-center" style="width: 10%">
@@ -238,7 +238,7 @@
                                     @php
                                         $montant_restant = ($inscription + $tranche_1 + $tranche_2 + $tranche_3) - $versement;
                                     @endphp
-                                    
+
                                     @if($eleve->paiements->where('frais_id', $id_tranche_3)->sum('montant_paiement') == 0)
                                     <span class="label label-sm label-danger">Pas payé</span>
                                     @elseif ($eleve->paiements->where('frais_id', $id_tranche_3)->sum('montant_paiement') < $tranche_3)
@@ -250,13 +250,13 @@
                                 -
                                 @endif
 
-                                
+
                             </td>
 
                             <td class="v-align-middle text-nowrap text-lg-center">
 
                                 <a href="{{ route('paiements.create', $eleve->id) }}" class="btn btn-sm btn-info" data-target="#payFrais{{ $eleve->id }}" data-toggle="modal">
-                                    <span class="fa fa-hand-holding-dollar" data-toggle="tooltip" data-placement="top" data-original-title="Payer l'employé"></span>
+                                    <span class="fa fa-hand-holding-dollar" data-toggle="tooltip" data-placement="top" data-original-title="Payer les frais"></span>
                                 </a>
 
                             </td>

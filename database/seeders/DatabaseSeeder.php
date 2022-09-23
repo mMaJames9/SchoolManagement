@@ -22,7 +22,7 @@ class DatabaseSeeder extends Seeder
             CycleSeeder::class,
             ClasseSeeder::class,
             FraisSeeder::class,
-            MatiereSeeder::class,
+            // MatiereSeeder::class,
         ]);
     }
 }

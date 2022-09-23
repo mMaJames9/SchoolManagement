@@ -12,6 +12,48 @@
 
                     <div class="row">
                         <div class="col-sm-12">
+                            <div class="form-group">
+                                <div class="checkbox check-primary">
+                                    <input type="checkbox" value="1" id="checkCompetence" name="checkCompetence" class="@error('checkCompetence') is-invalid @enderror">
+                                    <label for="checkCompetence">Cochers si la compétence est déjà enregistrée puis selectionner dans la liste ci-dessous</label>
+                                </div>
+                            </div>
+
+                            <div class="form-group form-group-default form-group-default-select2">
+                                <select class="full-width @error('competence_id') is-invalid @enderror" id="competence_id" name="competence_id" data-init-plugin="select2" disabled>
+                                    <option selected disabled hidden>Selectionner la compétence</option>
+                                    @foreach($listCompetences as $id => $listCompetence)
+                                    <option value="{{ $id }}">{{ ucwords($listCompetence) }}</option>
+                                    @endforeach
+                                </select>
+
+                                @error('competence_id')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group form-group-default required">
+                                <label for="intitule_competence">Intitulé compétence</label>
+                                <input type="text" class="form-control @error('intitule_competence') is-invalid @enderror" placeholder="Intitulé de la compétence" id="intitule_competence" name="intitule_competence">
+
+                                @error('intitule_competence')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-12">
                             <div class="form-group form-group-default required">
                                 <label for="intitule_matiere">Intitulé matière</label>
                                 <input type="text" class="form-control @error('intitule_matiere') is-invalid @enderror" placeholder="Intitulé de la matière" id="intitule_matiere" name="intitule_matiere" required>
@@ -65,3 +107,18 @@
         </div>
     </div>
 </div>
+
+@section('scripts')
+<script>
+    $(document).on('change', '#checkCompetence', function()
+        {
+            if($(this).is(":checked")) {
+                $('#competence_id').removeAttr('disabled');
+                $('#intitule_competence').attr('disabled', '');
+            } else {
+                $('#competence_id').attr('disabled', '');
+                $('#intitule_competence').removeAttr('disabled');
+            }
+        });
+</script>
+@endsection

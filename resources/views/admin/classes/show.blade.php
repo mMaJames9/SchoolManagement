@@ -35,7 +35,7 @@
             </div>
 
             <div class="card-body">
-                <table class="table table-hover demo-table-search table-responsive-lg" id="tableWithSearch">
+                <table class="table table-hover demo-table-search table-responsive-block dataTable no-footer" id="tableWithSearch">
                     <thead>
                         <tr>
                             <th>Nom</th>

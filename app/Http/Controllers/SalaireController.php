@@ -135,7 +135,7 @@ class SalaireController extends Controller
      */
     public function printSalaire(Salaire $salaire)
     {
-        abort_if(Gate::denies('salaire_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('salaire_print'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if(Carbon::now()->month >= 8 && Carbon::now()->month <= 12)
         {

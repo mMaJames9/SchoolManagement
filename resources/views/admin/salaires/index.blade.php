@@ -22,7 +22,7 @@
     <div class=" container-fluid container-fixed-lg">
         <!-- START card -->
         <div class="card card-transparent">
-            <div class="card-header mb-4 mb-4 ">
+            <div class="card-header mb-4">
                 <div class="pull-left">
                     <div class="col-xs-12">
                         <form action="{{ URL::current() }}" method="GET">
@@ -49,7 +49,7 @@
             </div>
             <div class="card-body">
 
-                <table class="table table-hover demo-table-search table-responsive-block" id="tableWithSearch">
+                <table class="table table-hover demo-table-search table-responsive-block dataTable no-footer" id="tableWithSearch">
                     <thead>
                         <tr>
                             <th>Nom</th>
@@ -123,7 +123,7 @@
                         </tr>
 
                         @include('admin.salaires.create')
-                        
+
                         @endforeach
 
                     </tbody>

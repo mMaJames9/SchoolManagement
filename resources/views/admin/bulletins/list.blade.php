@@ -6,13 +6,17 @@
                 <!-- START BREADCRUMB -->
                 <ol class="breadcrumb mt-5">
                     <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Accueil</a></li>
-                    <li class="breadcrumb-item active">Transactions</li>
+                    <li class="breadcrumb-item"><a href="{{ route('bulletins.index') }}">Bulletins Scolaire</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('bulletins.index') }}?classe={{ $eleve->classe_id }}">{{ $eleve->classe->nom_classe }}</a></li>
+                    <li class="breadcrumb-item active">{{ strtoupper($eleve->nom_eleve ?? '' ) }}</li>
+
                 </ol>
                 <!-- END BREADCRUMB -->
                 <div class="card card-transparent">
                     <div class="card-body">
-                        <h3>Transactions</h3>
-                        <p>Relevé de toutes les transactions de stock. </p>
+                        <h3>Bulletins Scolaires</h3>
+                        <p>Liste des bulletins scolaire de {{ strtoupper($eleve->nom_eleve ?? '' ) }}.</p>
+                        <p>Anée scolaire {{ strtoupper($eleve->annee->annee_academique ?? '' ) }}.</p>
                     </div>
                 </div>
             </div>
@@ -23,6 +27,10 @@
         <!-- START card -->
         <div class="card card-transparent">
             <div class="card-header mb-4">
+
+                <div class="pull-left">
+
+                </div>
 
                 <div class="pull-right">
                     <div class="col-xs-12">
@@ -36,30 +44,25 @@
                 <table class="table table-hover demo-table-search table-responsive-block dataTable no-footer" id="tableWithSearch">
                     <thead>
                         <tr>
-                            <th>Materiel</th>
-                            <th>Stock</th>
-                            <th>Effectué par</th>
-                            <th>Date</th>
+                            <th>Mois</th>
+                            <th class="text-lg-center">Actions</th>
                         </tr>
                     </thead>
                     <tbody class="bg-white">
-                        @foreach($transactions as $key => $transaction)
+
+                        @foreach ($eleve->notes->unique('mois_bulletin') as $key => $note)
                         <tr>
 
-                            <td class="v-align-middle text-nowrap" style="width: 50%">
-                                <p>{{ ucwords($transaction->materiel->nom_materiel) }}</p>
+                            <td class="v-align-middle text-nowrap">
+                                <p>{{ date('F Y', strtotime($note->mois_bulletin)) }}</p>
                             </td>
 
-                            <td class="v-align-middle">
-                                <p>{{ $transaction->stock }} articles</p>
-                            </td>
+                            <td class="v-align-middle text-nowrap text-lg-center" style="width: 15%">
 
-                            <td class="v-align-middle">
-                                <p>{{ strtoupper($transaction->user->personnel->nom_personnel) }}</p>
-                            </td>
+                                <a class="btn btn-sm btn-primary" href="{{ route('bulletins.show', $note->id) }}">
+                                    <span class="fa fa-eye" data-toggle="tooltip" data-placement="top" data-original-title="Afficher le bulletin de {{ date('F Y', strtotime($note->mois_bulletin)) }}"></span>
+                                </a>
 
-                            <td class="v-align-middle text-nowrap" style="width: 25%">
-                                <p>{{ $transaction->created_at }}</p>
                             </td>
                         </tr>
                         @endforeach
