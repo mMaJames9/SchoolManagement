@@ -22,7 +22,7 @@ return new class extends Migration
 
             $table->foreignId('eleve_id')
             ->nullable()
-            ->constrained('eleve')
+            ->constrained('eleves')
             ->onUpdate('cascade')
             ->onDelete('cascade');
         });
