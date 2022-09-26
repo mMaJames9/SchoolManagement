@@ -50,16 +50,14 @@ class PersonnelController extends Controller
         {
             $profilePath =  $request->photo_profil_personnel;
             $nameProfile = $profilePath->hashName();
-            $picPath = public_path('storage/uploads/profiles/personnels');
-            $profilePath->move($picPath, $nameProfile);
+            $profilePath->store('public/uploads/profiles/personnels');
         }
 
         if ($request->hasFile('cv_personnel'))
         {
             $experiencePath =  $request->cv_personnel;
             $nameCV = $experiencePath->hashName();
-            $cvPath = public_path('storage/uploads/cvs/personnels');
-            $experiencePath->move($cvPath, $nameCV);
+            $experiencePath->store('public/uploads/cvs/personnels');
         }
 
         $personnel = Personnel::create([
@@ -130,8 +128,7 @@ class PersonnelController extends Controller
 
             $profilePath =  $request->photo_profil_personnel;
             $nameProfile = $profilePath->hashName();
-            $picPath = public_path('storage/uploads/profiles/personnels');
-            $profilePath->move($picPath, $nameProfile);
+            $profilePath->store('public/uploads/profiles/personnels');
 
             $personnel->photo_profil_personnel = $nameProfile;
         }
@@ -149,8 +146,7 @@ class PersonnelController extends Controller
 
             $experiencePath =  $request->cv_personnel;
             $nameCV = $experiencePath->hashName();
-            $cvPath = public_path('storage/uploads/cvs/personnels');
-            $experiencePath->move($cvPath, $nameCV);
+            $experiencePath->store('public/uploads/cvs/personnels');
 
             $personnel->cv_personnel = $nameCV;
         }

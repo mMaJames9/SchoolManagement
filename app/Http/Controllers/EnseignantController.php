@@ -50,16 +50,14 @@ class EnseignantController extends Controller
         {
             $profilePath =  $request->photo_profil_enseignant;
             $nameProfile = $profilePath->hashName();
-            $picPath = public_path('storage/uploads/profiles/enseignants');
-            $profilePath->move($picPath, $nameProfile);
+            $profilePath->store('public/uploads/profiles/enseignants');
         }
 
         if ($request->hasFile('cv_enseignant'))
         {
             $experiencePath =  $request->cv_enseignant;
             $nameCV = $experiencePath->hashName();
-            $cvPath = public_path('storage/uploads/cvs/enseignants');
-            $experiencePath->move($cvPath, $nameCV);
+            $experiencePath->store('public/uploads/cvs/enseignants');
         }
 
         $enseignant = Enseignant::create([
@@ -131,8 +129,7 @@ class EnseignantController extends Controller
 
             $profilePath =  $request->photo_profil_enseignant;
             $nameProfile = $profilePath->hashName();
-            $picPath = public_path('storage/uploads/profiles/enseignants');
-            $profilePath->move($picPath, $nameProfile);
+            $profilePath->store('public/uploads/profiles/enseignants');
 
             $enseignant->photo_profil_enseignant = $nameProfile;
         }
@@ -150,8 +147,7 @@ class EnseignantController extends Controller
 
             $experiencePath =  $request->cv_enseignant;
             $nameCV = $experiencePath->hashName();
-            $cvPath = public_path('storage/uploads/cvs/enseignants');
-            $experiencePath->move($cvPath, $nameCV);
+            $experiencePath->store('public/uploads/cvs/enseignants');
 
             $enseignant->cv_enseignant = $nameCV;
         }

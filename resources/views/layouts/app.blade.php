@@ -29,9 +29,13 @@
         <link rel="stylesheet" type="text/css" href="{{ asset('assets/plugins/jquery-datatable/media/css/dataTables.bootstrap.min.css') }}" />
         <link rel="stylesheet" type="text/css" href="{{ asset('assets/plugins/jquery-datatable/extensions/FixedColumns/css/dataTables.fixedColumns.min.css') }}" />
         <link rel="stylesheet" type="text/css" href="{{ asset('assets/plugins/datatables-responsive/css/datatables.responsive.css') }}" />
-        
+
         <link rel="stylesheet" type="text/css" href="{{ asset('assets/plugins/bootstrap-datepicker/css/datepicker3.css') }}" />
         <link rel="stylesheet" type="text/css" href="{{ asset('assets/plugins/bootstrap-daterangepicker/daterangepicker-bs3.css') }}" />
+
+        <link rel="stylesheet" type="text/css" href="{{ asset('assets/plugins/nvd3/nv.d3.min.css') }}" media="screen" />
+        <link rel="stylesheet" type="text/css" href="{{ asset('assets/plugins/mapplic/css/mapplic.css') }}" />
+        <link rel="stylesheet" type="text/css" href="{{ asset('assets/plugins/rickshaw/rickshaw.min.css') }}" />
 
         <link rel="stylesheet" type="text/css" href="{{ asset('pages/css/pages-icons.css') }}" />
         <link rel="stylesheet" type="text/css" href="{{ asset('pages/css/themes/corporate.css') }}" class="main-stylesheet" />
@@ -80,6 +84,21 @@
         <script type="text/javascript" src="{{ asset('assets/plugins/jquery-datatable/extensions/Bootstrap/jquery-datatable-bootstrap.js') }}"></script>
         <script type="text/javascript" src="{{ asset('assets/plugins/datatables-responsive/js/datatables.responsive.js') }}"></script>
         <script type="text/javascript" src="{{ asset('assets/plugins/datatables-responsive/js/lodash.min.js') }}"></script>
+
+        <script type="text/javascript" src="{{ asset('assets/plugins/nvd3/lib/d3.v3.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('assets/plugins/nvd3/nv.d3.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('assets/plugins/nvd3/src/utils.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('assets/plugins/nvd3/src/tooltip.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('assets/plugins/nvd3/src/interactiveLayer.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('assets/plugins/nvd3/src/models/axis.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('assets/plugins/nvd3/src/models/line.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('assets/plugins/nvd3/src/models/lineWithFocusChart.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('assets/plugins/mapplic/js/hammer.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('assets/plugins/mapplic/js/jquery.mousewheel.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('assets/plugins/mapplic/js/mapplic.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('assets/plugins/rickshaw/rickshaw.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('assets/plugins/jquery-sparkline/jquery.sparkline.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('assets/plugins/skycons/skycons.js') }}"></script>
 
         <script type="text/javascript" src="{{ asset('assets/plugins/jquery-inputmask/jquery.inputmask.min.js') }}"></script>
 

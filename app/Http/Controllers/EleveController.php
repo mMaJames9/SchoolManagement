@@ -130,8 +130,7 @@ class EleveController extends Controller
         {
             $profilePath =  $request->photo_profil_eleve;
             $nameProfile = $profilePath->hashName();
-            $picPath = public_path('storage/uploads/profiles/eleves');
-            $profilePath->move($picPath, $nameProfile);
+            $profilePath->store('public/uploads/profiles/eleves');
 
             $eleve->photo_profil_eleve = $nameProfile;
         }
@@ -140,8 +139,7 @@ class EleveController extends Controller
         {
             $vaccPath =  $request->carnet_vaccination;
             $nameCarnet = $vaccPath->hashName();
-            $carnetPath = public_path('storage/uploads/documents/carnets');
-            $vaccPath->move($carnetPath, $nameCarnet);
+            $vaccPath->store('public/uploads/documents/carnets');
 
             $eleve->carnet_vaccination = $nameCarnet;
         }
@@ -227,8 +225,7 @@ class EleveController extends Controller
             {
                 $ancBulletinPath =  $request->bulletin_precedent;
                 $nameAncBull = $ancBulletinPath->hashName();
-                $abPath = public_path('storage/uploads/documents/bulletins/anciens');
-                $ancBulletinPath->move($abPath, $nameAncBull);
+                $ancBulletinPath->store('public/uploads/documents/bulletins/anciens');
             }
 
             $parcours = new Parcours;
@@ -371,8 +368,7 @@ class EleveController extends Controller
 
             $profilePath =  $request->photo_profil_eleve;
             $nameProfile = $profilePath->hashName();
-            $picPath = public_path('storage/uploads/profiles/eleves');
-            $profilePath->move($picPath, $nameProfile);
+            $profilePath->store('public/uploads/profiles/eleves');
 
             $eleve->photo_profil_eleve = $nameProfile;
         }
@@ -390,8 +386,7 @@ class EleveController extends Controller
 
             $vaccPath =  $request->carnet_vaccination;
             $nameCarnet = $vaccPath->hashName();
-            $carnetPath = public_path('storage/uploads/documents/carnets');
-            $vaccPath->move($carnetPath, $nameCarnet);
+            $vaccPath->store('public/uploads/documents/carnets');
 
             $eleve->carnet_vaccination = $nameCarnet;
         }
