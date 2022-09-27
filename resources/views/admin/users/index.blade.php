@@ -166,7 +166,7 @@
 
                             <td class="v-align-middle text-nowrap text-lg-center w-lg-15">
 
-                                    
+                                @if ($user->roles->first()->name !== 'Fondateur')
                                 <a href="{{ route('users.edit', $user->id) }}" class="btn btn-sm btn-info" data-target="#editUser{{ $user->id }}" data-toggle="modal">
                                     <span class="fa fa-paste" data-toogle="tooltip" data-placement="top" data-original-title="Afficher le rôle de cet utilisateur"></span>
                                 </a>
