@@ -104,11 +104,12 @@
 
                 </div>
 
-                <div class="modal-footer mt-3">
+                <div class="row mt-5">
                     <button type="submit" class="btn btn-primary btn-cons">Valider</button>
                     <button type="reset" class="btn btn-cons">Effacer</button>
                 </div>
+
             </form>
-            </div>
+        </div>
     </div>
 </div>

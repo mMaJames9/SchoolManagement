@@ -76,16 +76,17 @@
                         </div>
                     </div>
 
+                    <div class="row mt-5 d-flex justify-content-end">
+                        <button class="btn btn-info btn-cons" type="submit">
+                            <span class="fa fa-hand-holding-dollar mr-2"></span>
+                            <span>Valider le paiement</span>
+                        </button>
+                        <button type="reset" class="btn btn-cons">Effacer</button>
+                    </div>
+
                 </div>
 
-                <div class="modal-footer mt-3">
-                    <button class="btn btn-info btn-cons" type="submit">
-                        <span class="fa fa-hand-holding-dollar mr-2"></span>
-                        <span>Valider le paiement</span>
-                    </button>
-                    <button type="reset" class="btn btn-cons">Effacer</button>
-                </div>
             </form>
-            </div>
+        </div>
     </div>
 </div>

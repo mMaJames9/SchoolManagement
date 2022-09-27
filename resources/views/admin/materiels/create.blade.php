@@ -100,11 +100,11 @@
                         </div>
                     </div>
 
-                </div>
+                    <div class="row mt-5 d-flex justify-content-end">
+                        <button type="submit" class="btn btn-primary btn-cons">Valider</button>
+                        <button type="reset" class="btn btn-cons">Effacer</button>
+                    </div>
 
-                <div class="modal-footer fixed-bottom">
-                    <button type="submit" class="btn btn-primary btn-cons">Valider</button>
-                    <button type="reset" class="btn btn-cons">Effacer</button>
                 </div>
             </form>
         </div>

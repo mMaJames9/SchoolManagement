@@ -10,7 +10,7 @@
                 <div class="modal-body">
                     <p class="small-text">Créer un nouvel enseignant en remplissant tous les champs de ce formulaire</p>
 
-                    <div class="row d-none d-md-block">
+                    <div class="row">
                         <div class="col-sm-12">
                             <div class="form-group form-group-default required">
                                 <label for="matricule_enseignant">Matricule</label>
@@ -172,13 +172,13 @@
                         </div>
                     </div>
 
-                </div>
+                    <div class="row mt-5 d-flex justify-content-end">
+                        <button type="submit" class="btn btn-primary btn-cons">Valider</button>
+                        <button type="reset" class="btn btn-cons">Effacer</button>
+                    </div>
 
-                <div class="modal-footer mt-3">
-                    <button type="submit" class="btn btn-primary btn-cons">Valider</button>
-                    <button type="reset" class="btn btn-cons">Effacer</button>
                 </div>
             </form>
-            </div>
+        </div>
     </div>
 </div>
