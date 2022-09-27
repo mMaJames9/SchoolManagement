@@ -1,24 +1,26 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
-        <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="description" content="Application de gestion scolaire de l'établissement Fondation Fozeu et Magakou">
+        <meta name="author" content="Fondation Fozeu et Magakou">
+        <meta name="keywords" content="fozeu-magakou.space, fozeu, magakou, fondation fozeu, fozeu et magakou, magakou, fozeu magakou">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <title>{{ config('app.name', 'Laravel') }}</title>
 
-        <link rel="apple-touch-icon" href="{{ asset('pages/ico/60.png') }}">
-        <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('pages/ico/76.png') }}">
-        <link rel="apple-touch-icon" sizes="120x120" href="{{ asset('pages/ico/120.png') }}">
-        <link rel="apple-touch-icon" sizes="152x152" href="{{ asset('pages/ico/152.png') }}">
+        <link rel="icon" type="image/png" href="{{ asset('pages/ico/60.png') }}">
+        <link rel="icon" type="image/png" sizes="76x76" href="{{ asset('pages/ico/76.png') }}">
+        <link rel="icon" type="image/png" sizes="120x120" href="{{ asset('pages/ico/120.png') }}">
+        <link rel="icon" type="image/png" sizes="152x152" href="{{ asset('pages/ico/152.png') }}">
+
         <meta name="apple-mobile-web-app-capable" content="yes">
 
         <meta name="apple-touch-fullscreen" content="yes">
         <meta name="apple-mobile-web-app-status-bar-style" content="default">
-        <meta content="" name="description" />
-        <meta content="" name="author" />
-
+        
         <link rel="stylesheet" type="text/css" href="{{ asset('assets/plugins/pace/pace-theme-flash.css') }}" />
         <link rel="stylesheet" type="text/css" href="{{ asset('assets/plugins/bootstrap/css/bootstrap.min.css') }}" />
         <link rel="stylesheet" type="text/css" href="{{ asset('assets/plugins/font-awesome/css/all.min.css') }}" />
