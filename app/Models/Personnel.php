@@ -29,7 +29,7 @@ class Personnel extends Model
     /**
      * @var array
      */
-    
+
     protected $fillable = ['nom_personnel', 'prenom_personnel', 'birthday_personnel', 'phone_number', 'experience_personnel', 'cv_personnel', 'photo_profil_personnel', 'debut_contrat', 'fin_contrat', 'salaire', 'created_at', 'updated_at', 'deleted_at'];
 
     public function salaires()
@@ -40,6 +40,11 @@ class Personnel extends Model
     public function salaireMensuel()
     {
         return $this->salaires()->whereRaw("CAST(SUBSTR(date_paiement_salaire, 6, 2) AS integer) = '".date('n')."'");
+    }
+
+    public function users()
+    {
+        return $this->hasMany(User::class);
     }
 }
 
