@@ -31,7 +31,7 @@ class EnseignantUpdateRequest extends FormRequest
             'nom_enseignant' => ['required', 'string', 'max:255'],
             'prenom_enseignant' => ['required', 'string', 'max:255'],
             'birthday_enseignant'  => ['required', 'string', 'max:255'],
-            'experience_enseignant' => ['required', 'integer'],
+            'experience_enseignant' => ['required', 'string', 'max:255'],
             'debut_contrat'  => ['nullable', 'string', 'max:255'],
             'fin_contrat'  => ['nullable', 'string', 'max:255'],
             'salaire' => ['required', 'integer', 'min:25'],

@@ -67,7 +67,7 @@
                                         <div class="mb-3">
                                             <span class="text-uppercase fs-12 bold">Expérience Profesionnelle</span>
                                             <p>
-                                                {{ $enseignant->experience_enseignant }} ans
+                                                {{ \Carbon\Carbon::parse($enseignant->experience_enseignant)->diff(\Carbon\Carbon::now())->format('%y ans') }}
                                             </p>
                                         </div>
                                         @endif

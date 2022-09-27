@@ -20,7 +20,7 @@ class CreateEnseignantsTable extends Migration
             $table->string('prenom_enseignant');
             $table->string('num_tel_enseignant')->unique();;
             $table->date('birthday_enseignant');
-            $table->integer('experience_enseignant');
+            $table->date('experience_enseignant');
             $table->string('cv_enseignant');
             $table->string('photo_profil_enseignant', 2048);
             $table->date('debut_contrat')->nullable();

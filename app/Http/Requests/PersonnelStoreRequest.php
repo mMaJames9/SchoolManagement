@@ -32,7 +32,7 @@ class PersonnelStoreRequest extends FormRequest
             'prenom_personnel' => ['required', 'string', 'max:255'],
             'birthday_personnel'  => ['required', 'string', 'max:255'],
             'phone_number'  => ['required', 'string', 'max:255'],
-            'experience_personnel' => ['required', 'integer'],
+            'experience_personnel' => ['required', 'string', 'max:255'],
             'cv_personnel' => ['required', 'file', 'mimes:doc,docx,pdf', 'max:5120'],
             'photo_profil_personnel' => ['required', 'image', 'max:3072'],
             'debut_contrat'  => ['nullable', 'string', 'max:255'],

@@ -32,7 +32,7 @@ class PersonnelUpdateRequest extends FormRequest
             'prenom_personnel' => ['required', 'string', 'max:255'],
             'birthday_personnel'  => ['required', 'string', 'max:255'],
             'phone_number'  => ['required', 'string', 'max:255'],
-            'experience_personnel' => ['required', 'integer'],
+            'experience_personnel' => ['required', 'string', 'max:255'],
             'debut_contrat'  => ['nullable', 'string', 'max:255'],
             'fin_contrat'  => ['nullable', 'string', 'max:255'],
             'salaire' => ['required', 'integer', 'min:25'],

@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('prenom_personnel');
             $table->date('birthday_personnel');
             $table->string('phone_number')->unique();
-            $table->integer('experience_personnel');
+            $table->date('experience_personnel');
             $table->string('cv_personnel')->nullable();
             $table->string('photo_profil_personnel', 2048)->default('default-avatar.png');
             $table->date('debut_contrat')->nullable();

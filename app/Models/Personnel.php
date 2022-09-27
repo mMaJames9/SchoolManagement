@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $prenom_personnel
  * @property string $birthday_personnel
  * @property string $phone_number
- * @property integer $experience_personnel
+ * @property string $experience_personnel
  * @property string $cv_personnel
  * @property string $photo_profil_personnel
  * @property string $debut_contrat

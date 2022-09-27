@@ -32,7 +32,7 @@ class EnseignantStoreRequest extends FormRequest
             'matricule_enseignant' => ['required', 'string', 'min:10', 'unique:enseignants'],
             'prenom_enseignant' => ['required', 'string', 'max:255'],
             'birthday_enseignant'  => ['required', 'string', 'max:255'],
-            'experience_enseignant' => ['required', 'integer'],
+            'experience_enseignant' => ['required', 'string', 'max:255'],
             'cv_enseignant' => ['required', 'file', 'mimes:doc,docx,pdf', 'max:5120'],
             'photo_profil_enseignant' => ['required', 'image', 'max:3072'],
             'debut_contrat'  => ['nullable', 'string', 'max:255'],

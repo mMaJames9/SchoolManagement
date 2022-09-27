@@ -89,7 +89,7 @@
                         <div class="col-sm-12">
                             <div class="form-group form-group-default required">
                                 <label for="experience_enseignant">Années d'expérience</label>
-                                <input type="number" class="form-control @error('experience_enseignant') is-invalid @enderror" id="experience_enseignant" placeholder="Nombre d'années d'expérience de l'enseignant" name="experience_enseignant" required>
+                                <input type="month" class="form-control @error('experience_enseignant') is-invalid @enderror" id="experience_enseignant" placeholder="Nombre d'années d'expérience de l'enseignant" name="experience_enseignant" required>
 
                                 @error('experience_enseignant')
                                 <span class="invalid-feedback" role="alert">

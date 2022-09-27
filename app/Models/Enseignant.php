@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\DB;
  * @property string $prenom_enseignant
  * @property string $birthday_enseignant
  * @property string $num_tel_enseignant
- * @property int $experience_enseignant
+ * @property string $experience_enseignant
  * @property string $cv_enseignant
  * @property string $photo_profil_enseignant
  * @property string $debut_contrat
