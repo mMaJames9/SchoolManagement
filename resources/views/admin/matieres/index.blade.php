@@ -31,38 +31,40 @@
         <div class="card card-transparent">
 
             <div class="card-header mb-4">
-                <div class="pull-left">
-                    <div class="col-xs-12">
-                        <button id="show-modal" class="btn btn-primary btn-cons mr-4" data-target="#addNewMatiere" data-toggle="modal">
-                            <span class="fa fa-plus mr-2"></span>
-                            <span>Ajouter une matière</span>
-                        </button>
 
-                    </div>
-                </div>
-
-                <div class="pull-right">
-                    <div class="col-xs-12">
-                        <form class="d-flex" action="{{ URL::current() }}" method="GET">
-
-                            <div class="mr-2">
-                                <select class="form-control" id="niveau" name="niveau">
-                                    <option selected disabled hidden>Selectionner le niveau...</option>
-                                    <option value="0" {{ $selected == 0  ? 'selected' : '' }}>Niveau 0</option>
-                                    <option value="1" {{ $selected == 1  ? 'selected' : '' }}>Niveau 1</option>
-                                    <option value="2" {{ $selected == 2  ? 'selected' : '' }}>Niveau 2</option>
-                                    <option value="3" {{ $selected == 3  ? 'selected' : '' }}>Niveau 3</option>
-                                </select>
-                            </div>
-
-
-                            <button type="submit" class="btn btn-info">
-                                <span>Filtrer</span>
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <div class="col-xs-12">
+                            <button id="show-modal" class="btn btn-primary btn-cons mr-4" data-target="#addNewMatiere" data-toggle="modal">
+                                <span class="fa fa-plus mr-md-2"></span>
+                                <span class="d-none d-md-inline">Ajouter une matière</span>
                             </button>
-                        </form>
+
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="col-xs-12">
+                            <form class="d-flex" action="{{ URL::current() }}" method="GET">
+
+                                <div class="mr-2">
+                                    <select class="form-control" id="niveau" name="niveau">
+                                        <option selected disabled hidden>Selectionner le niveau...</option>
+                                        <option value="0" {{ $selected == 0  ? 'selected' : '' }}>Niveau 0</option>
+                                        <option value="1" {{ $selected == 1  ? 'selected' : '' }}>Niveau 1</option>
+                                        <option value="2" {{ $selected == 2  ? 'selected' : '' }}>Niveau 2</option>
+                                        <option value="3" {{ $selected == 3  ? 'selected' : '' }}>Niveau 3</option>
+                                    </select>
+                                </div>
+
+
+                                <button type="submit" class="btn btn-info">
+                                    <span>Filtrer</span>
+                                </button>
+                            </form>
+                        </div>
                     </div>
                 </div>
-                <div class="clearfix"></div>
             </div>
 
             <div class="card-body">
@@ -84,15 +86,15 @@
                                 <p>{{ ucwords(strtolower($competence->intitule_competence)) }}</p>
                             </td>
 
-                            <td class="v-align-middle text-nowrap" style="width: 30%">
+                            <td class="v-align-middle text-nowrap w-lg-30">
                                 <p>{{ strtoupper($competence->matieres[0]->intitule_matiere) }}</p>
                             </td>
 
-                            <td class="v-align-middle text-nowrap" style="width: 15%">
+                            <td class="v-align-middle text-nowrap w-lg-15">
                                 <p>{{ $competence->matieres[0]->coef_matiere }}</p>
                             </td>
 
-                            <td class="v-align-middle text-nowrap text-lg-center" style="width: 15%">
+                            <td class="v-align-middle text-nowrap text-lg-center w-lg-15">
 
                                 <a href="{{ route('matieres.edit', $competence->matieres[0]->id) }}" class="btn btn-sm btn-info" data-target="#editMatiere{{ $competence->matieres[0]->id }}" data-toggle="modal">
                                     <span class="fa fa-paste" data-toggle="tooltip" data-placement="top" data-original-title="Modifier les informations de cette matière"></span>
@@ -140,15 +142,15 @@
                         @for($i = 1; $i < $competence->matieres->count(); $i++)
                         <tr>
 
-                            <td class="v-align-middle text-nowrap" style="width: 30%">
+                            <td class="v-align-middle text-nowrap w-lg-30">
                                 <p>{{ strtoupper($competence->matieres[$i]->intitule_matiere) }}</p>
                             </td>
 
-                            <td class="v-align-middle text-nowrap" style="width: 15%">
+                            <td class="v-align-middle text-nowrap w-lg-15">
                                 <p>{{ $competence->matieres[$i]->coef_matiere }}</p>
                             </td>
 
-                            <td class="v-align-middle text-nowrap text-lg-center" style="width: 15%">
+                            <td class="v-align-middle text-nowrap text-lg-center w-lg-15">
 
                                 <a href="{{ route('matieres.edit', $competence->matieres[$i]->id) }}" class="btn btn-sm btn-info" data-target="#editMatiere{{ $competence->matieres[$i]->id }}" data-toggle="modal">
                                     <span class="fa fa-paste" data-toggle="tooltip" data-placement="top" data-original-title="Modifier les informations de cette matière"></span>

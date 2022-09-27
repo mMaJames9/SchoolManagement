@@ -47,7 +47,7 @@
                         @foreach($stocks as $key => $stock)
                         <tr>
 
-                            <td class="v-align-middle text-nowrap" style="width: 25%">
+                            <td class="v-align-middle text-nowrap w-lg-25">
                                 <p>{{ ucwords($stock->materiel->nom_materiel) }}</p>
                             </td>
 
@@ -55,7 +55,7 @@
                                 <p>{{ $stock->stock_courant }}</p>
                             </td>
 
-                            <td class="v-align-middle text-nowrap text-lg-center" style="width: 15%">
+                            <td class="v-align-middle text-nowrap text-lg-center w-lg-15">
                                 <form action="{{ route('transactions.storeStock', $stock->id) }}" method="POST" class="form">
                                     @csrf
 
@@ -78,7 +78,7 @@
                                 </form>
                             </td>
 
-                            <td class="v-align-middle text-nowrap text-lg-center" style="width: 15%">
+                            <td class="v-align-middle text-nowrap text-lg-center w-lg-15">
                                 <form action="{{ route('transactions.storeStock', $stock->id) }}" method="POST" class="form">
                                     @csrf
 
@@ -101,7 +101,7 @@
                                 </form>
                             </td>
 
-                            <td class="v-align-middle text-nowrap" style="width: 25%">
+                            <td class="v-align-middle text-nowrap w-lg-25">
                                 <p>{{ $stock->updated_at }}</p>
                             </td>
                         </tr>

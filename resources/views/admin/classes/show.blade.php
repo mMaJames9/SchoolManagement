@@ -49,7 +49,7 @@
                         @foreach($classe->eleves as $key => $eleve)
                         <tr>
 
-                            <td class="v-align-middle text-nowrap" style="width: 25%">
+                            <td class="v-align-middle text-nowrap w-lg-25">
                                 <div class="item-header clearfix">
                                     <div class="thumbnail-wrapper d32 circular">
                                         <img width="40" height="40" src="{{ asset("/storage/uploads/profiles/eleves/$eleve->photo_profil_eleve") }}" data-src="{{ asset("/storage/uploads/profiles/eleves/$eleve->photo_profil_eleve") }}">
@@ -65,23 +65,23 @@
                                 </div>
                             </td>
 
-                            <td class="v-align-middle text-nowrap" style="width: 15%">
+                            <td class="v-align-middle text-nowrap w-lg-15">
                                 <p>{{ $eleve->matricule_eleve ?? '' }}</p>
                             </td>
 
-                            <td class="v-align-middle text-nowrap" style="width: 15%">
+                            <td class="v-align-middle text-nowrap w-lg-15">
                                 <p>{{ \Carbon\Carbon::parse($eleve->birthday_eleve)->diff(\Carbon\Carbon::now())->format('%y ans') }}</p>
                             </td>
 
-                            <td class="v-align-middle text-nowrap" style="width: 15%">
+                            <td class="v-align-middle text-nowrap w-lg-15">
                                 <p>{{ $eleve->classe->nom_classe ?? '' }}</p>
                             </td>
 
-                            <td class="v-align-middle text-nowrap" style="width: 15%">
+                            <td class="v-align-middle text-nowrap w-lg-15">
                                 {{ date('d F Y', strtotime($eleve->created_at)) }}
                             </td>
 
-                            <td class="v-align-middle text-nowrap text-lg-center" style="width: 15%">
+                            <td class="v-align-middle text-nowrap text-lg-center w-lg-15">
 
                                 <a class="btn btn-sm btn-primary" href="{{ route('eleves.show', $eleve->id) }}">
                                     <span class="fa fa-eye" data-toggle="tooltip" data-placement="top" data-original-title="Afficher les informations de cet élève"></span>

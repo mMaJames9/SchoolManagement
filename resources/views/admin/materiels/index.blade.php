@@ -25,22 +25,24 @@
         <!-- START card -->
         <div class="card card-transparent">
             <div class="card-header mb-4">
-                <div class="pull-left">
-                    <div class="col-xs-12">
-                        <button id="show-modal" class="btn btn-primary btn-cons" data-target="#addNewAsset" data-toggle="modal">
-                            <span class="fa fa-plus mr-2"></span>
-                            <span>Ajouter un nouveau matériel</span>
-                        </button>
+
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <div class="col-xs-12">
+                            <button id="show-modal" class="btn btn-primary btn-cons" data-target="#addNewAsset" data-toggle="modal">
+                                <span class="fa fa-plus mr-md-2"></span>
+                                <span class="d-none d-md-inline">Ajouter un nouveau matériel</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="col-xs-12">
+                            <input type="text" id="search-table" class="form-control pull-right" placeholder="Rechercher">
+                        </div>
                     </div>
                 </div>
 
-                <div class="pull-right">
-                    <div class="col-xs-12">
-                        <input type="text" id="search-table" class="form-control pull-right" placeholder="Rechercher">
-                    </div>
-                </div>
-
-                <div class="clearfix"></div>
             </div>
             <div class="card-body">
                 <table class="table table-hover demo-table-search table-responsive-block dataTable no-footer" id="tableWithSearch">
@@ -57,27 +59,27 @@
                     <tbody class="bg-white">
                         @foreach($materiels as $key => $materiel)
                         <tr>
-                            <td class="v-align-middle text-nowrap" style="width: 25%">
+                            <td class="v-align-middle text-nowrap w-lg-25">
                                 <p>{{ ucwords($materiel->nom_materiel) }}</p>
                             </td>
 
-                            <td class="v-align-middle text-nowrap" style="width: 15%">
+                            <td class="v-align-middle text-nowrap w-lg-15">
                                 <p>{{ date('d F Y', strtotime($materiel->date_achat)) }}</p>
                             </td>
 
-                            <td class="v-align-middle text-nowrap" style="width: 10%">
+                            <td class="v-align-middle text-nowrap w-lg-10">
                                 <p>{{ number_format($materiel->prix_materiel, 0, ",", " ") }} FCFA</p>
                             </td>
 
-                            <td class="v-align-middle text-nowrap" style="width: 20%">
+                            <td class="v-align-middle text-nowrap w-lg-20">
                                 <p>{{ ucwords($materiel->destination) }}</p>
                             </td>
 
-                            <td class="v-align-middle text-nowrap" style="width: 15%">
+                            <td class="v-align-middle text-nowrap w-lg-15">
                                 <p>{{ date('d F Y', strtotime($materiel->date_prochain_achat)) }}</p>
                             </td>
 
-                            <td class="v-align-middle text-nowrap text-lg-center" style="width: 15%">
+                            <td class="v-align-middle text-nowrap text-lg-center w-lg-15">
 
                                 <a href="{{ route('materiels.edit', $materiel->id) }}" class="btn btn-sm btn-info" data-target="#editMateriel{{ $materiel->id }}" data-toggle="modal">
                                     <span class="fa fa-paste" data-toggle="tooltip" data-placement="top" data-original-title="Modifier les informations de ce matériel"></span>

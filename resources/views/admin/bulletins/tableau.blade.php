@@ -77,7 +77,7 @@
                         <p>{{ ucwords(strtolower($competence->intitule_competence)) }}</p>
                     </td>
 
-                    <td class="p-2 border v-align-middle text-nowrap" style="width: 20%">
+                    <td class="p-2 border v-align-middle text-nowrap w-lg-20">
                         <p>{{ strtoupper($competence->matieres[0]->intitule_matiere) }}</p>
                     </td>
 
@@ -99,7 +99,7 @@
 
                 <tr>
 
-                    <td class="p-2 border v-align-middle text-nowrap" style="width: 20%">
+                    <td class="p-2 border v-align-middle text-nowrap w-lg-20">
                         <p>{{ strtoupper($competence->matieres[$i]->intitule_matiere) }}</p>
                     </td>
 
@@ -120,11 +120,11 @@
 
                 <tr class="text-info">
 
-                    <td class="p-2 v-align-middle text-nowrap" style="width: 30%">
+                    <td class="p-2 v-align-middle text-nowrap w-lg-30">
                         <p></p>
                     </td>
 
-                    <td class="p-2 v-align-middle text-nowrap" style="width: 20%">
+                    <td class="p-2 v-align-middle text-nowrap w-lg-20">
                         <p class="bold">MOYENNE COMPETENCE {{ $loop->iteration }}</p>
                     </td>
 

@@ -46,7 +46,7 @@
                         @foreach($transactions as $key => $transaction)
                         <tr>
 
-                            <td class="v-align-middle text-nowrap" style="width: 50%">
+                            <td class="v-align-middle text-nowrap w-lg-50">
                                 <p>{{ ucwords($transaction->materiel->nom_materiel) }}</p>
                             </td>
 
@@ -58,7 +58,7 @@
                                 <p>{{ strtoupper($transaction->user->personnel->nom_personnel) }}</p>
                             </td>
 
-                            <td class="v-align-middle text-nowrap" style="width: 25%">
+                            <td class="v-align-middle text-nowrap w-lg-25">
                                 <p>{{ $transaction->created_at }}</p>
                             </td>
                         </tr>

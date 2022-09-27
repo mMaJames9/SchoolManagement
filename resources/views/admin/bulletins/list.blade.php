@@ -28,10 +28,6 @@
         <div class="card card-transparent">
             <div class="card-header mb-4">
 
-                <div class="pull-left">
-
-                </div>
-
                 <div class="pull-right">
                     <div class="col-xs-12">
                         <input type="text" id="search-table" class="form-control pull-right" placeholder="Rechercher">
@@ -57,7 +53,7 @@
                                 <p>{{ date('F Y', strtotime($note->mois_bulletin)) }}</p>
                             </td>
 
-                            <td class="v-align-middle text-nowrap text-lg-center" style="width: 15%">
+                            <td class="v-align-middle text-nowrap text-lg-center w-lg-15">
 
                                 <a class="btn btn-sm btn-primary" href="{{ route('bulletins.show', $note->id) }}">
                                     <span class="fa fa-eye" data-toggle="tooltip" data-placement="top" data-original-title="Afficher le bulletin de {{ date('F Y', strtotime($note->mois_bulletin)) }}"></span>

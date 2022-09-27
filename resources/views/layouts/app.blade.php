@@ -51,7 +51,7 @@
 
             <div class="page-content-wrapper">
 
-                <div class="content">
+                <div class="content sm-gutter">
                     {{ $slot }}
                 </div>
 

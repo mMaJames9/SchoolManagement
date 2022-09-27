@@ -25,22 +25,23 @@
         <!-- START card -->
         <div class="card card-transparent">
             <div class="card-header mb-4">
-                <div class="pull-left">
-                    <div class="col-xs-12">
-                        <button id="show-modal" class="btn btn-primary btn-cons" data-target="#addNewPersonnel" data-toggle="modal">
-                            <span class="fa fa-plus mr-2"></span>
-                            <span>Ajouter un nouvel personnel</span>
-                        </button>
+
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <div class="col-xs-12">
+                            <button id="show-modal" class="btn btn-primary btn-cons" data-target="#addNewPersonnel" data-toggle="modal">
+                                <span class="fa fa-plus mr-md-2"></span>
+                                <span class="d-none d-md-inline">Ajouter un nouvel personnel</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="col-xs-12">
+                            <input type="text" id="search-table" class="form-control pull-right" placeholder="Rechercher">
+                        </div>
                     </div>
                 </div>
-
-                <div class="pull-right">
-                    <div class="col-xs-12">
-                        <input type="text" id="search-table" class="form-control pull-right" placeholder="Rechercher">
-                    </div>
-                </div>
-
-                <div class="clearfix"></div>
             </div>
             <div class="card-body">
                 <table class="table table-hover demo-table-search table-responsive-block dataTable no-footer" id="tableWithSearch">
@@ -57,7 +58,7 @@
                     <tbody class="bg-white">
 
                         <tr>
-                            <td class="v-align-middle text-nowrap" style="width: 25%">
+                            <td class="v-align-middle text-nowrap w-lg-25">
                                 <div class="item-header clearfix">
                                     <div class="thumbnail-wrapper d32 circular">
                                         <img width="40" height="40" src="{{ asset('storage/uploads/profiles/personnels/'.Auth::user()->personnel->photo_profil_personnel) }}" data-src="{{ asset('/storage/uploads/profiles/personnels/'.Auth::user()->personnel->photo_profil_personnel) }}">
@@ -73,19 +74,19 @@
                                 </div>
                             </td>
 
-                            <td class="v-align-middle text-nowrap" style="width: 15%">
+                            <td class="v-align-middle text-nowrap w-lg-15">
                                 <p>{{ \Carbon\Carbon::parse(Auth::user()->personnel->birthday_personnel)->diff(\Carbon\Carbon::now())->format('%y ans') }}</p>
                             </td>
 
-                            <td class="v-align-middle text-nowrap" style="width: 15%">
+                            <td class="v-align-middle text-nowrap w-lg-15">
                                 <p>{{ Auth::user()->personnel->phone_number ?? '' }}</p>
                             </td>
 
-                            <td class="v-align-middle text-nowrap" style="width: 15%">
+                            <td class="v-align-middle text-nowrap w-lg-15">
                                 <p>{{ Auth::user()->personnel->experience_personnel ?? '' }} ans</p>
                             </td>
 
-                            <td class="v-align-middle text-nowrap" style="width: 15%">
+                            <td class="v-align-middle text-nowrap w-lg-15">
                                 <p> @if (Auth::user()->personnel->debut_contrat == null)
                                 <span class="label label-sm label-secondary">Non signé</span>
                                 @else
@@ -93,14 +94,14 @@
                                 @endif</p>
                             </td>
 
-                            <td class="v-align-middle text-nowrap" style="width: 15%">
+                            <td class="v-align-middle text-nowrap w-lg-15">
 
                             </td>
                         </tr>
 
                         @foreach($personnels as $key => $personnel)
                         <tr>
-                            <td class="v-align-middle text-nowrap" style="width: 25%">
+                            <td class="v-align-middle text-nowrap w-lg-25">
                                 <div class="item-header clearfix">
                                     <div class="thumbnail-wrapper d32 circular">
                                         <img width="40" height="40" src="{{ asset("/storage/uploads/profiles/personnels/$personnel->photo_profil_personnel") }}" data-src="{{ asset("/storage/uploads/profiles/personnels/$personnel->photo_profil_personnel") }}">
@@ -116,19 +117,19 @@
                                 </div>
                             </td>
 
-                            <td class="v-align-middle text-nowrap" style="width: 15%">
+                            <td class="v-align-middle text-nowrap w-lg-15">
                                 <p>{{ \Carbon\Carbon::parse($personnel->birthday_personnel)->diff(\Carbon\Carbon::now())->format('%y ans') }}</p>
                             </td>
 
-                            <td class="v-align-middle text-nowrap" style="width: 15%">
+                            <td class="v-align-middle text-nowrap w-lg-15">
                                 <p>{{ $personnel->phone_number ?? '' }}</p>
                             </td>
 
-                            <td class="v-align-middle text-nowrap" style="width: 15%">
+                            <td class="v-align-middle text-nowrap w-lg-15">
                                 <p>{{ $personnel->experience_personnel ?? '' }} ans</p>
                             </td>
 
-                            <td class="v-align-middle text-nowrap" style="width: 15%">
+                            <td class="v-align-middle text-nowrap w-lg-15">
                                 <p> @if ($personnel->debut_contrat == null)
                                 <span class="label label-sm label-secondary">Non signé</span>
                                 @else
@@ -136,7 +137,7 @@
                                 @endif</p>
                             </td>
 
-                            <td class="v-align-middle text-nowrap text-lg-center" style="width: 15%">
+                            <td class="v-align-middle text-nowrap text-lg-center w-lg-15">
 
                                 <a class="btn btn-sm btn-primary" href="{{ route('personnels.show', $personnel->id) }}">
                                     <span class="fa fa-eye"  data-toogle="tooltip" data-placement="top" data-original-title="Afficher les informations de cet employé"></span>

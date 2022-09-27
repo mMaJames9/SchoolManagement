@@ -51,21 +51,21 @@
                                 <p>{{ strtoupper($famille->nom_pere ?? $famille->nom_mere) }}</p>
                             </td>
 
-                            <td class="v-align-middle text-nowrap" style="width: 20%">
+                            <td class="v-align-middle text-nowrap w-lg-20">
                                 <p>{{ $famille->num_tel_pere ?? $famille->num_tel_mere }}</p>
                             </td>
 
-                            <td class="v-align-middle text-nowrap" style="width: 15%">
+                            <td class="v-align-middle text-nowrap w-lg-15">
                                 <p>{{ $famille->domicile_famille ?? '' }}</p>
                             </td>
 
-                            <td class="v-align-middle text-nowrap" style="width: 20%">
+                            <td class="v-align-middle text-nowrap w-lg-20">
                                 @foreach ($famille->eleves as $key => $item)
                                 <a class="label label-sm label-primary" href="{{ route('eleves.show', $item->id) }}">{{ strtoupper($item->nom_eleve) }}</a>
                                 @endforeach
                             </td>
 
-                            <td class="v-align-middle text-nowrap text-lg-center" style="width: 15%">
+                            <td class="v-align-middle text-nowrap text-lg-center w-lg-15">
 
                                 <a href="{{ route('familles.edit', $famille->id) }}" class="btn btn-sm btn-info" data-target="#editFamille{{ $famille->id }}" data-toggle="modal">
                                     <span class="fa fa-paste" data-toogle="tooltip" data-placement="top" data-original-title="Modifier les informations de ce(s) parent(s)"></span>

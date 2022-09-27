@@ -47,11 +47,11 @@
                         @foreach($classes as $key => $classe)
                         <tr>
 
-                            <td class="v-align-middle text-nowrap" style="width: 15%">
+                            <td class="v-align-middle text-nowrap w-lg-15">
                                 <p>{{ $classe->nom_section }}</p>
                             </td>
 
-                            <td class="v-align-middle text-nowrap" style="width: 15%">
+                            <td class="v-align-middle text-nowrap w-lg-15">
                                 <p>
                                     @if ($classe->nom_classe == 'Pre-Maternelle')
                                     {{ $classe->cycle->libelle_cycle ?? 'Maternelle' }}
@@ -67,11 +67,11 @@
                                 </p>
                             </td>
 
-                            <td class="v-align-middle text-nowrap" style="width: 20%">
+                            <td class="v-align-middle text-nowrap w-lg-20">
                                 <p>{{ $classe->nom_classe ?? '' }}</p>
                             </td>
 
-                            <td class="v-align-middle text-nowrap" style="width: 30%">
+                            <td class="v-align-middle text-nowrap w-lg-30">
                                 <div class="item-header clearfix">
                                     @if(isset($classe->enseignant->photo_profil_enseignant))
                                     <div class="thumbnail-wrapper d32 circular">
@@ -89,7 +89,7 @@
                                 </div>
                             </td>
 
-                            <td class="v-align-middle text-nowrap text-lg-center" style="width: 15%">
+                            <td class="v-align-middle text-nowrap text-lg-center w-lg-15">
 
                                 <a class="btn btn-sm btn-primary" href="{{ route('classes.show', $classe->id) }}">
                                     <span class="fa fa-eye" data-toggle="tooltip" data-placement="top" data-original-title="Afficher les informations de cette classe"></span>

@@ -99,7 +99,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="form-group form-group-default required">
@@ -116,7 +116,7 @@
                     </div>
 
                     <div class="row">
-                        <div class="col-sm-6">
+                        <div class="col-6">
                             <div class="form-group form-group-default">
                                 <label for="debut_contrat">Début de Contrat</label>
                                 <input type="date" class="form-control @error('debut_contrat') is-invalid @enderror" id="debut_contrat" name="debut_contrat">
@@ -128,7 +128,7 @@
                                 @enderror
                             </div>
                         </div>
-                        <div class="col-sm-6">
+                        <div class="col-6">
                             <div class="form-group form-group-default">
                                 <label for="fin_contrat">Fin de Contrat</label>
                                 <input type="date" class="form-control @error('fin_contrat') is-invalid @enderror" id="fin_contrat" name="fin_contrat">
@@ -159,7 +159,7 @@
 
                 </div>
 
-                <div class="modal-footer fixed-bottom">
+                <div class="modal-footer mt-3">
                     <button type="submit" class="btn btn-primary btn-cons">Valider</button>
                     <button type="reset" class="btn btn-cons">Effacer</button>
                 </div>

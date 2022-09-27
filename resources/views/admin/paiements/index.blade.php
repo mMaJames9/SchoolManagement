@@ -30,42 +30,42 @@
         <div class="card card-transparent">
             <div class="card-header mb-4">
 
-                <div class="pull-left">
-                    <div class="col-xs-12">
+                <div class="d-flex justify-content-between">
+                    <div class="mr-4">
+                        <div class="col-xs-12">
 
-                        <form class="d-flex" action="{{ URL::current() }}" method="GET">
+                            <form class="d-flex" action="{{ URL::current() }}" method="GET">
 
-                            <div class="mr-2">
-                                <select class="form-control" id="classe" name="classe">
-                                    <option selected disabled hidden>Selectionner la classe...</option>
-                                    @foreach($sections as $key => $section)
-                                    <optgroup label="{{ $section }}">
-                                        @foreach($classes as $key => $classe)
-                                        @if($section == $classe->nom_section)
-                                        <option value="{{ $classe->id }}" {{ ($classe ? $classe->id : old('classe')) == $selected    ? 'selected' : '' }}>{{ ucwords($classe->nom_classe) }}</option>
-                                        @endif
+                                <div class="mr-2">
+                                    <select class="form-control" id="classe" name="classe">
+                                        <option selected disabled hidden>Selectionner la classe...</option>
+                                        @foreach($sections as $key => $section)
+                                        <optgroup label="{{ $section }}">
+                                            @foreach($classes as $key => $classe)
+                                            @if($section == $classe->nom_section)
+                                            <option value="{{ $classe->id }}" {{ ($classe ? $classe->id : old('classe')) == $selected    ? 'selected' : '' }}>{{ ucwords($classe->nom_classe) }}</option>
+                                            @endif
 
+                                            @endforeach
+                                        </optgroup>
                                         @endforeach
-                                    </optgroup>
-                                    @endforeach
-                                </select>
-                            </div>
+                                    </select>
+                                </div>
 
 
-                            <button type="submit" class="btn btn-info">
-                                <span>Filtrer</span>
-                            </button>
-                        </form>
+                                <button type="submit" class="btn btn-info">
+                                    <span>Filtrer</span>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="col-xs-12">
+                            <input type="text" id="search-table" class="form-control pull-right" placeholder="Rechercher">
+                        </div>
                     </div>
                 </div>
-
-                <div class="pull-right">
-                    <div class="col-xs-12">
-                        <input type="text" id="search-table" class="form-control pull-right" placeholder="Rechercher">
-                    </div>
-                </div>
-
-                <div class="clearfix"></div>
             </div>
             <div class="card-body">
                 <table class="table table-hover demo-table-search table-responsive-block dataTable no-footer" id="tableWithSearch">
@@ -164,7 +164,7 @@
 
                         <tr>
 
-                            <td class="v-align-middle text-nowrap" style="width: 25%">
+                            <td class="v-align-middle text-nowrap w-lg-25">
                                 <div class="item-header clearfix">
                                     <div class="thumbnail-wrapper d32 circular">
                                         <img width="40" height="40" src="{{ asset("/storage/uploads/profiles/eleves/$eleve->photo_profil_eleve") }}" data-src="{{ asset("/storage/uploads/profiles/eleves/$eleve->photo_profil_eleve") }}">
@@ -180,11 +180,11 @@
                                 </div>
                             </td>
 
-                            <td class="v-align-middle text-nowrap" style="width: 15%">
+                            <td class="v-align-middle text-nowrap w-lg-15">
                                 <p>{{ $eleve->matricule_eleve ?? '' }}</p>
                             </td>
 
-                            <td class="v-align-middle text-nowrap text-lg-center" style="width: 10%">
+                            <td class="v-align-middle text-nowrap text-lg-center w-lg-10">
 
                                 @php
                                     $montant_restant = $inscription - $versement;
@@ -200,7 +200,7 @@
 
                             </td>
 
-                            <td class="v-align-middle text-nowrap text-lg-center" style="width: 10%">
+                            <td class="v-align-middle text-nowrap text-lg-center w-lg-10">
 
                                 @php
                                     $montant_restant = ($inscription + $tranche_1) - $versement;
@@ -216,7 +216,7 @@
 
                             </td>
 
-                            <td class="v-align-middle text-nowrap text-lg-center" style="width: 10%">
+                            <td class="v-align-middle text-nowrap text-lg-center w-lg-10">
 
                                 @php
                                     $montant_restant = ($inscription + $tranche_1 + $tranche_2) - $versement;
@@ -232,7 +232,7 @@
 
                             </td>
 
-                            <td class="v-align-middle text-nowrap text-lg-center" style="width: 10%">
+                            <td class="v-align-middle text-nowrap text-lg-center w-lg-10">
 
                                 @if ($tranche_3 <> 0)
                                     @php

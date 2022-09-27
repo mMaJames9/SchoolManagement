@@ -41,7 +41,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::get('admin/schoolmanagement/bulletins/editBulletin/{eleve}/bulletin/{bulletin}/', 'App\Http\Controllers\BulletinController@editBulletin')->name('editBulletin');
     Route::put('admin/schoolmanagement/bulletins/updateBulletin/{eleve}/bulletin/{bulletin}/', 'App\Http\Controllers\BulletinController@updateBulletin')->name('updateBulletin');
-    
+
     Route::get('admin/schoolmanagement/bulletins/list/{eleve}/', 'App\Http\Controllers\BulletinController@list')->name('bulletins.list');
     Route::get('admin/schoolmanagement/bulletins/{bulletin}/print', 'App\Http\Controllers\BulletinController@printBulletin')->name('printBulletin');
 

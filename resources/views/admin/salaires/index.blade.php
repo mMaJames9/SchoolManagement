@@ -23,29 +23,30 @@
         <!-- START card -->
         <div class="card card-transparent">
             <div class="card-header mb-4">
-                <div class="pull-left">
-                    <div class="col-xs-12">
-                        <form action="{{ URL::current() }}" method="GET">
-                            <button class="btn btn-complete btn-cons" name="type_salaries" value="personnel" type="submit">
-                                <span class="fa fa-user-gear mr-2"></span>
-                                <span>Personnel Administratif</span>
-                            </button>
 
-                            <button class="btn btn-danger btn-cons" name="type_salaries" value="enseignant" type="submit">
-                                <span class="fa fa-chalkboard-teacher mr-2"></span>
-                                <span>Enseignants</span>
-                            </button>
-                        </form>
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <div class="col-xs-12">
+                            <form action="{{ URL::current() }}" method="GET">
+                                <button class="btn btn-complete btn-cons my-1" name="type_salaries" value="personnel" type="submit">
+                                    <span class="fa fa-user-gear mr-2"></span>
+                                    <span>Personnel Administratif</span>
+                                </button>
+
+                                <button class="btn btn-danger btn-cons my-1" name="type_salaries" value="enseignant" type="submit">
+                                    <span class="fa fa-chalkboard-teacher mr-2"></span>
+                                    <span>Enseignants</span>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="col-xs-12">
+                            <input type="text" id="search-table" class="form-control pull-right my-1" placeholder="Rechercher">
+                        </div>
                     </div>
                 </div>
-
-                <div class="pull-right">
-                    <div class="col-xs-12">
-                        <input type="text" id="search-table" class="form-control pull-right" placeholder="Rechercher">
-                    </div>
-                </div>
-
-                <div class="clearfix"></div>
             </div>
             <div class="card-body">
 
@@ -64,7 +65,7 @@
 
                         @foreach($employes as $key => $employe)
                         <tr>
-                            <td class="v-align-middle text-nowrap" style="width: 25%">
+                            <td class="v-align-middle text-nowrap w-lg-25">
                                 <div class="item-header clearfix">
                                     <div class="thumbnail-wrapper d32 circular">
                                         <img width="40" height="40" src="{{ isset($employe->nom_personnel) ? asset("/storage/uploads/profiles/personnels/$employe->photo_profil_personnel") : asset("/storage/uploads/profiles/enseignants/$employe->photo_profil_enseignant")  }}" data-src="{{ isset($employe->nom_personnel) ? asset("/storage/uploads/profiles/personnels/$employe->photo_profil_personnel") : asset("/storage/uploads/profiles/enseignants/$employe->photo_profil_enseignant")  }}">
@@ -80,11 +81,11 @@
                                 </div>
                             </td>
 
-                            <td class="v-align-middle text-nowrap" style="width: 15%">
+                            <td class="v-align-middle text-nowrap w-lg-15">
                                 <p>{{ $employe->phone_number ?? $employe->num_tel_enseignant }}</p>
                             </td>
 
-                            <td class="v-align-middle text-nowrap" style="width: 15%">
+                            <td class="v-align-middle text-nowrap w-lg-15">
                                 <p>@if ($employe->debut_contrat == null)
                                 <span class="label label-sm label-secondary">Non signé</span>
                                 @else
@@ -92,11 +93,11 @@
                                 @endif</p>
                             </td>
 
-                            <td class="v-align-middle text-nowrap" style="width: 15%">
+                            <td class="v-align-middle text-nowrap w-lg-15">
                                 <p>{{ number_format($employe->salaire, 0, ",", " ") }} FCFA</p>
                             </td>
 
-                            <td class="v-align-middle text-nowrap" style="width: 15%">
+                            <td class="v-align-middle text-nowrap w-lg-15">
                                 <p>
                                     @if ($employe->salaireMensuel->count() == 0)
                                     <span class="label label-warning">Impayé</span>
@@ -106,7 +107,7 @@
                                 </p>
                             </td>
 
-                            <td class="v-align-middle text-nowrap text-lg-center" style="width: 15%">
+                            <td class="v-align-middle text-nowrap text-lg-center w-lg-15">
                                 @if ($employe->salaires->count() <> 0)
                                 <a class="btn btn-sm btn-primary" href="{{ route('salaires.show', $employe->salaireMensuel->first()->id) }}">
                                     <span class="fa fa-eye" data-toggle="tooltip" data-placement="top" data-original-title="Afficher le bulletin de paie"></span>

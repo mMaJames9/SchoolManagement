@@ -5,7 +5,7 @@
     <div class="w-40">
         <div class="brand inline m-l-10 ">
             <img class="w-100 mw-100" src="{{ asset('assets/img/logo.png') }}" alt="logo" data-src="{{ asset('assets/img/logo.png') }}">
-        </div>   
+        </div>
     </div>
 
     <div class="d-flex align-items-center">
@@ -20,10 +20,6 @@
                 </span>
             </button>
             <div class="dropdown-menu dropdown-menu-right profile-dropdown" role="menu">
-                <a href="#" class="dropdown-item">
-                    <span class="fas fa-cog mr-2"></span>
-                    <span>Paramètres</span>
-                </a>
                 <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="clearfix dropdown-item mb-2">
                     <span class="fas fa-power-off mr-2"></span>
                     <span>Déconnexion</span>

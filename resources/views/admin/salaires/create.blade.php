@@ -14,7 +14,7 @@
                         <span class="bold">Mois de {{ date('F Y') }}</span>
                     </p>
 
-                    @if (isset($employe->matricule_enseignant)) 
+                    @if (isset($employe->matricule_enseignant))
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="form-group form-group-default required">
@@ -30,7 +30,7 @@
                         </div>
                     </div>
                     @endif
-                    
+
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="form-group form-group-default required">
@@ -78,7 +78,7 @@
 
                 </div>
 
-                <div class="modal-footer fixed-bottom">
+                <div class="modal-footer mt-3">
                     <button class="btn btn-info btn-cons" type="submit">
                         <span class="fa fa-hand-holding-dollar mr-2"></span>
                         <span>Valider le paiement</span>

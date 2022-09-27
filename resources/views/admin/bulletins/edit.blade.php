@@ -46,12 +46,12 @@
                                     <p>{{ ucwords(strtolower($competence->intitule_competence)) }}</p>
                                 </td>
 
-                                <td class="v-align-middle text-nowrap" style="width: 20%">
+                                <td class="v-align-middle text-nowrap w-lg-20">
                                     <input type="hidden" name="matiere[]" value="{{ $competence->matieres[0]->id }}">
                                     <p>{{ strtoupper($competence->matieres[0]->intitule_matiere) }}</p>
                                 </td>
 
-                                <td class="v-align-middle text-nowrap" style="width: 30%">
+                                <td class="v-align-middle text-nowrap w-lg-30">
                                     <input type="number" min="0" max="20" step="0.25" class="form-control @error('notes[]') is-invalid @enderror" placeholder="Note en {{ strtoupper($competence->matieres[0]->intitule_matiere) }}" id="notes[0]" name="notes[]" value="{{ $competence->matieres[0]->notes[$index]->note_eleve }}" required>
 
                                 @error('notes[]')
@@ -66,12 +66,12 @@
                             @for($i = 1; $i < $competence->matieres->count(); $i++)
                             <tr>
 
-                                <td class="v-align-middle text-nowrap" style="width: 20%">
+                                <td class="v-align-middle text-nowrap w-lg-20">
                                     <input type="hidden" name="matiere[]" value="{{ $competence->matieres[$i]->id }}">
                                     <p>{{ strtoupper($competence->matieres[$i]->intitule_matiere) }}</p>
                                 </td>
 
-                                <td class="v-align-middle text-nowrap" style="width: 30%">
+                                <td class="v-align-middle text-nowrap w-lg-30">
                                     <input type="number" min="0" max="20" step="0.25" class="form-control @error('notes[]') is-invalid @enderror" placeholder="Note en {{ strtoupper($competence->matieres[$i]->intitule_matiere) }}" id="notes[{{$i}}]" name="notes[]" value="{{ $competence->matieres[$i]->notes[$index]->note_eleve }}" required>
 
                                 @error('notes')

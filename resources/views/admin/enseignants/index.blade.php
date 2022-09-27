@@ -25,22 +25,24 @@
         <!-- START card -->
         <div class="card card-transparent">
             <div class="card-header mb-4 mb-4">
-                <div class="pull-left">
-                    <div class="col-xs-12">
-                        <button id="show-modal" class="btn btn-primary btn-cons" data-target="#addNewEnseignant" data-toggle="modal">
-                            <span class="fa fa-plus mr-2"></span>
-                            <span>Ajouter un nouvel enseignant</span>
-                        </button>
+
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <div class="col-xs-12">
+                            <button id="show-modal" class="btn btn-primary btn-cons" data-target="#addNewEnseignant" data-toggle="modal">
+                                <span class="fa fa-plus mr-md-2"></span>
+                                <span class="d-none d-md-inline">Ajouter un nouvel enseignant</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="col-xs-12">
+                            <input type="text" id="search-table" class="form-control pull-right" placeholder="Rechercher">
+                        </div>
                     </div>
                 </div>
 
-                <div class="pull-right">
-                    <div class="col-xs-12">
-                        <input type="text" id="search-table" class="form-control pull-right" placeholder="Rechercher">
-                    </div>
-                </div>
-
-                <div class="clearfix"></div>
             </div>
             <div class="card-body">
                 <table class="table table-hover demo-table-search table-responsive-block dataTable no-footer" id="tableWithSearch">
@@ -59,7 +61,7 @@
                         @foreach($enseignants as $key => $enseignant)
                         <tr>
 
-                            <td class="v-align-middle text-nowrap" style="width: 20%">
+                            <td class="v-align-middle text-nowrap w-lg-20">
                                 <div class="item-header clearfix">
                                     <div class="thumbnail-wrapper d32 circular">
                                         <img width="40" height="40" src="{{ asset("/storage/uploads/profiles/enseignants/$enseignant->photo_profil_enseignant") }}" data-src="{{ asset("/storage/uploads/profiles/enseignants/$enseignant->photo_profil_enseignant") }}">
@@ -75,23 +77,23 @@
                                 </div>
                             </td>
 
-                            <td class="v-align-middle text-nowrap" style="width: 15%">
+                            <td class="v-align-middle text-nowrap w-lg-15">
                                 <p>{{ $enseignant->matricule_enseignant ?? '' }}</p>
                             </td>
 
-                            <td class="v-align-middle text-nowrap" style="width: 15%">
+                            <td class="v-align-middle text-nowrap w-lg-15">
                                 <p>{{ $enseignant->num_tel_enseignant ?? '' }}</p>
                             </td>
 
-                            <td class="v-align-middle text-nowrap" style="width: 15%">
+                            <td class="v-align-middle text-nowrap w-lg-15">
                                 <p>{{ \Carbon\Carbon::parse($enseignant->birthday_enseignant)->diff(\Carbon\Carbon::now())->format('%y ans') }}</p>
                             </td>
 
-                            <td class="v-align-middle text-nowrap" style="width: 10%">
+                            <td class="v-align-middle text-nowrap w-lg-10">
                                 <p>{{ $enseignant->experience_enseignant ?? '' }} ans</p>
                             </td>
 
-                            <td class="v-align-middle text-nowrap" style="width: 15%">
+                            <td class="v-align-middle text-nowrap w-lg-15">
                                 <p> @if ($enseignant->debut_contrat == null)
                                 <span class="label label-sm label-secondary">Non signé</span>
                                 @else
@@ -99,7 +101,7 @@
                                 @endif</p>
                             </td>
 
-                            <td class="v-align-middle text-nowrap text-lg-center" style="width: 15%">
+                            <td class="v-align-middle text-nowrap text-lg-center w-lg-15">
 
                                 <a class="btn btn-sm btn-primary" href="{{ route('enseignants.show', $enseignant->id) }}">
                                     <span class="fa fa-eye" data-toogle="tooltip" data-placement="top" data-original-title="Afficher les informations de cet enseignant"></span>

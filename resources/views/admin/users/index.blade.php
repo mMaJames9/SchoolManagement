@@ -25,22 +25,22 @@
         <!-- START card -->
         <div class="card card-transparent">
             <div class="card-header mb-4">
-                <div class="pull-left">
-                    <div class="col-xs-12">
-                        <button id="show-modal" class="btn btn-primary btn-cons" data-target="#addNewUser" data-toggle="modal">
-                            <span class="fa fa-plus mr-2"></span>
-                            <span>Ajouter un nouvel utilisateur</span>
-                        </button>
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <div class="col-xs-12">
+                            <button id="show-modal" class="btn btn-primary btn-cons" data-target="#addNewUser" data-toggle="modal">
+                                <span class="fa fa-plus mr-md-2"></span>
+                                <span class="d-none d-md-inline">Ajouter un nouvel utilisateur</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="col-xs-12">
+                            <input type="text" id="search-table" class="form-control pull-right" placeholder="Rechercher">
+                        </div>
                     </div>
                 </div>
-
-                <div class="pull-right">
-                    <div class="col-xs-12">
-                        <input type="text" id="search-table" class="form-control pull-right" placeholder="Rechercher">
-                    </div>
-                </div>
-
-                <div class="clearfix"></div>
             </div>
             <div class="card-body">
                 <table class="table table-hover demo-table-search table-responsive-block dataTable no-footer" id="tableWithSearch">
@@ -56,7 +56,7 @@
                     <tbody class="bg-white">
                         <tr>
 
-                            <td class="v-align-middle text-nowrap" style="width: 30%">
+                            <td class="v-align-middle text-nowrap w-lg-30">
                                 <div class="item-header clearfix">
                                     <div class="thumbnail-wrapper d32 circular">
                                         <img width="40" height="40" src="{{ asset('storage/uploads/profiles/personnels/'.Auth::user()->personnel->photo_profil_personnel) }}" data-src="{{ asset('storage/uploads/profiles/personnels/'.Auth::user()->personnel->photo_profil_personnel) }}">
@@ -72,15 +72,15 @@
                                 </div>
                             </td>
 
-                            <td class="v-align-middle text-nowrap" style="width: 20%">
+                            <td class="v-align-middle text-nowrap w-lg-20">
                                 <a href="mailto:{{ Auth::user()->email }}">{{ Auth::user()->email }}</a>
                             </td>
 
-                            <td class="v-align-middle text-nowrap" style="width: 15%">
+                            <td class="v-align-middle text-nowrap w-lg-15">
                                 <p>{{ Auth::user()->personnel->phone_number ?? '' }}</p>
                             </td>
 
-                            <td class="v-align-middle text-nowrap" style="width: 15%">
+                            <td class="v-align-middle text-nowrap w-lg-15">
                                 @foreach(Auth::user()->roles as $key => $item)
                                 @if($item->name == 'Fondateur')
                                 <span class="label label-sm label-danger">
@@ -106,7 +106,7 @@
                                 @endforeach
                             </td>
 
-                            <td class="v-align-middle text-nowrap text-lg-center" style="width: 15%">
+                            <td class="v-align-middle text-nowrap text-lg-center w-lg-15">
 
                             </td>
                         </tr>
@@ -114,7 +114,7 @@
                         @foreach($users as $key => $user)
                         <tr>
 
-                            <td class="v-align-middle text-nowrap" style="width: 30%">
+                            <td class="v-align-middle text-nowrap w-lg-30">
                                 <div class="item-header clearfix">
                                     <div class="thumbnail-wrapper d32 circular">
                                         <img width="40" height="40" src="{{ asset('storage/uploads/profiles/personnels/'.$user->personnel->photo_profil_personnel) }}" data-src="{{ asset('storage/uploads/profiles/personnels/'.$user->personnel->photo_profil_personnel) }}">
@@ -130,15 +130,15 @@
                                 </div>
                             </td>
 
-                            <td class="v-align-middle text-nowrap" style="width: 20%">
+                            <td class="v-align-middle text-nowrap w-lg-20">
                                 <a href="mailto:{{ $user->email }}">{{ $user->email }}</a>
                             </td>
 
-                            <td class="v-align-middle text-nowrap" style="width: 15%">
+                            <td class="v-align-middle text-nowrap w-lg-15">
                                 <p>{{ $user->personnel->phone_number ?? '' }}</p>
                             </td>
 
-                            <td class="v-align-middle text-nowrap" style="width: 15%">
+                            <td class="v-align-middle text-nowrap w-lg-15">
                                 @foreach($user->roles as $key => $item)
                                 @if($item->name == 'Fondateur')
                                 <span class="label label-sm label-danger">
@@ -164,7 +164,7 @@
                                 @endforeach
                             </td>
 
-                            <td class="v-align-middle text-nowrap text-lg-center" style="width: 15%">
+                            <td class="v-align-middle text-nowrap text-lg-center w-lg-15">
 
                                 <a href="{{ route('users.edit', $user->id) }}" class="btn btn-sm btn-info" data-target="#editUser{{ $user->id }}" data-toggle="modal">
                                     <span class="fa fa-paste" data-toogle="tooltip" data-placement="top" data-original-title="Afficher le rôle de cet utilisateur"></span>
