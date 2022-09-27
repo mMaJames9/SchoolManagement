@@ -56,12 +56,12 @@
                                 @enderror
                             </div>
                         </div>
-                        <div class="col-md-6 d-flex align-items-center justify-content-end">
+                        <div class="col-md-6 d-flex align-items-center">
                             <a href="mailto:anthonymisse85@gmail.com" class="text-info small">Besoin d'aide? Contacter le service maintenance</a>
                         </div>
                     </div>
 
-                    <button class="btn btn-primary btn-cons m-t-10" type="submit">Se connecter</button>
+                    <button class="btn btn-primary btn-cons m-t-10 mt-4" type="submit">Se connecter</button>
                 </form>
             </div>
         </div>
