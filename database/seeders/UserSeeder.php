@@ -31,7 +31,7 @@ class UserSeeder extends Seeder
             ],
             [
                 'id' => 2,
-                'email' => 'woalash@gmail.com',
+                'email' => 'woalashbr@gmail.com',
                 'email_verified_at' => null,
                 'password' => Hash::make('ffm@Sy!vie2022'),
                 'remember_token' => null,
