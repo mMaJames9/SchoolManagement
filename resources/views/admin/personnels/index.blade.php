@@ -83,7 +83,7 @@
                             </td>
 
                             <td class="v-align-middle text-nowrap w-lg-15">
-                                <p>{{ Auth::user()->personnel->experience_personnel ?? '' }} ans</p>
+                                <p>{{ Auth::user()->personnel->experience_personnel ?? '' }} ans <span class="d-inline d-lg-none">d'expérience</span></p>
                             </td>
 
                             <td class="v-align-middle text-nowrap w-lg-15">
@@ -126,7 +126,7 @@
                             </td>
 
                             <td class="v-align-middle text-nowrap w-lg-15">
-                                <p>{{ $personnel->experience_personnel ?? '' }} ans</p>
+                                <p>{{ $personnel->experience_personnel ?? '' }} ans <span class="d-inline d-lg-none">d'expérience</span></p>
                             </td>
 
                             <td class="v-align-middle text-nowrap w-lg-15">

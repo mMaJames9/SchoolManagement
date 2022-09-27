@@ -90,7 +90,7 @@
                             </td>
 
                             <td class="v-align-middle text-nowrap w-lg-10">
-                                <p>{{ $enseignant->experience_enseignant ?? '' }} ans</p>
+                                <p>{{ $enseignant->experience_enseignant ?? '' }} ans <span class="d-inline d-lg-none">d'expérience</span></p>
                             </td>
 
                             <td class="v-align-middle text-nowrap w-lg-15">
