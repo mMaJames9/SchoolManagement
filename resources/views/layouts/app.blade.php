@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
-        <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="description" content="Application de gestion scolaire de l'établissement Fondation Fozeu et Magakou">
+        <meta name="author" content="Fondation Fozeu et Magakou">
+        <meta name="keywords" content="fozeu-magakou.space, fozeu, magakou, fondation fozeu, fozeu et magakou, magakou, fozeu magakou">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <title>{{ config('app.name', 'Laravel') }}</title>
