@@ -87,10 +87,10 @@ class BulletinController extends Controller
     {
         abort_if(Gate::denies('bulletin_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $niveau0 = array(1, 2, 3, 10, 11, 12);
-        $niveau1 = array(4, 5, 13, 14);
-        $niveau2 = array(6, 7, 15, 16);
-        $niveau3 = array(8, 9, 17, 18);
+        $niveau0 = array(1, 2, 3, 4, 11, 12, 13, 14);
+        $niveau1 = array(5, 6, 14, 15);
+        $niveau2 = array(7, 8, 16, 17);
+        $niveau3 = array(9, 10, 19, 20);
 
         if(in_array($eleve->classe_id, $niveau0))
         {
@@ -186,10 +186,10 @@ class BulletinController extends Controller
         ->where('eleve_id', $bulletin->eleve_id)
         ->get();
 
-        $niveau0 = array(1, 2, 3, 10, 11, 12);
-        $niveau1 = array(4, 5, 13, 14);
-        $niveau2 = array(6, 7, 15, 16);
-        $niveau3 = array(8, 9, 17, 18);
+        $niveau0 = array(1, 2, 3, 4, 11, 12, 13, 14);
+        $niveau1 = array(5, 6, 14, 15);
+        $niveau2 = array(7, 8, 16, 17);
+        $niveau3 = array(9, 10, 19, 20);
 
         if(in_array($notes->first()->eleve->classe_id, $niveau0))
         {
@@ -277,10 +277,10 @@ class BulletinController extends Controller
         ->where('eleve_id', $bulletin->eleve_id)
         ->get();
 
-        $niveau0 = array(1, 2, 3, 10, 11, 12);
-        $niveau1 = array(4, 5, 13, 14);
-        $niveau2 = array(6, 7, 15, 16);
-        $niveau3 = array(8, 9, 17, 18);
+        $niveau0 = array(1, 2, 3, 4, 11, 12, 13, 14);
+        $niveau1 = array(5, 6, 14, 15);
+        $niveau2 = array(7, 8, 16, 17);
+        $niveau3 = array(9, 10, 19, 20);
 
         if(in_array($notes->first()->eleve->classe_id, $niveau0))
         {
@@ -379,10 +379,10 @@ class BulletinController extends Controller
         ->where('eleve_id', $eleve->id)
         ->get();
 
-        $niveau0 = array(1, 2, 3, 10, 11, 12);
-        $niveau1 = array(4, 5, 13, 14);
-        $niveau2 = array(6, 7, 15, 16);
-        $niveau3 = array(8, 9, 17, 18);
+        $niveau0 = array(1, 2, 3, 4, 11, 12, 13, 14);
+        $niveau1 = array(5, 6, 14, 15);
+        $niveau2 = array(7, 8, 16, 17);
+        $niveau3 = array(9, 10, 19, 20);
 
         if(in_array($notes->first()->eleve->classe_id, $niveau0))
         {
