@@ -16,8 +16,10 @@
                                 <label for="personnel_id">Personnel</label>
                                 <select class="full-width" data-placeholder="Selectionner le nom du personnel" data-init-plugin="select2" name="personnel_id" required autofocus>
                                     <option disabled selected hidden>Selectionner le nom du personnel</option>
-                                    @foreach($personnels as $id => $personnel)
-                                    <option value="{{ $id }}">{{ strtoupper($personnel) }}</option>
+                                    @foreach($personnels as $key => $personnel)
+                                    @if ($personnel->users->first()->roles->first()->name !== 'Fondateur')
+                                    <option value="{{ $personnel->id }}">{{ strtoupper($personnel->nom_personnel) }}</option>
+                                    @endif
                                     @endforeach
                                 </select>
                                 @error('personnel_id')
@@ -80,8 +82,10 @@
                                 <label for="roles">Rôle</label>
                                 <select class="full-width" data-placeholder="Selectionner le rôle de cet utilisateur" data-init-plugin="select2" name="roles[]" required>
                                     <option disabled selected hidden>Selectionner le rôle de cet utilisateur</option>
-                                    @foreach($roles as $id => $roles)
-                                    <option value="{{ $id }}" {{ in_array($id, old('roles', [])) ? 'selected' : '' }}>{{ $roles }}</option>
+                                    @foreach($roles as $id => $role)
+                                    @if ($role !== 'Fondateur')
+                                    <option value="{{ $id }}" {{ in_array($id, old('roles', [])) ? 'selected' : '' }}>{{ $role }}</option>
+                                    @endif
                                     @endforeach
                                 </select>
                                 @error('roles')

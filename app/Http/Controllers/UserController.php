@@ -26,8 +26,8 @@ class UserController extends Controller
         $users = User::all()->except(auth()->id())->sortByDesc("created_at");
 
         $roles = Role::all()->pluck('name', 'id');
-        
-        $personnels = Personnel::all()->pluck('nom_personnel', 'id');
+
+        $personnels = Personnel::all();
 
         return view('admin.users.index', compact('users', 'roles', 'personnels'));
     }
@@ -86,8 +86,8 @@ class UserController extends Controller
         abort_if(Gate::denies('user_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $roles = Role::all()->pluck('name', 'id');
-        
-        $personnels = Personnel::all()->pluck('nom_personnel', 'id');
+
+        $personnels = Personnel::all();
 
         $user->load('roles');
 

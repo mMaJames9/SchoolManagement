@@ -64,6 +64,7 @@
                     <tbody class="bg-white">
 
                         @foreach($employes as $key => $employe)
+                        @if ($employe->users->first()->roles->first()->name !== 'Fondateur')
                         <tr>
                             <td class="v-align-middle text-nowrap w-lg-25">
                                 <div class="item-header clearfix">
@@ -124,7 +125,7 @@
                         </tr>
 
                         @include('admin.salaires.create')
-
+                        @endif
                         @endforeach
 
                     </tbody>

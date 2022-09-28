@@ -17,8 +17,10 @@
                                 <label for="roles">Rôle</label>
                                 <select class="full-width" data-placeholder="Selectionner le rôle de cet utilisateur" data-init-plugin="select2" name="roles[]" required>
                                     <option disabled selected hidden>Selectionner le rôle de cet utilisateur</option>
-                                    @foreach($roles as $id => $roles)
-                                    <option value="{{ $id }}" {{ (in_array($id, old('roles', [])) || $user->roles->contains($id)) ? 'selected' : '' }}>{{ $roles }}</option>
+                                    @foreach($roles as $id => $role)
+                                    @if ($role !== 'Fondateur')
+                                    <option value="{{ $id }}" {{ (in_array($id, old('roles', [])) || $user->roles->contains($id)) ? 'selected' : '' }}>{{ $role }}</option>
+                                    @endif
                                     @endforeach
                                 </select>
                                 @error('roles')
