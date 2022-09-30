@@ -31,7 +31,7 @@ class PaiementController extends Controller
             $this->annee_id = Annee::where('year_from', $previous_year)->value('id');
         }
     }
-        
+
     /**
      * Display a listing of the resource.
      *
@@ -52,7 +52,7 @@ class PaiementController extends Controller
         {
             $selected = null;
             $eleves = Eleve::where('annee_id', $this->annee_id)
-            ->where('classe', $selected)->get();
+            ->where('classe_id', $selected)->get();
         }
 
         $annee_id = $this->annee_id;
@@ -61,13 +61,13 @@ class PaiementController extends Controller
         $classes = Classe::all()->sortByDesc("created_at");
         $sections = Classe::groupBy('nom_section')->pluck('nom_section', 'id');
 
-        return view('admin.paiements.index', 
-        compact('eleves', 
-        'classes', 
-        'sections', 
-        'selected', 
-        'frais', 
-        'paiements', 
+        return view('admin.paiements.index',
+        compact('eleves',
+        'classes',
+        'sections',
+        'selected',
+        'frais',
+        'paiements',
         'annee_id'));
     }
 
@@ -104,7 +104,7 @@ class PaiementController extends Controller
         ->where('type_frais', 'Inscription')->sum('montant_frais');
         $id_inscription = Frais::where('annee_id', $this->annee_id)
         ->where('type_frais', 'Inscription')->value('id');
-        
+
         if(!empty($eleve->classe->cycle_id))
         {
             $frais = $eleve->classe->cycle_id;
@@ -142,7 +142,7 @@ class PaiementController extends Controller
         else
         {
             $frais = $eleve->classe_id;
-            
+
             $tranche_1 = Frais::where('annee_id', $this->annee_id)
             ->where('type_frais', '1ere Tranche')
             ->where('classe_id', $frais)
@@ -192,7 +192,7 @@ class PaiementController extends Controller
             ->where('eleve_id', $eleve->id)
             ->sum('montant_paiement');
 
-            
+
             if($versement < $inscription)
             {
                 if(($montant_paiement + $versement) <= $inscription)
@@ -254,14 +254,14 @@ class PaiementController extends Controller
                             'annee_id' => $this->annee_id,
                         ]);
 
-                        $montant_paiement = $montant_paiement - $tranche_1;   
+                        $montant_paiement = $montant_paiement - $tranche_1;
                     }
                     else
                     {
                         $paiement = Paiement::create([
                             'montant_paiement' => $montant_paiement,
                             'eleve_id' => $eleve->id,
-                            'frais_id' => $id_tranche_1, 
+                            'frais_id' => $id_tranche_1,
                             'annee_id' => $this->annee_id,
                         ]);
 
@@ -293,7 +293,7 @@ class PaiementController extends Controller
                             'annee_id' => $this->annee_id,
                         ]);
 
-                        $montant_paiement = $montant_paiement - $tranche_2;   
+                        $montant_paiement = $montant_paiement - $tranche_2;
                     }
                     else
                     {
@@ -332,7 +332,7 @@ class PaiementController extends Controller
                             'annee_id' => $this->annee_id,
                         ]);
 
-                        $montant_paiement = $montant_paiement - $tranche_3;   
+                        $montant_paiement = $montant_paiement - $tranche_3;
                     }
                     else
                     {
@@ -349,7 +349,7 @@ class PaiementController extends Controller
                     return redirect()->back()->with([
                         'status' => $status,
                     ]);
-                    
+
                 }
             }
 
@@ -414,7 +414,7 @@ class PaiementController extends Controller
                             'annee_id' => $this->annee_id,
                         ]);
 
-                        $montant_paiement = $montant_paiement - $tranche_2;   
+                        $montant_paiement = $montant_paiement - $tranche_2;
                     }
                     else
                     {
@@ -453,7 +453,7 @@ class PaiementController extends Controller
                             'annee_id' => $this->annee_id,
                         ]);
 
-                        $montant_paiement = $montant_paiement - $tranche_3;   
+                        $montant_paiement = $montant_paiement - $tranche_3;
                     }
                     else
                     {
@@ -470,7 +470,7 @@ class PaiementController extends Controller
                     return redirect()->back()->with([
                         'status' => $status,
                     ]);
-                    
+
                 }
             }
 
@@ -494,7 +494,7 @@ class PaiementController extends Controller
                 elseif(($montant_paiement + $versement) > $pension)
                 {
                     $montant_restant = ($pension) - $versement;
-                    
+
                     $error = "Le montant versé exède la somme totale de la pension. Il ne manque plus que ".number_format($montant_restant, 0, ",", " "). " FCFA  à payer.";
 
                     return redirect()->back()->with([
@@ -535,7 +535,7 @@ class PaiementController extends Controller
                             'annee_id' => $this->annee_id,
                         ]);
 
-                        $montant_paiement = $montant_paiement - $tranche_3;   
+                        $montant_paiement = $montant_paiement - $tranche_3;
                     }
                     else
                     {
@@ -552,7 +552,7 @@ class PaiementController extends Controller
                     return redirect()->back()->with([
                         'status' => $status,
                     ]);
-                    
+
                 }
             }
 
@@ -582,7 +582,7 @@ class PaiementController extends Controller
                     return redirect()->back()->with([
                         'error' => $error,
                     ]);
-                    
+
                 }
             }
 
