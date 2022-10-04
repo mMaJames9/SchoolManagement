@@ -141,11 +141,15 @@
                             <td class="v-align-middle text-nowrap w-lg-15">
                                 @foreach($user->roles as $key => $item)
                                 @if($item->name == 'Fondateur')
-                                <span class="label label-sm label-danger">
+                                <span class="label label-sm label-primary">
                                     {{ $item->name }}
                                 </span>
                                 @elseif($item->name == 'Econome')
                                 <span class="label label-sm label-secondary">
+                                    {{ $item->name }}
+                                </span>
+                                @elseif($item->name == 'Comptable')
+                                <span class="label label-sm label-info">
                                     {{ $item->name }}
                                 </span>
                                 @elseif($item->name == 'Directeur')
@@ -157,7 +161,7 @@
                                     {{ $item->name }}
                                 </span>
                                 @else
-                                <span class="label label-sm label-info">
+                                <span class="label label-sm label-danger">
                                     {{ $item->name }}
                                 </span>
                                 @endif
@@ -171,14 +175,17 @@
                                     <span class="fa fa-paste" data-toogle="tooltip" data-placement="top" data-original-title="Afficher le rôle de cet utilisateur"></span>
                                 </a>
 
+                                @role('Fondateur')
                                 <button class="btn btn-sm btn-danger" data-target="#deleteUser{{ $user->id }}" data-toggle="modal">
                                     <span class="fa fa-trash" data-toogle="tooltip" data-placement="top" data-original-title="Supprimer cet utilisateur"></span>
                                 </button>
                                 @endif
+                                @endrole
 
                             </td>
                         </tr>
 
+                        @role('Fondateur')
                         <div class="modal fade slide-up disable-scroll" id="deleteUser{{ $user->id }}" tabindex="-1" role="dialog" aria-labelledby="deleteUser{{ $user->id }}" aria-hidden="false">
                             <div class="modal-dialog ">
                                 <div class="modal-content-wrapper">
@@ -207,6 +214,7 @@
                                 </div>
                             </div>
                         </div>
+                        @endrole
 
                         @include('admin.users.edit')
 

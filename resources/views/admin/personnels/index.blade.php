@@ -147,7 +147,9 @@
                                 <a href="{{ route('personnels.edit', $personnel->id) }}" class="btn btn-sm btn-info" data-target="#editPersonnel{{ $personnel->id }}" data-toggle="modal">
                                     <span class="fa fa-paste"  data-toogle="tooltip" data-placement="top" data-original-title="Modifier les informations de cet employé"></span>
                                 </a>
+                                @endif
 
+                                @if($personnel->users->first()->roles->first()->name == 'Enseignant d\'informatique')
                                 <button id="show-modal" class="btn btn-sm btn-danger" data-target="#deletePersonnel{{ $personnel->id }}" data-toggle="modal">
                                     <span class="fa fa-trash" data-toogle="tooltip" data-placement="top" data-original-title="Supprimer cet employé"></span>
                                 </button>
@@ -155,6 +157,7 @@
                             </td>
                         </tr>
 
+                        @if($personnel->users->first()->roles->first()->name == 'Enseignant d\'informatique')
                         <div class="modal fade slide-up disable-scroll" id="deletePersonnel{{ $personnel->id }}" tabindex="-1" role="dialog" aria-labelledby="deletePersonnel{{ $personnel->id }}" aria-hidden="false">
                             <div class="modal-dialog ">
                                 <div class="modal-content-wrapper">
@@ -183,6 +186,7 @@
                                 </div>
                             </div>
                         </div>
+                        @endif
 
                         @include('admin.personnels.edit')
 
