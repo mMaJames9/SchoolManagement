@@ -18,11 +18,13 @@
                 </a>
             </li>
 
-            @can('user_access')
+            @can('personnel_access')
             <li class="pl-4 my-3">
                 <span class="title text-uppercase">Gestion du Personnel</span>
             </li>
+            @endcan
 
+            @can('user_access')
             <li class="{{ request()->routeIs('users*') ? 'active' : '' }}">
                 <a href="{{ route('users.index') }}">
                     <span class="fas fa-user mr-2"></span>
