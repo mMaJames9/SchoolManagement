@@ -198,10 +198,7 @@ class PermissionRoleSeeder extends Seeder
         $role2->givePermissionTo('transaction_show');
         $role2->givePermissionTo('transaction_access');
 
-
-
-
-        $role3 = Role::create(['name' => 'Secretaire']);
+        $role3 = Role::create(['name' => 'Comptable']);
         // $role3->givePermissionTo('personnel_create');
         // $role3->givePermissionTo('personnel_edit');
         // $role3->givePermissionTo('personnel_delete');
@@ -214,44 +211,90 @@ class PermissionRoleSeeder extends Seeder
         $role3->givePermissionTo('enseignant_show');
         $role3->givePermissionTo('enseignant_access');
 
-        $role3->givePermissionTo('eleve_create');
-        $role3->givePermissionTo('eleve_edit');
-        // $role3->givePermissionTo('eleve_delete');
-        $role3->givePermissionTo('eleve_show');
-        $role3->givePermissionTo('eleve_access');
+        $role3->givePermissionTo('salaire_create');
+        $role3->givePermissionTo('salaire_edit');
+        $role3->givePermissionTo('salaire_delete');
+        $role3->givePermissionTo('salaire_show');
+        $role3->givePermissionTo('salaire_access');
 
-        $role3->givePermissionTo('famille_create');
-        $role3->givePermissionTo('famille_edit');
-        // $role3->givePermissionTo('famille_delete');
-        $role3->givePermissionTo('famille_show');
-        $role3->givePermissionTo('famille_access');
+        $role3->givePermissionTo('paiement_create');
+        $role3->givePermissionTo('paiement_edit');
+        $role3->givePermissionTo('paiement_delete');
+        $role3->givePermissionTo('paiement_show');
+        $role3->givePermissionTo('paiement_access');
 
-        // $role3->givePermissionTo('classe_create');
-        // $role3->givePermissionTo('classe_edit');
-        // // $role3->givePermissionTo('classe_delete');
-        $role3->givePermissionTo('classe_show');
-        $role3->givePermissionTo('classe_access');
+        $role3->givePermissionTo('materiel_create');
+        $role3->givePermissionTo('materiel_edit');
+        $role3->givePermissionTo('materiel_delete');
+        $role3->givePermissionTo('materiel_show');
+        $role3->givePermissionTo('materiel_access');
 
-        // $role3->givePermissionTo('matiere_create');
-        // $role3->givePermissionTo('matiere_edit');
-        // // $role3->givePermissionTo('matiere_delete');
-        $role3->givePermissionTo('matiere_show');
-        $role3->givePermissionTo('matiere_access');
+        $role3->givePermissionTo('stock_create');
+        $role3->givePermissionTo('stock_edit');
+        $role3->givePermissionTo('stock_delete');
+        $role3->givePermissionTo('stock_show');
+        $role3->givePermissionTo('stock_access');
 
-        $role3->givePermissionTo('bulletin_create');
-        $role3->givePermissionTo('bulletin_edit');
-        $role3->givePermissionTo('bulletin_delete');
-        $role3->givePermissionTo('bulletin_show');
-        $role3->givePermissionTo('bulletin_access');
-
-
-
-
-        $role4 = Role::create(['name' => 'Fondateur']);
+        $role3->givePermissionTo('transaction_create');
+        $role3->givePermissionTo('transaction_edit');
+        $role3->givePermissionTo('transaction_delete');
+        $role3->givePermissionTo('transaction_show');
+        $role3->givePermissionTo('transaction_access');
 
 
 
 
-        $role5 = Role::create(['name' => 'Enseignant d\'informatique']);
+        $role4 = Role::create(['name' => 'Secretaire']);
+        // $role4->givePermissionTo('personnel_create');
+        // $role4->givePermissionTo('personnel_edit');
+        // $role4->givePermissionTo('personnel_delete');
+        $role4->givePermissionTo('personnel_show');
+        $role4->givePermissionTo('personnel_access');
+
+        // $role4->givePermissionTo('enseignant_create');
+        // $role4->givePermissionTo('enseignant_edit');
+        // $role4->givePermissionTo('enseignant_delete');
+        $role4->givePermissionTo('enseignant_show');
+        $role4->givePermissionTo('enseignant_access');
+
+        $role4->givePermissionTo('eleve_create');
+        $role4->givePermissionTo('eleve_edit');
+        // $role4->givePermissionTo('eleve_delete');
+        $role4->givePermissionTo('eleve_show');
+        $role4->givePermissionTo('eleve_access');
+
+        $role4->givePermissionTo('famille_create');
+        $role4->givePermissionTo('famille_edit');
+        // $role4->givePermissionTo('famille_delete');
+        $role4->givePermissionTo('famille_show');
+        $role4->givePermissionTo('famille_access');
+
+        // $role4->givePermissionTo('classe_create');
+        // $role4->givePermissionTo('classe_edit');
+        // // $role4->givePermissionTo('classe_delete');
+        $role4->givePermissionTo('classe_show');
+        $role4->givePermissionTo('classe_access');
+
+        // $role4->givePermissionTo('matiere_create');
+        // $role4->givePermissionTo('matiere_edit');
+        // // $role4->givePermissionTo('matiere_delete');
+        $role4->givePermissionTo('matiere_show');
+        $role4->givePermissionTo('matiere_access');
+
+        $role4->givePermissionTo('bulletin_create');
+        $role4->givePermissionTo('bulletin_edit');
+        $role4->givePermissionTo('bulletin_delete');
+        $role4->givePermissionTo('bulletin_show');
+        $role4->givePermissionTo('bulletin_access');
+
+
+
+
+        $role5 = Role::create(['name' => 'Fondateur']);
+
+
+
+
+        $role6 = Role::create(['name' => 'Enseignant d\'informatique']);
     }
 }
