@@ -198,6 +198,10 @@ class PermissionRoleSeeder extends Seeder
         $role2->givePermissionTo('transaction_show');
         $role2->givePermissionTo('transaction_access');
 
+
+
+
+
         $role3 = Role::create(['name' => 'Comptable']);
         // $role3->givePermissionTo('personnel_create');
         // $role3->givePermissionTo('personnel_edit');
