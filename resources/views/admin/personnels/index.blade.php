@@ -151,7 +151,7 @@
                                 <button id="show-modal" class="btn btn-sm btn-danger" data-target="#deletePersonnel{{ $personnel->id }}" data-toggle="modal">
                                     <span class="fa fa-trash" data-toogle="tooltip" data-placement="top" data-original-title="Supprimer cet employé"></span>
                                 </button>
-                                @can
+                                @endcan
                             </td>
                         </tr>
 
