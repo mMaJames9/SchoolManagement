@@ -144,9 +144,9 @@
 
                     <div class="row">
                         <div class="col-sm-12">
-                            <div class="form-group form-group-default required">
+                            <div class="form-group form-group-default">
                                 <label for="salaire">Salaire</label>
-                                <input type="number" min="25" step="25" class="form-control @error('salaire') is-invalid @enderror" placeholder="Salaire de l'employé" id="salaire" name="salaire" required>
+                                <input type="number" min="25" step="25" class="form-control @error('salaire') is-invalid @enderror" placeholder="Salaire de l'employé" id="salaire" name="salaire">
 
                                 @error('salaire')
                                 <span class="invalid-feedback" role="alert">

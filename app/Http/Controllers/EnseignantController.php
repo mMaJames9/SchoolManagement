@@ -66,7 +66,7 @@ class EnseignantController extends Controller
             'prenom_enseignant' => $request['prenom_enseignant'],
             'birthday_enseignant' => $request['birthday_enseignant'],
             'num_tel_enseignant' => $request['num_tel_enseignant'],
-            'experience_enseignant' => $request['experience_enseignant'],
+            'experience_enseignant' => $request['experience_enseignant']."-01",
             'cv_enseignant' => $nameCV ?? null,
             'photo_profil_enseignant' => $nameProfile ?? null,
             'debut_contrat' => $request['debut_contrat'] ?? null,

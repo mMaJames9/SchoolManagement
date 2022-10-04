@@ -17,7 +17,7 @@
                                 <select class="full-width" data-placeholder="Selectionner le nom du personnel" data-init-plugin="select2" name="personnel_id" required autofocus>
                                     <option disabled selected hidden>Selectionner le nom du personnel</option>
                                     @foreach($personnels as $key => $personnel)
-                                    @if(Auth::user()->roles->first()->name == 'Fondateur')
+                                    @if ($personnel->users->first()->roles->first()->name !== 'Fondateur')
                                     <option value="{{ $personnel->id }}">{{ strtoupper($personnel->nom_personnel) }}</option>
                                     @endif
                                     @endforeach

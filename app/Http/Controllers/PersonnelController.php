@@ -65,7 +65,7 @@ class PersonnelController extends Controller
             'prenom_personnel' => $request['prenom_personnel'],
             'birthday_personnel' => $request['birthday_personnel'],
             'phone_number' => $request['phone_number'],
-            'experience_personnel' => $request['experience_personnel'],
+            'experience_personnel' => $request['experience_personnel']."-01",
             'cv_personnel' => $nameCV ?? null,
             'photo_profil_personnel' => $nameProfile ?? null,
             'debut_contrat' => $request['debut_contrat'] ?? null,
