@@ -81,13 +81,17 @@
                             </td>
 
                             <td class="v-align-middle text-nowrap w-lg-15">
-                                @foreach(Auth::user()->roles as $key => $item)
+                                @foreach($user->roles as $key => $item)
                                 @if($item->name == 'Fondateur')
-                                <span class="label label-sm label-danger">
+                                <span class="label label-sm label-inverse">
                                     {{ $item->name }}
                                 </span>
                                 @elseif($item->name == 'Econome')
                                 <span class="label label-sm label-secondary">
+                                    {{ $item->name }}
+                                </span>
+                                @elseif($item->name == 'Comptable')
+                                <span class="label label-sm label-info">
                                     {{ $item->name }}
                                 </span>
                                 @elseif($item->name == 'Directeur')
@@ -99,7 +103,7 @@
                                     {{ $item->name }}
                                 </span>
                                 @else
-                                <span class="label label-sm label-info">
+                                <span class="label label-sm label-danger">
                                     {{ $item->name }}
                                 </span>
                                 @endif
@@ -141,7 +145,7 @@
                             <td class="v-align-middle text-nowrap w-lg-15">
                                 @foreach($user->roles as $key => $item)
                                 @if($item->name == 'Fondateur')
-                                <span class="label label-sm label-primary">
+                                <span class="label label-sm label-inverse">
                                     {{ $item->name }}
                                 </span>
                                 @elseif($item->name == 'Econome')
