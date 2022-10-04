@@ -81,7 +81,7 @@
                             </td>
 
                             <td class="v-align-middle text-nowrap w-lg-15">
-                                @foreach($user->roles as $key => $item)
+                                @foreach(Auth::user()->roles as $key => $item)
                                 @if($item->name == 'Fondateur')
                                 <span class="label label-sm label-inverse">
                                     {{ $item->name }}
