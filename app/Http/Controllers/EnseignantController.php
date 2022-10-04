@@ -67,11 +67,11 @@ class EnseignantController extends Controller
             'birthday_enseignant' => $request['birthday_enseignant'],
             'num_tel_enseignant' => $request['num_tel_enseignant'],
             'experience_enseignant' => $request['experience_enseignant'],
-            'cv_enseignant' => $nameCV,
-            'photo_profil_enseignant' => $nameProfile,
+            'cv_enseignant' => $nameCV ?? null,
+            'photo_profil_enseignant' => $nameProfile ?? null,
             'debut_contrat' => $request['debut_contrat'] ?? null,
             'fin_contrat' => $request['fin_contrat'] ?? null,
-            'salaire' => $request['salaire'],
+            'salaire' => $request['salaire'] ?? null,
         ]);
 
         $status = 'Création de l\'enseignant réussie.';

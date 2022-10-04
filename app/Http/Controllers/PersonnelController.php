@@ -66,11 +66,11 @@ class PersonnelController extends Controller
             'birthday_personnel' => $request['birthday_personnel'],
             'phone_number' => $request['phone_number'],
             'experience_personnel' => $request['experience_personnel'],
-            'cv_personnel' => $nameCV,
-            'photo_profil_personnel' => $nameProfile,
+            'cv_personnel' => $nameCV ?? null,
+            'photo_profil_personnel' => $nameProfile ?? null,
             'debut_contrat' => $request['debut_contrat'] ?? null,
             'fin_contrat' => $request['fin_contrat'] ?? null,
-            'salaire' => $request['salaire'],
+            'salaire' => $request['salaire'] ?? null,
         ]);
 
         $status = 'Création d\'un nouvel employé réussie.';

@@ -33,11 +33,11 @@ class PersonnelStoreRequest extends FormRequest
             'birthday_personnel'  => ['required', 'string', 'max:255'],
             'phone_number'  => ['required', 'string', 'max:255'],
             'experience_personnel' => ['required', 'string', 'max:255'],
-            'cv_personnel' => ['required', 'file', 'mimes:doc,docx,pdf', 'max:5120'],
-            'photo_profil_personnel' => ['required', 'image', 'max:3072'],
+            'cv_personnel' => ['nullable', 'file', 'mimes:doc,docx,pdf', 'max:5120'],
+            'photo_profil_personnel' => ['nullable', 'image', 'max:3072'],
             'debut_contrat'  => ['nullable', 'string', 'max:255'],
             'fin_contrat'  => ['nullable', 'string', 'max:255'],
-            'salaire' => ['required', 'integer', 'min:25'],
+            'salaire' => ['nullable', 'integer', 'min:25'],
         ];
     }
 }
