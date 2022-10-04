@@ -144,8 +144,6 @@
                                 </a>
 
                                @can('personnel.edit')
-
-                               @endcan
                                 <a href="{{ route('personnels.edit', $personnel->id) }}" class="btn btn-sm btn-info" data-target="#editPersonnel{{ $personnel->id }}" data-toggle="modal">
                                     <span class="fa fa-paste"  data-toogle="tooltip" data-placement="top" data-original-title="Modifier les informations de cet employé"></span>
                                 </a>
