@@ -23,7 +23,7 @@
                 <span class="title text-uppercase">Gestion du Personnel</span>
             </li>
             @endcan
-
+            
             @can('user_access')
             <li class="{{ request()->routeIs('users*') ? 'active' : '' }}">
                 <a href="{{ route('users.index') }}">
