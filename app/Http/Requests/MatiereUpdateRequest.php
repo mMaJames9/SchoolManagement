@@ -28,9 +28,8 @@ class MatiereUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'intitule_matiere' => ['required', 'string', 'max:255'],
-            'niveau_matiere' => ['required', 'string', 'min:0', 'max:3'],
-            'coef_matiere' => ['required', 'integer', 'min:1'],
+            'forme_evaluation' => ['required', 'string', 'max:255'],
+            'notation_matiere' => ['required', 'integer', 'min:1'],
             'competence_id' => ['required', 'integer'],
         ];
     }

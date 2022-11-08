@@ -10,16 +10,21 @@
                     <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Accueil</a></li>
                     @if (!empty($selected))
                     <li class="breadcrumb-item"><a href="{{ route('matieres.index') }}">Matières</a></li>
-                    <li class="breadcrumb-item active">Niveau {{ $selected }}</li>
+                        @if ($selected == 2)
+                        <li class="breadcrumb-item active">Niveau 2 & 3</li>
+                        @else
+                        <li class="breadcrumb-item active">Niveau {{ $selected }}</li>
+                        @endif
                     @else
-                    <li class="breadcrumb-item active">Matières</li>
+                    <li class="breadcrumb-item"><a href="{{ route('matieres.index') }}">Matières</a></li>
+                    <li class="breadcrumb-item active">Section Anglophone</li>
                     @endif
                 </ol>
                 <!-- END BREADCRUMB -->
                 <div class="card card-transparent">
                     <div class="card-body">
                         <h3>Matières</h3>
-                        <p>Liste de toutes les matières. </p>
+                        <p>Liste de toutes les matières par niveau. </p>
                     </div>
                 </div>
             </div>
@@ -49,11 +54,9 @@
 
                                 <div class="mr-2">
                                     <select class="form-control" id="niveau" name="niveau">
-                                        <option selected disabled hidden>Selectionner le niveau...</option>
-                                        <option value="0" {{ $selected == 0  ? 'selected' : '' }}>Niveau 0</option>
+                                        <option selected disabled>Selectionner le niveau...</option>
                                         <option value="1" {{ $selected == 1  ? 'selected' : '' }}>Niveau 1</option>
-                                        <option value="2" {{ $selected == 2  ? 'selected' : '' }}>Niveau 2</option>
-                                        <option value="3" {{ $selected == 3  ? 'selected' : '' }}>Niveau 3</option>
+                                        <option value="2" {{ $selected == 2  ? 'selected' : '' }}>Niveau 2 & 3</option>
                                     </select>
                                 </div>
 
@@ -72,8 +75,9 @@
                     <thead>
                         <tr>
                             <th class="v-align-middle text-nowrap text-lg-center">Compétences</th>
-                            <th>Intitule</th>
-                            <th>Coef.</th>
+                            <th class="v-align-middle text-nowrap text-lg-center">Total Points</th>
+                            <th>Forme d'évaluation</th>
+                            <th>Notation</th>
                             <th class="text-lg-center">Actions</th>
                         </tr>
                     </thead>
@@ -81,17 +85,21 @@
                         @foreach($competences as $key => $competence)
                         <tr>
 
-                            <td class="v-align-middle text-nowrap text-lg-center" style="width: 40%" rowspan="{{ $competence->matieres->count() }}">
-                                <p class="bold">Comptence {{ $loop->iteration}}</p>
+                            <td class="v-align-middle text-nowrap text-lg-center w-lg-25" rowspan="{{ $competence->matieres->count() }}">
+                                <p class="bold">Competence {{ $loop->iteration}}</p>
                                 <p>{{ ucwords(strtolower($competence->intitule_competence)) }}</p>
                             </td>
 
+                            <td class="v-align-middle text-nowrap text-lg-center w-lg-15" rowspan="{{ $competence->matieres->count() }}">
+                                <p>{{ $competence->matieres->sum('notation_matiere') }} points</p>
+                            </td>
+
                             <td class="v-align-middle text-nowrap w-lg-30">
-                                <p>{{ strtoupper($competence->matieres[0]->intitule_matiere) }}</p>
+                                <p>{{ strtoupper(strtolower($competence->matieres[0]->forme_evaluation)) }}</p>
                             </td>
 
                             <td class="v-align-middle text-nowrap w-lg-15">
-                                <p>{{ $competence->matieres[0]->coef_matiere }}</p>
+                                <p>{{ $competence->matieres[0]->notation_matiere }}</p>
                             </td>
 
                             <td class="v-align-middle text-nowrap text-lg-center w-lg-15">
@@ -115,7 +123,7 @@
                                                     <i class="pg-close fs-14"></i>
                                                 </button>
                                                 <h5>Confirmer <span class="semi-bold">Suppression</span></h5>
-                                                <p class="p-b-10">Etes-vous sûr que vous voulez supprimer {{ strtoupper($competence->matieres[0]->intitule_matiere ?? '' ) }} ?</p>
+                                                <p class="p-b-10">Etes-vous sûr que vous voulez supprimer {{ strtoupper($competence->matieres[0]->forme_evaluation ?? '' ) }} ?</p>
                                             </div>
                                             <div class="modal-body">
                                                 <form class="form" action="{{ route('matieres.destroy', $competence->matieres[0]->id) }}" method="POST">
@@ -143,11 +151,11 @@
                         <tr>
 
                             <td class="v-align-middle text-nowrap w-lg-30">
-                                <p>{{ strtoupper($competence->matieres[$i]->intitule_matiere) }}</p>
+                                <p>{{ strtoupper(strtolower($competence->matieres[$i]->forme_evaluation)) }}</p>
                             </td>
 
                             <td class="v-align-middle text-nowrap w-lg-15">
-                                <p>{{ $competence->matieres[$i]->coef_matiere }}</p>
+                                <p>{{ $competence->matieres[$i]->notation_matiere }}</p>
                             </td>
 
                             <td class="v-align-middle text-nowrap text-lg-center w-lg-15">
@@ -171,7 +179,7 @@
                                                     <i class="pg-close fs-14"></i>
                                                 </button>
                                                 <h5>Confirmer <span class="semi-bold">Suppression</span></h5>
-                                                <p class="p-b-10">Etes-vous sûr que vous voulez supprimer {{ strtoupper($competence->matieres[$i]->intitule_matiere ?? '' ) }} ?</p>
+                                                <p class="p-b-10">Etes-vous sûr que vous voulez supprimer {{ strtoupper($competence->matieres[$i]->forme_evaluation ?? '' ) }} ?</p>
                                             </div>
                                             <div class="modal-body">
                                                 <form class="form" action="{{ route('matieres.destroy', $competence->matieres[$i]->id) }}" method="POST">

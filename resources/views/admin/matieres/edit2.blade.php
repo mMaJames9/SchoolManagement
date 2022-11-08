@@ -13,12 +13,12 @@
 
                     <div class="row">
                         <div class="col-sm-12">
-
-                            <div class="form-group form-group-default form-group-default-select2">
+                            <div class="form-group form-group-default form-group-default-select2 required">
+                                <label class="mb-2" for="competence_id">Compétences</label>
                                 <select class="full-width @error('competence_id') is-invalid @enderror" id="competence_id" name="competence_id" data-init-plugin="select2">
                                     <option selected disabled hidden>Selectionner la compétence</option>
                                     @foreach($listCompetences as $id => $listCompetence)
-                                    <option value="{{ $id }}" {{ ($competence->matieres[$i] ? $competence->matieres[$i]->competence_id : old('competence_id')) == $id ? 'selected' : '' }}>{{ ucwords($listCompetence) }}</option>
+                                    <option value="{{ $id }}" {{ ($competence->matieres[0] ? $competence->matieres[$i]->competence_id : old('competence_id')) == $id ? 'selected' : '' }}>{{ ucwords($listCompetence) }}</option>
                                     @endforeach
                                 </select>
 
@@ -28,17 +28,16 @@
                                 </span>
                                 @enderror
                             </div>
-
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="form-group form-group-default required">
-                                <label for="intitule_matiere">Intitulé matière</label>
-                                <input type="text" class="form-control @error('intitule_matiere') is-invalid @enderror" placeholder="Intitulé de la matière"  value="{{ old('intitule_matiere', $competence->matieres[$i]->intitule_matiere) }}" id="intitule_matiere" name="intitule_matiere" required>
+                                <label for="forme_evaluation">Forme d'évaluation</label>
+                                <input type="text" class="form-control @error('forme_evaluation') is-invalid @enderror" placeholder="Forme d'évaluation de la compétence"  value="{{ old('forme_evaluation', $competence->matieres[$i]->forme_evaluation) }}" id="forme_evaluation" name="forme_evaluation" required>
 
-                                @error('intitule_matiere')
+                                @error('forme_evaluation')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
@@ -50,25 +49,10 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="form-group form-group-default required">
-                                <label for="coef_matiere">Niveau</label>
-                                <input type="number" min="0" max="3" class="form-control @error('coef_matiere') is-invalid @enderror" placeholder="Niveau correspondant" value="{{ old('coef_matiere', $competence->matieres[$i]->niveau_matiere) }}" id="niveau_matiere" name="niveau_matiere" required>
+                                <label for="notation_matiere">Notation</label>
+                                <input type="number" min="1" value="{{ old('notation_matiere', $competence->matieres[$i]->notation_matiere) }}" class="form-control @error('notation_matiere') is-invalid @enderror" placeholder="Total de la forme d'évaluation" id="notation_matiere" name="notation_matiere" required>
 
-                                @error('niveau_matiere')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <div class="form-group form-group-default required">
-                                <label for="coef_matiere">Coef. Matière</label>
-                                <input type="number" min="1" value="{{ old('coef_matiere', $competence->matieres[$i]->coef_matiere) }}" class="form-control @error('coef_matiere') is-invalid @enderror" placeholder="Coefficient de la matière" id="coef_matiere" name="coef_matiere" required>
-
-                                @error('coef_matiere')
+                                @error('notation_matiere')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>

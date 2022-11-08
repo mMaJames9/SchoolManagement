@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Evaluation;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -22,7 +23,8 @@ class DatabaseSeeder extends Seeder
             CycleSeeder::class,
             ClasseSeeder::class,
             FraisSeeder::class,
-            // MatiereSeeder::class,
+            TrimestreSeeder::class,
+            EvaluationSeeder::class,
         ]);
     }
 }

@@ -15,9 +15,8 @@ class CreateMatieresTable extends Migration
     {
         Schema::create('matieres', function (Blueprint $table) {
             $table->id();
-            $table->string('intitule_matiere')->nullable();
-            $table->integer('niveau_matiere')->nullable();
-            $table->integer('coef_matiere')->nullable();
+            $table->string('forme_evaluation')->nullable();
+            $table->integer('notation_matiere')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

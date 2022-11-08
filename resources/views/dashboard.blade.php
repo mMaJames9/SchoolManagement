@@ -21,7 +21,7 @@
 
                                 <div class="card-body">
                                     <div class="pull-bottom bottom-left bottom-right ">
-                                        <h2 class="text-white bold">Bievenue, {{ Auth::user()->personnel->nom_personnel }}</h2>
+                                        <h2 class="text-white bold">Bienvenue, {{ Auth::user()->personnel->nom_personnel }}</h2>
                                         {{-- <div class="row stock-rates m-t-15">
                                             <div class="company col-4">
                                                 <div>

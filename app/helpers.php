@@ -2,43 +2,15 @@
 
 function calculGrade(float $x)
 {
-    if ($x >= 0 && $x < 7)
-    {
-        $grade = 'F';
-    }
-    elseif ($x >= 7 && $x < 10)
-    {
-        $grade = 'D';
-    }
-    elseif ($x >= 10 && $x < 12)
-    {
-        $grade = 'C-';
-    }
-    elseif ($x >= 12 && $x < 13)
+    if ($x >= 0 && $x < 11)
     {
         $grade = 'C';
     }
-    elseif ($x >= 13 && $x < 14)
-    {
-        $grade = 'C+';
-    }
-    elseif ($x >= 14 && $x < 16)
-    {
-        $grade = 'B-';
-    }
-    elseif ($x >= 16 && $x < 17)
+    elseif ($x >= 11 && $x < 15)
     {
         $grade = 'B';
     }
-    elseif ($x >= 17 && $x < 18)
-    {
-        $grade = 'B+';
-    }
-    elseif ($x >= 18 && $x < 19)
-    {
-        $grade = 'A-';
-    }
-    elseif ($x >= 19 && $x < 20)
+    elseif ($x >= 15 && $x < 18)
     {
         $grade = 'A';
     }
@@ -50,4 +22,54 @@ function calculGrade(float $x)
     return $grade;
 }
 
+function calculScore (float $a, int $x)
+{
+    $b = ($a * 20) / $x;
+    return $b;
+}
 
+function getEvaluation(int $date)
+{
+    if ($date == 10)
+    {
+        $evaluation = 1;
+    }
+    else if ($date == 11)
+    {
+        $evaluation = 2;
+    }
+    else if ($date == 12)
+    {
+        $evaluation = 3;
+    }
+    else if ($date == 1)
+    {
+        $evaluation = 4;
+    }
+    else if ($date == 2)
+    {
+        $evaluation = 5;
+    }
+    else if ($date == 3)
+    {
+        $evaluation = 6;
+    }
+    else if ($date == 4)
+    {
+        $evaluation = 7;
+    }
+    else if ($date == 5)
+    {
+        $evaluation = 8;
+    }
+    else if ($date == 6)
+    {
+        $evaluation = 9;
+    }
+    else
+    {
+        $evaluation = null;
+    }
+
+    return $evaluation;
+}

@@ -24,20 +24,16 @@ class MatiereController extends Controller
         if(isset($request['niveau']))
         {
             $selected = $request['niveau'];
-            $competences = Competence::whereHas('matieres', function ($q) use ($selected) {
-                $q->where('niveau_matiere', $selected);
-            })->get();
+            $competences = Competence::where('niveau_competence', $selected)->get();
+            $listCompetences = Competence::where('niveau_competence', $selected)->pluck('intitule_competence', 'id');
 
         }
         else
         {
             $selected = null;
-            $competences = Competence::whereHas('matieres', function ($q) use ($selected) {
-                $q->where('niveau_matiere', $selected);
-            })->get();
+            $competences = Competence::where('niveau_competence', $selected)->get();
+            $listCompetences = Competence::where('niveau_competence', $selected)->pluck('intitule_competence', 'id');
         }
-
-        $listCompetences = Competence::all()->pluck('intitule_competence', 'id');
 
         return view('admin.matieres.index', compact('competences', 'listCompetences', 'selected'));
     }
@@ -61,9 +57,8 @@ class MatiereController extends Controller
     public function store(MatiereStoreRequest $request)
     {
         $matiere = new Matiere;
-        $matiere->intitule_matiere = $request['intitule_matiere'];
-        $matiere->niveau_matiere = $request['niveau_matiere'];
-        $matiere->coef_matiere = $request['coef_matiere'];
+        $matiere->forme_evaluation = $request['forme_evaluation'];
+        $matiere->notation_matiere = $request['notation_matiere'];
 
         if($request->filled('checkCompetence'))
         {
@@ -80,10 +75,12 @@ class MatiereController extends Controller
             $competence = new Competence;
 
             $this->validate($request, [
-                'intitule_competence' => ['required', 'string', 'max:255', 'unique:competences'],
+                'intitule_competence' => ['required', 'string', 'max:255'],
+                'niveau_competence' => ['nullable', 'integer', 'min:0', 'max:2'],
             ]);
 
             $competence->intitule_competence = $request['intitule_competence'];
+            $competence->niveau_competence = $request['niveau_competence'];
 
             $competence->save();
 
@@ -128,9 +125,8 @@ class MatiereController extends Controller
      */
     public function update(MatiereUpdateRequest $request, Matiere $matiere)
     {
-        $matiere->intitule_matiere = $request['intitule_matiere'];
-        $matiere->niveau_matiere = $request['niveau_matiere'];
-        $matiere->coef_matiere = $request['coef_matiere'];
+        $matiere->forme_evaluation = $request['forme_evaluation'];
+        $matiere->notation_matiere = $request['notation_matiere'];
         $matiere->competence_id = $request['competence_id'];
 
         $matiere->save();

@@ -87,33 +87,36 @@ class BulletinController extends Controller
     {
         abort_if(Gate::denies('bulletin_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $niveau0 = array(1, 2, 3, 4, 11, 12, 13, 14);
-        $niveau1 = array(5, 6, 14, 15);
-        $niveau2 = array(7, 8, 16, 17);
-        $niveau3 = array(9, 10, 19, 20);
+        $niveau0Fr = array(1, 2, 3, 4);
+        $niveau0En = array(11, 12, 13, 14);
 
-        if(in_array($eleve->classe_id, $niveau0))
-        {
-            $selected = 0;
-        }
-        else if(in_array($eleve->classe_id, $niveau1))
+        $niveau1 = array(5, 6);
+        $niveau23 = array(7, 8, 9, 10);
+
+        $niveauEn = array(14, 15, 16, 17, 19, 20);
+
+        if(in_array($eleve->classe_id, $niveau1))
         {
             $selected = 1;
         }
-        else if(in_array($eleve->classe_id, $niveau2))
+        else if(in_array($eleve->classe_id, $niveau23))
         {
             $selected = 2;
         }
+        else if(in_array($eleve->classe_id, $niveauEn))
+        {
+            $selected = null;
+        }
         else
         {
-            $selected = 3;
+            $selected = 0;
         }
 
-        $competences = Competence::whereHas('matieres', function ($q) use ($selected) {
-            $q->where('niveau_matiere', $selected);
-        })->get();
+        $num_ev = getEvaluation(Carbon::now()->format('n'));
 
-        return view('admin.bulletins.create', compact('competences', 'eleve'));
+        $competences = Competence::where('niveau_competence', $selected)->get();
+
+        return view('admin.bulletins.create', compact('competences', 'eleve', 'num_ev'));
     }
 
     /**
@@ -124,7 +127,7 @@ class BulletinController extends Controller
      */
     public function store(Request $request)
     {
-//
+        //
     }
 
     /**
@@ -138,14 +141,17 @@ class BulletinController extends Controller
         $note = $request['notes'];
         $matieres = $request['matiere'];
 
+        $num_ev = getEvaluation(Carbon::now()->format('n'));
+
         foreach($matieres as $key => $matiere)
         {
             $bulletin = Note::create([
                 'eleve_id' => $eleve->id,
                 'annee_id' => $this->annee_id,
-                'mois_bulletin' => Carbon::now()->format('Y-m'),
+                'mois_bulletin' => Carbon::now()->format('Y-m-d'),
                 'matiere_id' => $matiere,
                 'note_eleve' => $note[$key],
+                'evaluation_id' => $num_ev,
             ]);
         }
 
@@ -181,36 +187,37 @@ class BulletinController extends Controller
     {
         abort_if(Gate::denies('bulletin_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $notes = Note::where('annee_id', $bulletin->annee_id,)
-        ->where('mois_bulletin', $bulletin->mois_bulletin)
+        $notes = Note::where('annee_id', $bulletin->annee_id)
         ->where('eleve_id', $bulletin->eleve_id)
+        ->where('mois_bulletin', $bulletin->mois_bulletin)
         ->get();
 
-        $niveau0 = array(1, 2, 3, 4, 11, 12, 13, 14);
-        $niveau1 = array(5, 6, 14, 15);
-        $niveau2 = array(7, 8, 16, 17);
-        $niveau3 = array(9, 10, 19, 20);
+        $niveau0Fr = array(1, 2, 3, 4);
+        $niveau0En = array(11, 12, 13, 14);
 
-        if(in_array($notes->first()->eleve->classe_id, $niveau0))
-        {
-            $selected = 0;
-        }
-        else if(in_array($notes->first()->eleve->classe_id, $niveau1))
+        $niveau1 = array(5, 6);
+        $niveau23 = array(7, 8, 9, 10);
+
+        $niveauEn = array(14, 15, 16, 17, 19, 20);
+
+        if(in_array( $notes->first()->eleve->classe_id, $niveau1))
         {
             $selected = 1;
         }
-        else if(in_array($notes->first()->eleve->classe_id, $niveau2))
+        else if(in_array( $notes->first()->eleve->classe_id, $niveau23))
         {
             $selected = 2;
         }
+        else if(in_array( $notes->first()->eleve->classe_id, $niveauEn))
+        {
+            $selected = null;
+        }
         else
         {
-            $selected = 3;
+            $selected = 0;
         }
 
-        $competences = Competence::whereHas('matieres', function ($q) use ($selected) {
-            $q->where('niveau_matiere', $selected);
-        })->get();
+        $competences = Competence::where('niveau_competence', $selected)->get();
 
         $eleves = Eleve::where('annee_id', $this->annee_id)
         ->where('classe_id', $bulletin->eleve->classe_id)->get();
@@ -219,47 +226,149 @@ class BulletinController extends Controller
 
         foreach($eleves as $key => $eleve)
         {
-            $sum_values = 0;
-            $my_sum_values = 0;
-            $sum_coef = $competences->count();
+            $trimestre = $competences->first()->matieres->first()->notes->where('mois_bulletin', $bulletin->mois_bulletin)->first()->evaluation->trimestre_id;
 
-            foreach($competences as $competence )
+            $ev_trimestre = $competences->first()->matieres->first()->notes->where('eleve_id', $eleve->id)->filter(function($item) use ($trimestre) {
+                return stripos($item->evaluation->trimestre->evaluations,$trimestre) !== false;
+            });
+
+            foreach($competences as $item => $competence )
             {
-                $value = 0;
-                $coef = $competence->matieres->sum('coef_matiere');
+                $total = array();
 
-                for ($i = 0; $i < $competence->matieres->count(); $i++)
+                for($i = 0; $i < $competence->matieres->count(); $i++)
                 {
-                    $value += ( $competence->matieres[$i]->notes[$key]->note_eleve * $competence->matieres[$i]->coef_matiere );
+
+                    if($ev_trimestre->count() >= 1)
+                    {
+                        $evaluation1 = $competence->matieres[$i]->notes->where('eleve_id', $eleve->id)->where('annee_id', $bulletin->annee_id)->where('evaluation_id', $notes->first()->evaluation->trimestre->evaluations[0]->id)->first();
+                    }
+
+                    if($ev_trimestre->count() >= 2)
+                    {
+                        $evaluation2 = $competence->matieres[$i]->notes->where('eleve_id', $eleve->id)->where('annee_id', $bulletin->annee_id)->where('evaluation_id', $notes->first()->evaluation->trimestre->evaluations[1]->id)->first();
+                    }
+
+                    if($ev_trimestre->count() == 3)
+                    {
+                        $evaluation3 = $competence->matieres[$i]->notes->where('eleve_id', $eleve->id)->where('annee_id', $bulletin->annee_id)->where('evaluation_id', $notes->first()->evaluation->trimestre->evaluations[2]->id)->first();
+
+                    }
+
+                    if(!empty($evaluation1) && !empty($evaluation2) && !empty($evaluation3))
+                    {
+                        $moy_gen = ($evaluation1->note_eleve + $evaluation2->note_eleve + $evaluation3->note_eleve) / 3;
+                    }
+                    else if (!empty($evaluation1) && !empty($evaluation2))
+                    {
+                        $moy_gen = ($evaluation1->note_eleve + $evaluation2->note_eleve) / 2;
+                    }
+                    else
+                    {
+                        $moy_gen = $evaluation1->note_eleve;
+                    }
+
+                    $total[$i] = $moy_gen;
                 }
 
-                $moy = $value / $coef;
-                $sum_values += round($moy, 2);
+                for($i = 0; $i < $competence->matieres->count(); $i++)
+                {
+                    if($ev_trimestre->count() >= 1)
+                    {
+                        $evaluation1 = $competence->matieres[$i]->notes->where('eleve_id', $eleve->id)->where('annee_id', $bulletin->annee_id)->where('evaluation_id', $notes->first()->evaluation->trimestre->evaluations[0]->id)->first();
+                    }
+
+                    if(!empty($evaluation1))
+                    {
+                        $somme1 =null;
+
+                        for ($i = 0; $i < $competence->matieres->count(); $i++)
+                        {
+
+                            $somme1 +=  $evaluation1->note_eleve;
+
+                        }
+
+                        $sum1 = calculScore($somme1, $competence->matieres->sum('notation_matiere'));
+                    }
+                }
+
+                for($i = 0; $i < $competence->matieres->count(); $i++)
+                {
+                    if($ev_trimestre->count() >= 2)
+                    {
+                        $evaluation2 = $competence->matieres[$i]->notes->where('eleve_id', $eleve->id)->where('annee_id', $bulletin->annee_id)->where('evaluation_id', $notes->first()->evaluation->trimestre->evaluations[1]->id)->first();
+                    }
+
+                    if(!empty($evaluation2))
+                    {
+                        $somme2 =null;
+
+                        for ($i = 0; $i < $competence->matieres->count(); $i++)
+                        {
+
+                            $somme2 +=  $evaluation2->note_eleve;
+                        }
+
+                        $sum2 = calculScore($somme2, $competence->matieres->sum('notation_matiere'));
+                    }
+                }
+
+                for($i = 0; $i < $competence->matieres->count(); $i++)
+                {
+                    if($ev_trimestre->count() == 3)
+                    {
+                        $evaluation3 = $competence->matieres[$i]->notes->where('eleve_id', $eleve->id)->where('annee_id', $bulletin->annee_id)->where('evaluation_id', $notes->first()->evaluation->trimestre->evaluations[2]->id)->first();
+                    }
+
+                    if(!empty($evaluation3))
+                    {
+                        $somme3 =null;
+
+                        for ($i = 0; $i < $competence->matieres->count(); $i++)
+                        {
+
+                            $somme3 +=  $evaluation3->note_eleve;
+                        }
+
+                        $sum3 = calculScore($somme3, $competence->matieres->sum('notation_matiere'));
+                    }
+                }
+
+                for($i = 0; $i < $competence->matieres->count(); $i++)
+                {
+                    $sommeTotale = array_sum($total);
+                    $sumTotal = calculScore($sommeTotale, $competence->matieres->sum('notation_matiere'));
+
+                    $arrayMoyenne[$item] = $sumTotal;
+                }
 
                 if($eleve->id == $bulletin->eleve_id)
                 {
-                    $my_moy = $value / $coef;
-                    $my_sum_values += round($moy, 2);
+                    $mySommeTotale =array_sum($total);
+                    $mySumTotal = calculScore($sommeTotale, $competence->matieres->sum('notation_matiere'));
                 }
             }
 
-            $gen = $sum_values / $sum_coef;
+            $gen = array_sum($arrayMoyenne) / $competences->count();
             $gen = round($gen, 2);
 
             if($eleve->id == $bulletin->eleve_id)
             {
                 $index = $key;
 
-                $my_gen = $my_sum_values / $sum_coef;
+                $my_gen = array_sum($arrayMoyenne) / $competences->count();
                 $my_gen = round($my_gen, 2);
 
             }
 
             $averages[] = $gen;
             rsort($averages);
+
+            // dump($arrayMoyenne);
         }
 
-        return view('admin.bulletins.show', compact('notes', 'competences', 'selected', 'index', 'averages', 'my_gen' ));
+        return view('admin.bulletins.show', compact( 'bulletin', 'notes', 'competences', 'selected', 'index', 'averages', 'my_gen'));
     }
 
     /**
@@ -272,36 +381,37 @@ class BulletinController extends Controller
     {
         abort_if(Gate::denies('bulletin_print'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $notes = Note::where('annee_id', $bulletin->annee_id,)
-        ->where('mois_bulletin', $bulletin->mois_bulletin)
+        $notes = Note::where('annee_id', $bulletin->annee_id)
         ->where('eleve_id', $bulletin->eleve_id)
+        ->where('mois_bulletin', $bulletin->mois_bulletin)
         ->get();
 
-        $niveau0 = array(1, 2, 3, 4, 11, 12, 13, 14);
-        $niveau1 = array(5, 6, 14, 15);
-        $niveau2 = array(7, 8, 16, 17);
-        $niveau3 = array(9, 10, 19, 20);
+        $niveau0Fr = array(1, 2, 3, 4);
+        $niveau0En = array(11, 12, 13, 14);
 
-        if(in_array($notes->first()->eleve->classe_id, $niveau0))
-        {
-            $selected = 0;
-        }
-        else if(in_array($notes->first()->eleve->classe_id, $niveau1))
+        $niveau1 = array(5, 6);
+        $niveau23 = array(7, 8, 9, 10);
+
+        $niveauEn = array(14, 15, 16, 17, 19, 20);
+
+        if(in_array( $notes->first()->eleve->classe_id, $niveau1))
         {
             $selected = 1;
         }
-        else if(in_array($notes->first()->eleve->classe_id, $niveau2))
+        else if(in_array( $notes->first()->eleve->classe_id, $niveau23))
         {
             $selected = 2;
         }
+        else if(in_array( $notes->first()->eleve->classe_id, $niveauEn))
+        {
+            $selected = null;
+        }
         else
         {
-            $selected = 3;
+            $selected = 0;
         }
 
-        $competences = Competence::whereHas('matieres', function ($q) use ($selected) {
-            $q->where('niveau_matiere', $selected);
-        })->get();
+        $competences = Competence::where('niveau_competence', $selected)->get();
 
         $eleves = Eleve::where('annee_id', $this->annee_id)
         ->where('classe_id', $bulletin->eleve->classe_id)->get();
@@ -310,47 +420,147 @@ class BulletinController extends Controller
 
         foreach($eleves as $key => $eleve)
         {
-            $sum_values = 0;
-            $my_sum_values = 0;
-            $sum_coef = $competences->count();
+            $trimestre = $competences->first()->matieres->first()->notes->where('mois_bulletin', $bulletin->mois_bulletin)->first()->evaluation->trimestre_id;
 
-            foreach($competences as $competence )
+            $ev_trimestre = $competences->first()->matieres->first()->notes->where('eleve_id', $eleve->id)->filter(function($item) use ($trimestre) {
+                return stripos($item->evaluation->trimestre->evaluations,$trimestre) !== false;
+            });
+
+            foreach($competences as $item => $competence )
             {
-                $value = 0;
-                $coef = $competence->matieres->sum('coef_matiere');
+                $total = array();
 
-                for ($i = 0; $i < $competence->matieres->count(); $i++)
+                for($i = 0; $i < $competence->matieres->count(); $i++)
                 {
-                    $value += ( $competence->matieres[$i]->notes[$key]->note_eleve * $competence->matieres[$i]->coef_matiere );
+
+                    if($ev_trimestre->count() >= 1)
+                    {
+                        $evaluation1 = $competence->matieres[$i]->notes->where('eleve_id', $eleve->id)->where('annee_id', $bulletin->annee_id)->where('evaluation_id', $notes->first()->evaluation->trimestre->evaluations[0]->id)->first();
+                    }
+
+                    if($ev_trimestre->count() >= 2)
+                    {
+                        $evaluation2 = $competence->matieres[$i]->notes->where('eleve_id', $eleve->id)->where('annee_id', $bulletin->annee_id)->where('evaluation_id', $notes->first()->evaluation->trimestre->evaluations[1]->id)->first();
+                    }
+
+                    if($ev_trimestre->count() == 3)
+                    {
+                        $evaluation3 = $competence->matieres[$i]->notes->where('eleve_id', $eleve->id)->where('annee_id', $bulletin->annee_id)->where('evaluation_id', $notes->first()->evaluation->trimestre->evaluations[2]->id)->first();
+
+                    }
+
+                    if(!empty($evaluation1) && !empty($evaluation2) && !empty($evaluation3))
+                    {
+                        $moy_gen = ($evaluation1->note_eleve + $evaluation2->note_eleve + $evaluation3->note_eleve) / 3;
+                    }
+                    else if (!empty($evaluation1) && !empty($evaluation2))
+                    {
+                        $moy_gen = ($evaluation1->note_eleve + $evaluation2->note_eleve) / 2;
+                    }
+                    else
+                    {
+                        $moy_gen = $evaluation1->note_eleve;
+                    }
+
+                    $total[$i] = $moy_gen;
                 }
 
-                $moy = $value / $coef;
-                $sum_values += round($moy, 2);
+                for($i = 0; $i < $competence->matieres->count(); $i++)
+                {
+                    if($ev_trimestre->count() >= 1)
+                    {
+                        $evaluation1 = $competence->matieres[$i]->notes->where('eleve_id', $eleve->id)->where('annee_id', $bulletin->annee_id)->where('evaluation_id', $notes->first()->evaluation->trimestre->evaluations[0]->id)->first();
+                    }
+
+                    if(!empty($evaluation1))
+                    {
+                        $somme1 =null;
+
+                        for ($i = 0; $i < $competence->matieres->count(); $i++)
+                        {
+
+                            $somme1 +=  $evaluation1->note_eleve;
+
+                        }
+
+                        $sum1 = calculScore($somme1, $competence->matieres->sum('notation_matiere'));
+                    }
+                }
+
+                for($i = 0; $i < $competence->matieres->count(); $i++)
+                {
+                    if($ev_trimestre->count() >= 2)
+                    {
+                        $evaluation2 = $competence->matieres[$i]->notes->where('eleve_id', $eleve->id)->where('annee_id', $bulletin->annee_id)->where('evaluation_id', $notes->first()->evaluation->trimestre->evaluations[1]->id)->first();
+                    }
+
+                    if(!empty($evaluation2))
+                    {
+                        $somme2 =null;
+
+                        for ($i = 0; $i < $competence->matieres->count(); $i++)
+                        {
+
+                            $somme2 +=  $evaluation2->note_eleve;
+                        }
+
+                        $sum2 = calculScore($somme2, $competence->matieres->sum('notation_matiere'));
+                    }
+                }
+
+                for($i = 0; $i < $competence->matieres->count(); $i++)
+                {
+                    if($ev_trimestre->count() == 3)
+                    {
+                        $evaluation3 = $competence->matieres[$i]->notes->where('eleve_id', $eleve->id)->where('annee_id', $bulletin->annee_id)->where('evaluation_id', $notes->first()->evaluation->trimestre->evaluations[2]->id)->first();
+                    }
+
+                    if(!empty($evaluation3))
+                    {
+                        $somme3 =null;
+
+                        for ($i = 0; $i < $competence->matieres->count(); $i++)
+                        {
+
+                            $somme3 +=  $evaluation3->note_eleve;
+                        }
+
+                        $sum3 = calculScore($somme3, $competence->matieres->sum('notation_matiere'));
+                    }
+                }
+
+                for($i = 0; $i < $competence->matieres->count(); $i++)
+                {
+                    $sommeTotale = array_sum($total);
+                    $sumTotal = calculScore($sommeTotale, $competence->matieres->sum('notation_matiere'));
+
+                    $arrayMoyenne[$item] = $sumTotal;
+                }
 
                 if($eleve->id == $bulletin->eleve_id)
                 {
-                    $my_moy = $value / $coef;
-                    $my_sum_values += round($moy, 2);
+                    $mySommeTotale =array_sum($total);
+                    $mySumTotal = calculScore($sommeTotale, $competence->matieres->sum('notation_matiere'));
+
                 }
             }
 
-            $gen = $sum_values / $sum_coef;
+            $gen = array_sum($arrayMoyenne) / $competences->count();
             $gen = round($gen, 2);
 
             if($eleve->id == $bulletin->eleve_id)
             {
                 $index = $key;
 
-                $my_gen = $my_sum_values / $sum_coef;
+                $my_gen = array_sum($arrayMoyenne) / $competences->count();
                 $my_gen = round($my_gen, 2);
 
             }
-
             $averages[] = $gen;
             rsort($averages);
         }
 
-        return view('admin.bulletins.print', compact('notes', 'competences', 'selected', 'index', 'averages', 'my_gen' ));
+        return view('admin.bulletins.print', compact( 'bulletin' ,'notes', 'competences', 'selected', 'index', 'averages', 'my_gen' ));
     }
 
     /**
@@ -374,36 +584,37 @@ class BulletinController extends Controller
     {
         abort_if(Gate::denies('bulletin_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $notes = Note::where('annee_id', $bulletin->annee_id,)
+        $notes = Note::where('annee_id', $bulletin->annee_id)
         ->where('mois_bulletin', $bulletin->mois_bulletin)
         ->where('eleve_id', $eleve->id)
         ->get();
 
-        $niveau0 = array(1, 2, 3, 4, 11, 12, 13, 14);
-        $niveau1 = array(5, 6, 14, 15);
-        $niveau2 = array(7, 8, 16, 17);
-        $niveau3 = array(9, 10, 19, 20);
+        $niveau0Fr = array(1, 2, 3, 4);
+        $niveau0En = array(11, 12, 13, 14);
 
-        if(in_array($notes->first()->eleve->classe_id, $niveau0))
-        {
-            $selected = 0;
-        }
-        else if(in_array($notes->first()->eleve->classe_id, $niveau1))
+        $niveau1 = array(5, 6);
+        $niveau23 = array(7, 8, 9, 10);
+
+        $niveauEn = array(14, 15, 16, 17, 19, 20);
+
+        if(in_array( $notes->first()->eleve->classe_id, $niveau1))
         {
             $selected = 1;
         }
-        else if(in_array($notes->first()->eleve->classe_id, $niveau2))
+        else if(in_array( $notes->first()->eleve->classe_id, $niveau23))
         {
             $selected = 2;
         }
+        else if(in_array( $notes->first()->eleve->classe_id, $niveauEn))
+        {
+            $selected = null;
+        }
         else
         {
-            $selected = 3;
+            $selected = 0;
         }
 
-        $competences = Competence::whereHas('matieres', function ($q) use ($selected) {
-            $q->where('niveau_matiere', $selected);
-        })->get();
+        $competences = Competence::where('niveau_competence', $selected)->get();
 
         $eleves = Eleve::where('annee_id', $this->annee_id)
         ->where('classe_id', $bulletin->eleve->classe_id)->get();
@@ -440,7 +651,7 @@ class BulletinController extends Controller
      */
     public function updateBulletin(NoteStoreRequest $request, Eleve $eleve, Note $bulletin)
     {
-        $updates = Note::where('annee_id', $bulletin->annee_id,)
+        $updates = Note::where('annee_id', $bulletin->annee_id)
         ->where('mois_bulletin', $bulletin->mois_bulletin)
         ->where('eleve_id', $eleve->id)
         ->get();
@@ -448,15 +659,16 @@ class BulletinController extends Controller
         $notes = $request['notes'];
         $matieres = $request['matiere'];
 
-        // dd($updates);
+        $num_ev = getEvaluation(Carbon::now()->format('n'));
 
         foreach($updates as $key => $update)
         {
             $update->eleve_id = $eleve->id;
             $update->annee_id = $this->annee_id;
-            $update->mois_bulletin = Carbon::now()->format('Y-m');
+            $update->mois_bulletin = Carbon::now()->format('Y-m-d');
             $update->matiere_id = $matieres[$key];
             $update->note_eleve = $notes[$key];
+            $update->evaluation_id = $num_ev;
 
             $update->save();
         }

@@ -13,8 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('notes', function (Blueprint $table) {
-            $table->date('mois_bulletin')->after('note_eleve');
+        Schema::table('evaluations', function (Blueprint $table) {
+            $table->foreignId('trimestre_id')
+            ->nullable()
+            ->constrained('trimestres')
+            ->onUpdate('cascade')
+            ->onDelete('cascade');
         });
     }
 
@@ -25,8 +29,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('notes', function (Blueprint $table) {
-            $table->dropColumn('mois_bulletin');
+        Schema::table('evaluations', function (Blueprint $table) {
+            $table->dropForeign(['trimestre_id']);
         });
     }
 };

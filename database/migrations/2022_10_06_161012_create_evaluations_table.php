@@ -13,10 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('competences', function (Blueprint $table) {
+        Schema::create('evaluations', function (Blueprint $table) {
             $table->id();
-            $table->string('intitule_competence');
-            $table->integer('niveau_competence')->nullable();
+            $table->integer('num_evaluation');
             $table->timestamps();
         });
     }
@@ -28,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('competences');
+        Schema::dropIfExists('evaluations');
     }
 };

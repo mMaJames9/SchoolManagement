@@ -15,15 +15,15 @@
                             <div class="form-group">
                                 <div class="checkbox check-primary">
                                     <input type="checkbox" value="1" id="checkCompetence" name="checkCompetence" class="@error('checkCompetence') is-invalid @enderror">
-                                    <label for="checkCompetence">Cochers si la compétence est déjà enregistrée puis selectionner dans la liste ci-dessous</label>
+                                    <label for="checkCompetence">Cocher si la compétence est déjà enregistrée puis selectionner dans la liste ci-dessous</label>
                                 </div>
                             </div>
 
                             <div class="form-group form-group-default form-group-default-select2">
                                 <select class="full-width @error('competence_id') is-invalid @enderror" id="competence_id" name="competence_id" data-init-plugin="select2" disabled>
                                     <option selected disabled hidden>Selectionner la compétence</option>
-                                    @foreach($listCompetences as $id => $listCompetence)
-                                    <option value="{{ $id }}">{{ ucwords($listCompetence) }}</option>
+                                    @foreach($competences as $key => $competence)
+                                    <option value="{{ $competence->id }}">{{ ucwords($competence->intitule_competence) }}</option>
                                     @endforeach
                                 </select>
 
@@ -52,13 +52,13 @@
                         </div>
                     </div>
 
-                    <div class="row">
+                    <div class="row d-none">
                         <div class="col-sm-12">
-                            <div class="form-group form-group-default required">
-                                <label for="intitule_matiere">Intitulé matière</label>
-                                <input type="text" class="form-control @error('intitule_matiere') is-invalid @enderror" placeholder="Intitulé de la matière" id="intitule_matiere" name="intitule_matiere" required>
+                            <div class="form-group form-group-default">
+                                <label for="niveau_competence">Niveau</label>
+                                <input type="number" min="0" max="2" class="form-control @error('niveau_competence') is-invalid @enderror" placeholder="Niveau de la competence" id="niveau_competence" name="niveau_competence" value="{{ $selected }}">
 
-                                @error('intitule_matiere')
+                                @error('niveau_competence')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
@@ -70,10 +70,10 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="form-group form-group-default required">
-                                <label for="niveau_matiere">Niveau</label>
-                                <input type="number" min="0" max="3" class="form-control @error('niveau_matiere') is-invalid @enderror" placeholder="Niveau correspondant" id="niveau_matiere" name="niveau_matiere" required>
+                                <label for="forme_evaluation">Forme d'évaluation</label>
+                                <input type="text" class="form-control @error('forme_evaluation') is-invalid @enderror" placeholder="Forme d'évaluation de la compétence" id="forme_evaluation" name="forme_evaluation" required>
 
-                                @error('niveau_matiere')
+                                @error('forme_evaluation')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
@@ -85,10 +85,10 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="form-group form-group-default required">
-                                <label for="coef_matiere">Coef. Matière</label>
-                                <input type="number" min="1" class="form-control @error('coef_matiere') is-invalid @enderror" placeholder="Coefficient de la matière" id="coef_matiere" name="coef_matiere" required>
+                                <label for="notation_matiere">Notation</label>
+                                <input type="number" min="1" class="form-control @error('notation_matiere') is-invalid @enderror" placeholder="Total de la forme d'évaluation" id="notation_matiere" name="notation_matiere" required>
 
-                                @error('coef_matiere')
+                                @error('notation_matiere')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
@@ -116,9 +116,11 @@
             if($(this).is(":checked")) {
                 $('#competence_id').removeAttr('disabled');
                 $('#intitule_competence').attr('disabled', '');
+                $('#niveau_competence').attr('disabled', '');
             } else {
                 $('#competence_id').attr('disabled', '');
                 $('#intitule_competence').removeAttr('disabled');
+                $('#niveau_competence').removeAttr('disabled');
             }
         });
 </script>

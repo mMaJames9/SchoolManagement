@@ -29,21 +29,75 @@
         <link rel="stylesheet" type="text/css" href="{{ asset('pages/css/pages-icons.css') }}" />
         <link rel="stylesheet" type="text/css" href="{{ asset('pages/css/themes/corporate.css') }}" class="main-stylesheet" />
 
-        <style type="text/css" media="print">
+        <style type="text/css">
             @media print {
                 body
                 {
-                    size:A4 portrait;
-                    -webkit-print-color-adjust: exact;
-                    transform: scale(1);
+                    zoom: 80%;
                 }
-            }
-            @page {
-                -webkit-print-color-adjust: exact;
+                table
+                {
+                    page-break-after:auto !important;
+                }
+                tr
+                {
+                    page-break-inside:avoid !important;
+                    page-break-before:avoid !important;
+                    page-break-after:always !important;
+                }
+                .last-row
+                {
+                    page-break-inside:avoid !important;
+                    page-break-before:avoid !important;
+                    page-break-after:always !important;
+                }
+                thead
+                {
+                    display:table-header-group !important;
+                }
+                tfoot
+                {
+                    display:table-footer-group !important;
+                }
+                @page
+                {
+                    -webkit-print-color-adjust: exact;
+                }
+
+                div.outer {
+                    page-break-after: always;
+                }
+
+                div.no-fit {
+                    overflow: hidden;
+                }
+
+                img.fit-size {
+                    width: 100%;
+                }
+
+                .w-300 {
+                    width: 300px;
+                    border: 2px solid red;
+                    margin-bottom: 1em;
+                }
+
+                .w-600 {
+                    width: 600px;
+                    margin-bottom: 1em;
+                    padding: 3px;
+                    border: 3px dashed gray;
+                }
+
+                .w-1000 {
+                    width: 1000px;
+                    border: 2px solid red;
+                    margin-bottom: 1em;
+                }
             }
         </style>
 
-        <script defer>
+        {{-- <script defer>
             "use strict";
             window.print();
             window.onafterprint = back;
@@ -52,7 +106,7 @@
             {
                 window.history.back();
             }
-        </script>
+        </script> --}}
     </head>
     <body class="bg-white">
 

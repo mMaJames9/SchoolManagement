@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $deleted_at
  * @property integer $eleve_id
  * @property integer $matiere_id
+ * @property integer $evaluation_id
  * @property integer $annee_id
  */
 class Note extends Model
@@ -20,7 +21,7 @@ class Note extends Model
     /**
      * @var array
      */
-    protected $fillable = ['note_eleve', 'mois_bulletin', 'created_at', 'updated_at', 'deleted_at', 'eleve_id', 'matiere_id', 'annee_id'];
+    protected $fillable = ['note_eleve', 'mois_bulletin', 'created_at', 'updated_at', 'deleted_at', 'eleve_id', 'matiere_id', 'evaluation_id', 'annee_id'];
 
     public function eleve()
     {
@@ -30,6 +31,11 @@ class Note extends Model
     public function matiere()
     {
         return $this->belongsTo(Matiere::class);
+    }
+
+    public function evaluation()
+    {
+        return $this->belongsTo(Evaluation::class);
     }
 
     public function annee()

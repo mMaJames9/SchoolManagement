@@ -41,18 +41,18 @@
                             @foreach($competences as $key => $competence)
                             <tr>
 
-                                <td class="v-align-middle text-nowrap text-lg-center" style="width: 40%" rowspan="{{ $competence->matieres->count() }}">
-                                    <p class="bold">Comptence {{ $loop->iteration}}</p>
+                                <td class="v-align-middle text-nowrap text-lg-center w-lg-40" rowspan="{{ $competence->matieres->count() }}">
+                                    <p class="bold">Competence {{ $loop->iteration}}</p>
                                     <p>{{ ucwords(strtolower($competence->intitule_competence)) }}</p>
                                 </td>
 
                                 <td class="v-align-middle text-nowrap w-lg-20">
                                     <input type="hidden" name="matiere[]" value="{{ $competence->matieres[0]->id }}">
-                                    <p>{{ strtoupper($competence->matieres[0]->intitule_matiere) }}</p>
+                                    <p>{{ strtoupper($competence->matieres[0]->forme_evaluation) }}</p>
                                 </td>
 
                                 <td class="v-align-middle text-nowrap w-lg-30">
-                                    <input type="number" min="0" max="20" step="0.25" class="form-control @error('notes[]') is-invalid @enderror" placeholder="Note en {{ strtoupper($competence->matieres[0]->intitule_matiere) }}" id="notes[0]" name="notes[]" value="{{ $competence->matieres[0]->notes[$index]->note_eleve }}" required>
+                                    <input type="number" min="0" max="{{ $competence->matieres[0]->notation_matiere }}" step="0.25" class="form-control @error('notes[]') is-invalid @enderror" placeholder="Note / {{ $competence->matieres[0]->notation_matiere }}" id="notes[0]" name="notes[]" value="{{ $competence->matieres[0]->notes[$index]->note_eleve }}" required>
 
                                 @error('notes[]')
                                 <span class="invalid-feedback" role="alert">
@@ -68,11 +68,11 @@
 
                                 <td class="v-align-middle text-nowrap w-lg-20">
                                     <input type="hidden" name="matiere[]" value="{{ $competence->matieres[$i]->id }}">
-                                    <p>{{ strtoupper($competence->matieres[$i]->intitule_matiere) }}</p>
+                                    <p>{{ strtoupper($competence->matieres[$i]->forme_evaluation) }}</p>
                                 </td>
 
                                 <td class="v-align-middle text-nowrap w-lg-30">
-                                    <input type="number" min="0" max="20" step="0.25" class="form-control @error('notes[]') is-invalid @enderror" placeholder="Note en {{ strtoupper($competence->matieres[$i]->intitule_matiere) }}" id="notes[{{$i}}]" name="notes[]" value="{{ $competence->matieres[$i]->notes[$index]->note_eleve }}" required>
+                                    <input type="number" min="0" max="{{ $competence->matieres[$i]->notation_matiere }}" step="0.25" class="form-control @error('notes[]') is-invalid @enderror" placeholder="Note / {{ $competence->matieres[0]->notation_matiere }}" id="notes[{{$i}}]" name="notes[]" value="{{ $competence->matieres[$i]->notes[$index]->note_eleve }}" required>
 
                                 @error('notes')
                                 <span class="invalid-feedback" role="alert">

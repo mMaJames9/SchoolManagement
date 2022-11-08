@@ -23,7 +23,7 @@ class CreateElevesTable extends Migration
             $table->integer('sexe_eleve');
             $table->string('acte_naissance');
             $table->string('carnet_vaccination')->nullable();
-            $table->string('photo_profil_eleve', 2048);
+            $table->string('photo_profil_eleve', 2048)->default('avatar-eleve.png');;
             $table->string('maladie_hereditaire')->nullable();
             $table->string('maladie_chronique')->nullable();
             $table->string('alergie_aliment')->nullable();

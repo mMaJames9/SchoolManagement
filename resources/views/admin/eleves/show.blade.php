@@ -89,7 +89,7 @@
 
                                         @if (isset($eleve->classe))
                                         <div class="mb-3">
-                                            <span class="text-uppercase fs-12 bold">Classe d'inscription'</span>
+                                            <span class="text-uppercase fs-12 bold">Classe d'inscription</span>
                                             <br>
                                             <span class="badge badge-primary">
                                                 {{ $eleve->classe->nom_classe }}
