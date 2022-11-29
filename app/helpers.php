@@ -1,5 +1,8 @@
 <?php
 
+use App\Models\Annee;
+use Carbon\Carbon;
+
 function calculGrade(float $x)
 {
     if ($x >= 0 && $x < 11)
@@ -72,4 +75,20 @@ function getEvaluation(int $date)
     }
 
     return $evaluation;
+}
+
+function anneeId()
+{
+    if(Carbon::now()->month >= 8 && Carbon::now()->month <= 12)
+    {
+        $annee_id = Annee::where('year_from', Carbon::now()->year)->value('id');
+    }
+    else
+    {
+        $previous_year = Carbon::now()->subYear(1)->year;
+
+        $annee_id = Annee::where('year_from', $previous_year)->value('id');
+    }
+
+    return $annee_id;
 }

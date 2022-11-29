@@ -24,6 +24,7 @@
     <div class="mt-4 p-3 bg-dark text-center">
         <span class="bold h4 text-white mb-0">BULLETIN DE NOTES TRIMESTRIEL No.{{ $notes->where('mois_bulletin', $bulletin->mois_bulletin)->first()->evaluation->trimestre->num_trimestre }}</span>
     </div>
+
     <div class=" mt-0 mb-4 text-center">
         <span class="font-italic h6 mb-0">TERMLY PROGRESS REPORT CARD</span>
     </div>
@@ -144,41 +145,42 @@
                 $numTE = $notes->where('mois_bulletin', $bulletin->mois_bulletin)->first()->evaluation->trimestre->evaluations[2];
             @endphp
 
-            <thead>
-                <tr>
-                    <th class="p-1 border text-center">Compétences</th>
-                    <th class="p-1 border ">Evaluations</th>
-                    <th class="p-1 border text-center">
-                        CI/TL-{{ $numFE->num_evaluation }}
-                    </th>
-                    <th class="p-1 border text-center">
-                        CI/TL-{{ $numSE->num_evaluation }}
-                    </th>
-                    <th class="p-1 border text-center">
-                        CI/TL-{{ $numTE->num_evaluation }}
-                    </th>
-                    <th class="p-1 border text-center">Moy. Gen.</th>
-                </tr>
-            </thead>
+            <tr class="text-uppercase font-weight-light font-montserrat fs-10">
+                <th class="p-1 border text-center">Compétences</th>
+                <th class="p-1 pl-3 border ">Evaluations</th>
+                <th class="p-1 border text-center">
+                    CI/TL-{{ $numFE->num_evaluation }}
+                </th>
+                <th class="p-1 border text-center">
+                    CI/TL-{{ $numSE->num_evaluation }}
+                </th>
+                <th class="p-1 border text-center">
+                    CI/TL-{{ $numTE->num_evaluation }}
+                </th>
+                <th class="p-1 border text-center">Moy. Gen.</th>
+            </tr>
 
             <tbody class="border">
+                @php
+                    $validated = array();
+                @endphp
 
                 @foreach($competences as $key => $competence)
                 @php
                     $total = array();
                 @endphp
-                <tr>
+                <tr class="competenceId">
 
-                    <td class="pt-1 pb-0 px-3 border v-align-middle text-nowrap text-center w-25" rowspan="{{ $competence->matieres->count() + 2 }}">
+                    <td class="pt-3 pb-0 px-3 border text-nowrap text-center w-25" rowspan="{{ $competence->matieres->count() + 2 }}">
                         <p class="bold">Competence {{ $loop->iteration}}</p>
                         <p>{{ ucwords(strtolower($competence->intitule_competence)) }}</p>
                     </td>
 
-                    <td class="pt-1 pb-0 px-3 border v-align-middle text-nowrap w-35">
+                    <td class="pt-1 pb-0 px-3 border text-nowrap w-35">
                         <p>{{ strtoupper($competence->matieres[0]->forme_evaluation) }} - ({{ strtoupper($competence->matieres[0]->notation_matiere) }} pts)</p>
                     </td>
 
-                    <td class="pt-1 pb-0 px-3 border v-align-middle text-nowrap text-center w-10">
+                    <td class="pt-1 pb-0 px-3 border text-nowrap text-center w-10">
                         @php
                         if($ev_trimestre->count() >= 1)
                         {
@@ -191,7 +193,7 @@
                         @endif
                     </td>
 
-                    <td class="pt-1 pb-0 px-3 border v-align-middle text-nowrap text-center w-10">
+                    <td class="pt-1 pb-0 px-3 border text-nowrap text-center w-10">
                         @php
                         if($ev_trimestre->count() >= 2)
                         {
@@ -204,7 +206,7 @@
                         @endif
                     </td>
 
-                    <td class="pt-1 pb-0 px-3 border v-align-middle text-nowrap text-center w-10">
+                    <td class="pt-1 pb-0 px-3 border text-nowrap text-center w-10">
                         @php
                         if($ev_trimestre->count() == 3)
                         {
@@ -217,7 +219,7 @@
                         @endif
                     </td>
 
-                    <td class="pt-1 pb-0 px-3 border v-align-middle text-nowrap text-center w-10">
+                    <td class="pt-1 pb-0 px-3 border text-nowrap text-center w-10">
                         @php
                         if(!empty($evaluation1) && !empty($evaluation2) && !empty($evaluation3))
                         {
@@ -317,7 +319,7 @@
                         <p class="bold">TOTAL COMPETENCE {{ $loop->iteration }}</p>
                     </td>
 
-                    <td class="bg-info text-white pt-1 pb-0 px-3 border v-align-middle text-nowrap text-white text-center">
+                    <td class="bg-info pt-1 pb-0 px-3 border v-align-middle text-nowrap text-white text-center">
                         @if(!empty($evaluation1))
                         @php
                         $somme1 =null;
@@ -335,7 +337,7 @@
                         @endif
                     </td>
 
-                    <td class="bg-info text-white pt-1 pb-0 px-3 border v-align-middle text-nowrap text-white text-center">
+                    <td class="bg-info pt-1 pb-0 px-3 border v-align-middle text-nowrap text-white text-center">
                         @if(!empty($evaluation2))
                         @php
                         $somme2 =null;
@@ -353,7 +355,7 @@
                         @endif
                     </td>
 
-                    <td class="bg-info text-white pt-1 pb-0 px-3 border v-align-middle text-nowrap text-white text-center">
+                    <td class="bg-info pt-1 pb-0 px-3 border v-align-middle text-nowrap text-white text-center">
                         @if(!empty($evaluation3))
                         @php
                         $somme3 =null;
@@ -371,11 +373,17 @@
                         @endif
                     </td>
 
-                    <td class="bg-info text-white pt-1 pb-0 px-3 border v-align-middle text-nowrap text-white text-center">
+                    <td class="bg-info pt-1 pb-0 px-3 border v-align-middle text-nowrap text-white text-center">
                         @php
                         $sommeTotale = array_sum($total);
 
                         $sumTotal = calculScore($sommeTotale, $competence->matieres->sum('notation_matiere'));
+
+                        if($sumTotal >= 10)
+                        {
+                            $validated[] = $sumTotal;
+                        }
+
 
                         $arrayMoyenne[$key] = $sumTotal;
 
@@ -386,137 +394,131 @@
 
                 </tr>
 
-                <tr class="last-row">
+                <tr>
 
                     <td class="bg-success text-white pt-1 pb-0 px-3 border v-align-middle text-nowrap">
                         <p class="bold">CÔTE</p>
                     </td>
 
-                    <td class="bg-success text-white pt-1 pb-0 px-3 border v-align-middle text-nowrap text-white text-center">
+                    <td class="bg-success text-white pt-1 pb-0 px-3 border v-align-middle text-nowrap text-center">
                         @if(!empty($evaluation1))
                         <p class="bold">{{ calculGrade($sum1) ?? '-' }}</p>
                         @endif
                     </td>
 
-                    <td class="bg-success text-white pt-1 pb-0 px-3 border v-align-middle text-nowrap text-white text-center">
+                    <td class="bg-success text-white pt-1 pb-0 px-3 border v-align-middle text-nowrap text-center">
                         @if(!empty($evaluation2))
                         <p class="bold">{{ calculGrade($sum2) ?? '-' }}</p>
                         @endif
                     </td>
 
-                    <td class="bg-success text-white pt-1 pb-0 px-3 border v-align-middle text-nowrap text-white text-center">
+                    <td class="bg-success text-white pt-1 pb-0 px-3 border v-align-middle text-nowrap text-center">
                         @if(!empty($evaluation3))
                         <p class="bold">{{ calculGrade($sum3) ?? '-' }}</p>
                         @endif
                     </td>
 
-                    <td class="bg-success text-white pt-1 pb-0 px-3 border v-align-middle text-nowrap text-white text-center">
+                    <td class="bg-success text-white pt-1 pb-0 px-3 border v-align-middle text-nowrap text-center">
                         <p class="bold">{{ calculGrade($sumTotal) ?? '-' }}</p>
                     </td>
 
                 </tr>
                 @endfor
 
-            @endforeach
+                @endforeach
 
-            @php
-                $gen = array_sum($arrayMoyenne) / $competences->count();
+                @php
+                    $gen = array_sum($arrayMoyenne) / $competences->count();
 
-                $position = array_search($my_gen, $averages, true) + 1;
+                    $position = array_search($my_gen, $averages, true) + 1;
 
-                if ($position == 1)
-                {
-                    $pos = "1 ER";
-                }
-                else
-                {
-                    $pos = "$position EME";
-                }
-            @endphp
+                    if ($position == 1)
+                    {
+                        $pos = "1er";
+                    }
+                    else
+                    {
+                        $pos = "$position"."e";
+                    }
+                @endphp
 
             </tbody>
         </table>
     </div>
 
-    <div class="d-flex justify-content-center mt-auto">
-        <div class="sm-no-padding p-4 border mx-1" style="min-width: 33%;">
-            <p>MOYENNE GENERALE: <span class="bold">{{ round($gen, 2) }} / 20</span></p>
-            <p>NOTE GENERALE: <span class="bold">{{ calculGrade($gen) }}</span></p>
-            <p>RANG: <span class="bold">{{ $pos }}</span></p>
-            <p>MOYENNE DU PREMIER: <span class="bold">{{ max($averages) }} / 20</span></p>
-            <p>MOYENNE DU DERNIER: <span class="bold">{{ min($averages) }} / 20</span></p>
-            <p>MOYENNE DE LA CLASSE: <span class="bold">{{ round(array_sum($averages) / count($averages), 2) }} / 20</span></p>
-        </div>
-
-        <div class="sm-no-padding p-4 border mx-1 text-center" style="min-width: 33%;">
-            <p class="bold fs-15 mb-4">AMÉLIORATION SUR</p>
-            <div class="d-flex justify-content-center">
-                <div class="text-right">
-                    <p class="bold">Absences:</p>
-                    <p class="bold">Retard:</p>
-                    <p class="bold">vestimentaire:</p>
-                    <p class="bold">Propreté:</p>
-                    <p class="bold">Comportement:</p>
-                </div>
-                <div class="text-left">
-                    <p>
-                        <span class="ml-4 checkbox checkbox-primary">
-                            <input type="checkbox" class="form-check-input">
-                            <label>Oui</label>
-                            <input type="checkbox" class="form-check-input">
-                            <label>Non</label>
-                        </span>
-                    </p>
-                    <p>
-                        <span class="ml-4 checkbox checkbox-primary">
-                            <input type="checkbox" class="form-check-input">
-                            <label>Oui</label>
-                            <input type="checkbox" class="form-check-input">
-                            <label>Non</label>
-                        </span>
-                    </p>
-                    <p>
-                        <span class="ml-4 checkbox checkbox-primary">
-                            <input type="checkbox" class="form-check-input">
-                            <label>Oui</label>
-                            <input type="checkbox" class="form-check-input">
-                            <label>Non</label>
-                        </span>
-                    </p>
-                    <p>
-                        <span class="ml-4 checkbox checkbox-primary">
-                            <input type="checkbox" class="form-check-input">
-                            <label>Oui</label>
-                            <input type="checkbox" class="form-check-input">
-                            <label>Non</label>
-                        </span>
-                    </p>
-                    <p>
-                        <span class="ml-4 checkbox checkbox-primary">
-                            <input type="checkbox" class="form-check-input">
-                            <label>Oui</label>
-                            <input type="checkbox" class="form-check-input">
-                            <label>Non</label>
-                        </span>
-                    </p>
-                </div>
-            </div>
-        </div>
-
-        <div class="sm-no-padding border ml-1 d-flex flex-column justify-content-center" style="min-width: 33%;">
-
-            <div class="sm-no-padding border-bottom">
-                <p class="bold fs-10 text-center mb-5">SIGNATURE DE L'ENSEIGNANT: </p>
-            </div>
-
-            <div class="sm-no-padding">
-                <p class="bold fs-10 pb-5 text-center mb-5">SIGNATURE ET REMARQUE DU COORDINATEUR: </p>
-            </div>
-
-            <div class="sm-no-padding border-top">
-                <p class="bold fs-10 text-center mb-5">SIGNATURE DES PARENTS/TUTEUR: </p>
-            </div>
-
+    <div class="d-flex justify-content-center">
+        <div class="table-responsive table-invoice">
+            <table class="table border table-bulletin">
+                <tr>
+                    <td class="bg-info pt-1 pb-0 px-3 border v-align-middle text-nowrap text-white text-center"><p class="bold">DISCIPLINE</p></td>
+                    <td class="pt-1 pb-0 px-3 border v-align-middle text-nowrap text-center">Nb. Abscences</td>
+                    <td class="pt-1 pb-0 px-3 border v-align-middle text-nowrap text-center"></td>
+                    <td class="pt-1 pb-0 px-3 border v-align-middle text-nowrap text-center">Heures justifiées</td>
+                    <td class="pt-1 pb-0 px-3 border v-align-middle text-nowrap text-center"></td>
+                    <td class="pt-1 pb-0 px-3 border v-align-middle text-nowrap text-center">Heures non justifiées</td>
+                    <td class="pt-1 pb-0 px-3 border v-align-middle text-nowrap text-center"></td>
+                    <td class="pt-1 pb-0 px-3 border v-align-middle text-nowrap text-center">Jours suspensions</td>
+                    <td class="pt-1 pb-0 px-3 border v-align-middle text-nowrap text-center"></td>
+                </tr>
+                <tr>
+                    <td class="bg-info pt-1 pb-0 px-3 border v-align-middle text-nowrap text-white text-center"><p class="bold">STATS MATIERES</p></td>
+                    <td class="pt-1 pb-0 px-3 border v-align-middle text-nowrap text-center" colspan="3">Nb. Compétences composées</td>
+                    <td class="pt-1 pb-0 px-3 border v-align-middle text-nowrap text-center">{{ $competences->count() }}</td>
+                    <td class="pt-1 pb-0 px-3 border v-align-middle text-nowrap text-center" colspan="3">Nb. Compétences validées</td>
+                    <td class="pt-1 pb-0 px-3 border v-align-middle text-nowrap text-center">{{ sizeof($validated) ?? '' }}</td>
+                </tr>
+                <tr>
+                    <td class="bg-info pt-1 pb-0 px-3 border v-align-middle text-nowrap text-white text-center"><p class="bold">STATS DE PERFORMANCES</p></td>
+                    <td class="pt-1 pb-0 px-3 border v-align-middle text-nowrap text-center">Moy. Premier</td>
+                    <td class="pt-1 pb-0 px-3 border v-align-middle text-nowrap text-center"><p class="bold">{{ max($averages) }}</p></td>
+                    <td class="pt-1 pb-0 px-3 border v-align-middle text-nowrap text-center">Moy. Dernier</td>
+                    <td class="pt-1 pb-0 px-3 border v-align-middle text-nowrap text-center"><p class="bold">{{ min($averages) }}</p></td>
+                    <td class="pt-1 pb-0 px-3 border v-align-middle text-nowrap text-center">Moy. Classe</td>
+                    <td class="pt-1 pb-0 px-3 border v-align-middle text-nowrap text-center"><p class="bold">{{ round(array_sum($averages) / count($averages), 2) }}</p></td>
+                    <td class="pt-1 pb-0 px-3 border v-align-middle text-nowrap text-center">% Réussite</td>
+                    <td class="pt-1 pb-0 px-3 border v-align-middle text-nowrap text-center"><p class="bold">{{ $win }}%</p></td>
+                </tr>
+            </table>
         </div>
     </div>
+
+    <div class="d-flex justify-content-center mt-4">
+        <div class="table-responsive table-invoice">
+            <table class="table border table-bulletin">
+                <tr>
+                    <td class="bg-info pt-1 pb-0 px-3 border v-align-middle text-nowrap text-white text-center"><p class="bold">RANG</p></td>
+                    <td class="bg-info pt-1 pb-0 px-3 border v-align-middle text-nowrap text-white text-center"><p class="bold">MOYENNE</p></td>
+                    <td class="bg-info pt-1 pb-0 px-3 border v-align-middle text-nowrap text-white text-center"><p class="bold">NOTE GENERALE</p></td>
+                </tr>
+                <tr>
+                    <td class="pt-1 pb-0 px-3 border v-align-middle text-nowrap text-center"><h4 class="bold">{{ $pos }} / {{ $notes->where('mois_bulletin', $bulletin->mois_bulletin)->first()->eleve->classe->eleves->count() }}</h4></td>
+                    <td class="pt-1 pb-0 px-3 border v-align-middle text-nowrap text-center"><h4 class="bold">{{ round($gen, 2) }}</h4></td>
+                    <td class="pt-1 pb-0 px-3 border v-align-middle text-nowrap text-center"><h4 class="bold">{{ calculGrade($gen) }}</h4></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-center mt-4">
+        <div class="table-responsive table-invoice">
+            <table class="table border table-bulletin">
+                <tr>
+                    <td class="bg-info pt-1 pb-0 px-3 border v-align-middle text-nowrap text-white text-center" colspan="4"><p class="bold">OBSERVATIONS</p></td>
+                </tr>
+                <tr>
+                    <td class="bg-success text-white pt-1 pb-0 px-3 border v-align-middle text-nowrap text-center"><p class="bold">Observation du titulaire</p></td>
+                    <td class="bg-success text-white pt-1 pb-0 px-3 border v-align-middle text-nowrap text-center"><p class="bold">Observation disciplinaires</p></td>
+                    <td class="bg-success text-white pt-1 pb-0 px-3 border v-align-middle text-nowrap text-center"><p class="bold">Signature des parents</p></td>
+                    <td class="bg-success text-white pt-1 pb-0 px-3 border v-align-middle text-nowrap text-center"><p class="bold">Signature du chef d'établissement</p></td>
+                </tr>
+                <tr>
+                    <td class="border py-4"><p class="py-4"></p></td>
+                    <td class="border py-4"><p class="py-4"></p></td>
+                    <td class="border py-4"><p class="py-4"></p></td>
+                    <td class="border py-4"><p class="py-4"></p></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
 </div>

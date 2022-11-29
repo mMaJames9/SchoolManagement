@@ -16,22 +16,6 @@ use Illuminate\Support\Facades\Request as FacadesRequest;
 
 class PaiementController extends Controller
 {
-    private $annee_id;
-
-    public function __construct()
-    {
-        if(Carbon::now()->month >= 8 && Carbon::now()->month <= 12)
-        {
-            $this->annee_id = Annee::where('year_from', Carbon::now()->year)->value('id');
-        }
-        else
-        {
-            $previous_year = Carbon::now()->subYear(1)->year;
-
-            $this->annee_id = Annee::where('year_from', $previous_year)->value('id');
-        }
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -44,18 +28,18 @@ class PaiementController extends Controller
         if(isset($request['classe']))
         {
             $selected = $request['classe'];
-            $eleves = Eleve::where('annee_id', $this->annee_id)
+            $eleves = Eleve::where('annee_id', anneeId())
             ->where('classe_id', $selected)
             ->get();
         }
         else
         {
             $selected = null;
-            $eleves = Eleve::where('annee_id', $this->annee_id)
+            $eleves = Eleve::where('annee_id', anneeId())
             ->where('classe_id', $selected)->get();
         }
 
-        $annee_id = $this->annee_id;
+        $annee_id = anneeId();
         $frais = Frais::all();
         $paiements = Paiement::all();
         $classes = Classe::all()->sortByDesc("created_at");
@@ -100,41 +84,41 @@ class PaiementController extends Controller
      */
     public function storePaiement(PaiementStoreRequest $request, Eleve $eleve)
     {
-        $inscription = Frais::where('annee_id', $this->annee_id)
+        $inscription = Frais::where('annee_id', anneeId())
         ->where('type_frais', 'Inscription')->sum('montant_frais');
-        $id_inscription = Frais::where('annee_id', $this->annee_id)
+        $id_inscription = Frais::where('annee_id', anneeId())
         ->where('type_frais', 'Inscription')->value('id');
 
         if(!empty($eleve->classe->cycle_id))
         {
             $frais = $eleve->classe->cycle_id;
 
-            $tranche_1 = Frais::where('annee_id', $this->annee_id)
+            $tranche_1 = Frais::where('annee_id', anneeId())
             ->where('type_frais', '1ere Tranche')
             ->where('cycle_id', $frais)
             ->sum('montant_frais');
 
-            $id_tranche_1 = Frais::where('annee_id', $this->annee_id)
+            $id_tranche_1 = Frais::where('annee_id', anneeId())
             ->where('type_frais', '1ere Tranche')
             ->where('cycle_id', $frais)
             ->value('id');
 
-            $tranche_2 = Frais::where('annee_id', $this->annee_id)
+            $tranche_2 = Frais::where('annee_id', anneeId())
             ->where('type_frais', '2eme Tranche')
             ->where('cycle_id', $frais)
             ->sum('montant_frais');
 
-            $id_tranche_2 = Frais::where('annee_id', $this->annee_id)
+            $id_tranche_2 = Frais::where('annee_id', anneeId())
             ->where('type_frais', '2eme Tranche')
             ->where('cycle_id', $frais)
             ->value('id');
 
-            $tranche_3 = Frais::where('annee_id', $this->annee_id)
+            $tranche_3 = Frais::where('annee_id', anneeId())
             ->where('type_frais', '3eme Tranche')
             ->where('cycle_id', $frais)
             ->sum('montant_frais');
 
-            $id_tranche_3 = Frais::where('annee_id', $this->annee_id)
+            $id_tranche_3 = Frais::where('annee_id', anneeId())
             ->where('type_frais', '3eme Tranche')
             ->where('cycle_id', $frais)
             ->value('id');
@@ -143,32 +127,32 @@ class PaiementController extends Controller
         {
             $frais = $eleve->classe_id;
 
-            $tranche_1 = Frais::where('annee_id', $this->annee_id)
+            $tranche_1 = Frais::where('annee_id', anneeId())
             ->where('type_frais', '1ere Tranche')
             ->where('classe_id', $frais)
             ->sum('montant_frais');
 
-            $id_tranche_1 = Frais::where('annee_id', $this->annee_id)
+            $id_tranche_1 = Frais::where('annee_id', anneeId())
             ->where('type_frais', '1ere Tranche')
             ->where('classe_id', $frais)
             ->value('id');
 
-            $tranche_2 = Frais::where('annee_id', $this->annee_id)
+            $tranche_2 = Frais::where('annee_id', anneeId())
             ->where('type_frais', '2eme Tranche')
             ->where('classe_id', $frais)
             ->sum('montant_frais');
 
-            $id_tranche_2 = Frais::where('annee_id', $this->annee_id)
+            $id_tranche_2 = Frais::where('annee_id', anneeId())
             ->where('type_frais', '2eme Tranche')
             ->where('classe_id', $frais)
             ->value('id');
 
-            $tranche_3 = Frais::where('annee_id', $this->annee_id)
+            $tranche_3 = Frais::where('annee_id', anneeId())
             ->where('type_frais', '3eme Tranche')
             ->where('classe_id', $frais)
             ->sum('montant_frais');
 
-            $id_tranche_3 = Frais::where('annee_id', $this->annee_id)
+            $id_tranche_3 = Frais::where('annee_id', anneeId())
             ->where('type_frais', '3eme Tranche')
             ->where('classe_id', $frais)
             ->value('id');
@@ -188,7 +172,7 @@ class PaiementController extends Controller
         }
         else
         {
-            $versement = Paiement::where('annee_id', $this->annee_id)
+            $versement = Paiement::where('annee_id', anneeId())
             ->where('eleve_id', $eleve->id)
             ->sum('montant_paiement');
 
@@ -201,7 +185,7 @@ class PaiementController extends Controller
                     'montant_paiement' => $montant_paiement,
                     'eleve_id' => $eleve->id,
                     'frais_id' => $id_inscription,
-                    'annee_id' => $this->annee_id,
+                    'annee_id' => anneeId(),
                     ]);
 
                     $status = 'Le paiement de la scolarité à bien été enregistré.';
@@ -228,12 +212,12 @@ class PaiementController extends Controller
                     'montant_paiement' => $montant_paiement - $montant_restant,
                     'eleve_id' => $eleve->id,
                     'frais_id' => $id_inscription,
-                    'annee_id' => $this->annee_id,
+                    'annee_id' => anneeId(),
                     ]);
 
                     $montant_paiement = $montant_restant;
 
-                    $versement = Paiement::where('annee_id', $this->annee_id)
+                    $versement = Paiement::where('annee_id', anneeId())
                     ->where('eleve_id', $eleve->id)
                     ->sum('montant_paiement');
 
@@ -251,7 +235,7 @@ class PaiementController extends Controller
                             'montant_paiement' => $tranche_1,
                             'eleve_id' => $eleve->id,
                             'frais_id' => $id_tranche_1,
-                            'annee_id' => $this->annee_id,
+                            'annee_id' => anneeId(),
                         ]);
 
                         $montant_paiement = $montant_paiement - $tranche_1;
@@ -262,7 +246,7 @@ class PaiementController extends Controller
                             'montant_paiement' => $montant_paiement,
                             'eleve_id' => $eleve->id,
                             'frais_id' => $id_tranche_1,
-                            'annee_id' => $this->annee_id,
+                            'annee_id' => anneeId(),
                         ]);
 
                         $status = 'Le paiement de la scolarité à bien été enregistré.';
@@ -272,7 +256,7 @@ class PaiementController extends Controller
                         ]);
                     }
 
-                    $versement = Paiement::where('annee_id', $this->annee_id)
+                    $versement = Paiement::where('annee_id', anneeId())
                     ->where('eleve_id', $eleve->id)
                     ->sum('montant_paiement');
 
@@ -290,7 +274,7 @@ class PaiementController extends Controller
                             'montant_paiement' => $tranche_2,
                             'eleve_id' => $eleve->id,
                             'frais_id' => $id_tranche_2,
-                            'annee_id' => $this->annee_id,
+                            'annee_id' => anneeId(),
                         ]);
 
                         $montant_paiement = $montant_paiement - $tranche_2;
@@ -301,7 +285,7 @@ class PaiementController extends Controller
                             'montant_paiement' => $montant_paiement,
                             'eleve_id' => $eleve->id,
                             'frais_id' => $id_tranche_2,
-                            'annee_id' => $this->annee_id,
+                            'annee_id' => anneeId(),
                         ]);
 
                         $status = 'Le paiement de la scolarité à bien été enregistré.';
@@ -311,7 +295,7 @@ class PaiementController extends Controller
                         ]);
                     }
 
-                    $versement = Paiement::where('annee_id', $this->annee_id)
+                    $versement = Paiement::where('annee_id', anneeId())
                     ->where('eleve_id', $eleve->id)
                     ->sum('montant_paiement');
 
@@ -329,7 +313,7 @@ class PaiementController extends Controller
                             'montant_paiement' => $tranche_3,
                             'eleve_id' => $eleve->id,
                             'frais_id' => $id_tranche_3,
-                            'annee_id' => $this->annee_id,
+                            'annee_id' => anneeId(),
                         ]);
 
                         $montant_paiement = $montant_paiement - $tranche_3;
@@ -340,7 +324,7 @@ class PaiementController extends Controller
                             'montant_paiement' => $montant_paiement,
                             'eleve_id' => $eleve->id,
                             'frais_id' => $id_tranche_3,
-                            'annee_id' => $this->annee_id,
+                            'annee_id' => anneeId(),
                         ]);
                     }
 
@@ -361,7 +345,7 @@ class PaiementController extends Controller
                     'montant_paiement' => $montant_paiement,
                     'eleve_id' => $eleve->id,
                     'frais_id' => $id_tranche_1,
-                    'annee_id' => $this->annee_id,
+                    'annee_id' => anneeId(),
                     ]);
 
                     $status = 'Le paiement de la scolarité à bien été enregistré.';
@@ -388,12 +372,12 @@ class PaiementController extends Controller
                     'montant_paiement' => $montant_paiement - $montant_restant,
                     'eleve_id' => $eleve->id,
                     'frais_id' => $id_tranche_1,
-                    'annee_id' => $this->annee_id,
+                    'annee_id' => anneeId(),
                     ]);
 
                     $montant_paiement = $montant_restant;
 
-                    $versement = Paiement::where('annee_id', $this->annee_id)
+                    $versement = Paiement::where('annee_id', anneeId())
                     ->where('eleve_id', $eleve->id)
                     ->sum('montant_paiement');
 
@@ -411,7 +395,7 @@ class PaiementController extends Controller
                             'montant_paiement' => $tranche_2,
                             'eleve_id' => $eleve->id,
                             'frais_id' => $id_tranche_2,
-                            'annee_id' => $this->annee_id,
+                            'annee_id' => anneeId(),
                         ]);
 
                         $montant_paiement = $montant_paiement - $tranche_2;
@@ -422,7 +406,7 @@ class PaiementController extends Controller
                             'montant_paiement' => $montant_paiement,
                             'eleve_id' => $eleve->id,
                             'frais_id' => $id_tranche_2,
-                            'annee_id' => $this->annee_id,
+                            'annee_id' => anneeId(),
                         ]);
 
                         $status = 'Le paiement de la scolarité à bien été enregistré.';
@@ -432,7 +416,7 @@ class PaiementController extends Controller
                         ]);
                     }
 
-                    $versement = Paiement::where('annee_id', $this->annee_id)
+                    $versement = Paiement::where('annee_id', anneeId())
                     ->where('eleve_id', $eleve->id)
                     ->sum('montant_paiement');
 
@@ -450,7 +434,7 @@ class PaiementController extends Controller
                             'montant_paiement' => $tranche_3,
                             'eleve_id' => $eleve->id,
                             'frais_id' => $id_tranche_3,
-                            'annee_id' => $this->annee_id,
+                            'annee_id' => anneeId(),
                         ]);
 
                         $montant_paiement = $montant_paiement - $tranche_3;
@@ -461,7 +445,7 @@ class PaiementController extends Controller
                             'montant_paiement' => $montant_paiement,
                             'eleve_id' => $eleve->id,
                             'frais_id' => $id_tranche_3,
-                            'annee_id' => $this->annee_id,
+                            'annee_id' => anneeId(),
                         ]);
                     }
 
@@ -482,7 +466,7 @@ class PaiementController extends Controller
                     'montant_paiement' => $montant_paiement,
                     'eleve_id' => $eleve->id,
                     'frais_id' => $id_tranche_2,
-                    'annee_id' => $this->annee_id,
+                    'annee_id' => anneeId(),
                     ]);
 
                     $status = 'Le paiement de la scolarité à bien été enregistré.';
@@ -509,12 +493,12 @@ class PaiementController extends Controller
                     'montant_paiement' => $montant_paiement - $montant_restant,
                     'eleve_id' => $eleve->id,
                     'frais_id' => $id_tranche_2,
-                    'annee_id' => $this->annee_id,
+                    'annee_id' => anneeId(),
                     ]);
 
                     $montant_paiement = $montant_restant;
 
-                    $versement = Paiement::where('annee_id', $this->annee_id)
+                    $versement = Paiement::where('annee_id', anneeId())
                     ->where('eleve_id', $eleve->id)
                     ->sum('montant_paiement');
 
@@ -532,7 +516,7 @@ class PaiementController extends Controller
                             'montant_paiement' => $tranche_3,
                             'eleve_id' => $eleve->id,
                             'frais_id' => $id_tranche_3,
-                            'annee_id' => $this->annee_id,
+                            'annee_id' => anneeId(),
                         ]);
 
                         $montant_paiement = $montant_paiement - $tranche_3;
@@ -543,7 +527,7 @@ class PaiementController extends Controller
                             'montant_paiement' => $montant_paiement,
                             'eleve_id' => $eleve->id,
                             'frais_id' => $id_tranche_3,
-                            'annee_id' => $this->annee_id,
+                            'annee_id' => anneeId(),
                         ]);
                     }
 
@@ -564,7 +548,7 @@ class PaiementController extends Controller
                     'montant_paiement' => $montant_paiement,
                     'eleve_id' => $eleve->id,
                     'frais_id' => $id_tranche_3,
-                    'annee_id' => $this->annee_id,
+                    'annee_id' => anneeId(),
                     ]);
 
                     $status = 'Le paiement de la scolarité à bien été enregistré.';

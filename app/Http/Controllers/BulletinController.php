@@ -15,22 +15,6 @@ use Illuminate\Support\Facades\Gate;
 
 class BulletinController extends Controller
 {
-    private $annee_id;
-
-    public function __construct()
-    {
-        if(Carbon::now()->month >= 8 && Carbon::now()->month <= 12)
-        {
-            $this->annee_id = Annee::where('year_from', Carbon::now()->year)->value('id');
-        }
-        else
-        {
-            $previous_year = Carbon::now()->subYear(1)->year;
-
-            $this->annee_id = Annee::where('year_from', $previous_year)->value('id');
-        }
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -43,18 +27,18 @@ class BulletinController extends Controller
         if(isset($request['classe']))
         {
             $selected = $request['classe'];
-            $eleves = Eleve::where('annee_id', $this->annee_id)
+            $eleves = Eleve::where('annee_id', anneeId())
             ->where('classe_id', $selected)
             ->get();
         }
         else
         {
             $selected = null;
-            $eleves = Eleve::where('annee_id', $this->annee_id)
+            $eleves = Eleve::where('annee_id', anneeId())
             ->where('classe_id', $selected)->get();
         }
 
-        $annee_id = $this->annee_id;
+        $annee_id = anneeId();
         $notes = Note::all();
         $classes = Classe::all()->sortByDesc("created_at");
         $sections = Classe::groupBy('nom_section')->pluck('nom_section', 'id');
@@ -147,7 +131,7 @@ class BulletinController extends Controller
         {
             $bulletin = Note::create([
                 'eleve_id' => $eleve->id,
-                'annee_id' => $this->annee_id,
+                'annee_id' => anneeId(),
                 'mois_bulletin' => Carbon::now()->format('Y-m-d'),
                 'matiere_id' => $matiere,
                 'note_eleve' => $note[$key],
@@ -172,6 +156,7 @@ class BulletinController extends Controller
      */
     public function list(Eleve $eleve)
     {
+
         abort_if(Gate::denies('bulletin_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return view('admin.bulletins.list', compact('eleve'));
@@ -219,10 +204,11 @@ class BulletinController extends Controller
 
         $competences = Competence::where('niveau_competence', $selected)->get();
 
-        $eleves = Eleve::where('annee_id', $this->annee_id)
+        $eleves = Eleve::where('annee_id', anneeId())
         ->where('classe_id', $bulletin->eleve->classe_id)->get();
 
         $averages = array();
+        $winPerc = array();
 
         foreach($eleves as $key => $eleve)
         {
@@ -359,16 +345,21 @@ class BulletinController extends Controller
 
                 $my_gen = array_sum($arrayMoyenne) / $competences->count();
                 $my_gen = round($my_gen, 2);
-
             }
 
             $averages[] = $gen;
-            rsort($averages);
 
-            // dump($arrayMoyenne);
+            if($gen >= 10)
+            {
+                $winPerc[] = $gen;
+            }
+
+            rsort($averages);
         }
 
-        return view('admin.bulletins.show', compact( 'bulletin', 'notes', 'competences', 'selected', 'index', 'averages', 'my_gen'));
+        $win = (sizeof($winPerc) / $eleves->count()) * 100;
+
+        return view('admin.bulletins.show', compact( 'bulletin', 'notes', 'competences', 'selected', 'index', 'averages', 'my_gen', 'win'));
     }
 
     /**
@@ -413,10 +404,11 @@ class BulletinController extends Controller
 
         $competences = Competence::where('niveau_competence', $selected)->get();
 
-        $eleves = Eleve::where('annee_id', $this->annee_id)
+        $eleves = Eleve::where('annee_id', anneeId())
         ->where('classe_id', $bulletin->eleve->classe_id)->get();
 
         $averages = array();
+        $winPerc = array();
 
         foreach($eleves as $key => $eleve)
         {
@@ -541,7 +533,6 @@ class BulletinController extends Controller
                 {
                     $mySommeTotale =array_sum($total);
                     $mySumTotal = calculScore($sommeTotale, $competence->matieres->sum('notation_matiere'));
-
                 }
             }
 
@@ -554,13 +545,21 @@ class BulletinController extends Controller
 
                 $my_gen = array_sum($arrayMoyenne) / $competences->count();
                 $my_gen = round($my_gen, 2);
-
             }
+
             $averages[] = $gen;
+
+            if($gen >= 10)
+            {
+                $winPerc[] = $gen;
+            }
+
             rsort($averages);
         }
 
-        return view('admin.bulletins.print', compact( 'bulletin' ,'notes', 'competences', 'selected', 'index', 'averages', 'my_gen' ));
+        $win = (sizeof($winPerc) / $eleves->count()) * 100;
+
+        return view('admin.bulletins.print', compact( 'bulletin' ,'notes', 'competences', 'selected', 'index', 'averages', 'my_gen', 'win' ));
     }
 
     /**
@@ -616,7 +615,7 @@ class BulletinController extends Controller
 
         $competences = Competence::where('niveau_competence', $selected)->get();
 
-        $eleves = Eleve::where('annee_id', $this->annee_id)
+        $eleves = Eleve::where('annee_id', anneeId())
         ->where('classe_id', $bulletin->eleve->classe_id)->get();
 
         foreach($eleves as $key => $student)
@@ -664,7 +663,7 @@ class BulletinController extends Controller
         foreach($updates as $key => $update)
         {
             $update->eleve_id = $eleve->id;
-            $update->annee_id = $this->annee_id;
+            $update->annee_id = anneeId();
             $update->mois_bulletin = Carbon::now()->format('Y-m-d');
             $update->matiere_id = $matieres[$key];
             $update->note_eleve = $notes[$key];

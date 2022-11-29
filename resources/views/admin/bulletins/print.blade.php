@@ -18,47 +18,20 @@
         <meta name="apple-mobile-web-app-status-bar-style" content="default">
         <meta content="" name="description" />
         <meta content="" name="author" />
-
-        <link rel="stylesheet" type="text/css" href="{{ asset('assets/plugins/pace/pace-theme-flash.css') }}" />
-        <link rel="stylesheet" type="text/css" href="{{ asset('assets/plugins/bootstrap/css/bootstrap.min.css') }}" />
         <link rel="stylesheet" type="text/css" href="{{ asset('assets/plugins/font-awesome/css/all.min.css') }}" />
-        <link rel="stylesheet" type="text/css" href="{{ asset('assets/plugins/jquery-scrollbar/jquery.scrollbar.css') }}" media="screen" />
-        <link rel="stylesheet" type="text/css" href="{{ asset('assets/plugins/select2/css/select2.min.css') }}" media="screen" />
-        <link rel="stylesheet" type="text/css" href="{{ asset('assets/plugins/switchery/css/switchery.min.css') }}" media="screen" />
-
-        <link rel="stylesheet" type="text/css" href="{{ asset('pages/css/pages-icons.css') }}" />
+        <link rel="stylesheet" type="text/css" href="{{ asset('assets/plugins/bootstrap/css/bootstrap.min.css') }}" />
         <link rel="stylesheet" type="text/css" href="{{ asset('pages/css/themes/corporate.css') }}" class="main-stylesheet" />
 
         <style type="text/css">
+            .competenceId
+            {
+                page-break-inside: avoid;
+                page-break-after: auto;
+            }
             @media print {
                 body
                 {
-                    zoom: 80%;
-                }
-                table
-                {
-                    page-break-after:auto !important;
-                }
-                tr
-                {
-                    page-break-inside:avoid !important;
-                    page-break-before:avoid !important;
-                    page-break-after:always !important;
-                }
-                .last-row
-                {
-                    page-break-inside:avoid !important;
-                    page-break-before:avoid !important;
-                    page-break-after:always !important;
-                }
-                thead
-                {
-                    display:table-header-group !important;
-                }
-                tfoot
-                {
-                    display:table-footer-group !important;
-                }
+                    zoom: 81.7%;                }
                 @page
                 {
                     -webkit-print-color-adjust: exact;
@@ -97,7 +70,7 @@
             }
         </style>
 
-        {{-- <script defer>
+        <script defer>
             "use strict";
             window.print();
             window.onafterprint = back;
@@ -106,7 +79,7 @@
             {
                 window.history.back();
             }
-        </script> --}}
+        </script>
     </head>
     <body class="bg-white">
 

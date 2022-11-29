@@ -16,8 +16,6 @@ use Illuminate\Support\Facades\Gate;
 
 class EleveController extends Controller
 {
-    private $annee_id;
-
     /**
      * Display a listing of the resource.
      *
@@ -60,17 +58,6 @@ class EleveController extends Controller
     public function store(EleveStoreRequest $request)
     {
 
-        if(Carbon::now()->month >= 8 && Carbon::now()->month <= 12)
-        {
-            $this->annee_id = Annee::where('year_from', Carbon::now()->year)->value('id');
-        }
-        else
-        {
-            $previous_year = Carbon::now()->subYear(1)->year;
-
-            $this->annee_id = Annee::where('year_from', $previous_year)->value('id');
-        }
-
         // Enregister un élève
         $eleve = new Eleve;
         $eleve->matricule_eleve = $request['matricule_eleve'];
@@ -79,7 +66,7 @@ class EleveController extends Controller
         $eleve->birthday_eleve = $request['birthday_eleve'];
         $eleve->lieu_naissance = $request['lieu_naissance'];
         $eleve->sexe_eleve = $request['sexe_eleve'];
-        $eleve->annee_id = $this->annee_id;
+        $eleve->annee_id = anneeId();
 
         if($request->filled('checkMaladie'))
         {
@@ -291,24 +278,13 @@ class EleveController extends Controller
      */
     public function update(EleveUpdateRequest $request, Eleve $eleve)
     {
-        if(Carbon::now()->month >= 8 && Carbon::now()->month <= 12)
-        {
-            $this->annee_id = Annee::where('year_from', Carbon::now()->year)->value('id');
-        }
-        else
-        {
-            $previous_year = Carbon::now()->subYear(1)->year;
-
-            $this->annee_id = Annee::where('year_from', $previous_year)->value('id');
-        }
-
         $eleve->matricule_eleve = $request['matricule_eleve'];
         $eleve->nom_eleve = $request['nom_eleve'];
         $eleve->prenom_eleve = $request['prenom_eleve'];
         $eleve->birthday_eleve = $request['birthday_eleve'];
         $eleve->lieu_naissance = $request['lieu_naissance'];
         $eleve->sexe_eleve = $request['sexe_eleve'];
-        $eleve->annee_id = $this->annee_id;
+        $eleve->annee_id = anneeId();
 
         if($request->filled('checkMaladie'))
         {

@@ -40,17 +40,17 @@
                 <table class="table table-hover demo-table-search table-responsive-block dataTable no-footer" id="tableWithSearch">
                     <thead>
                         <tr>
-                            <th>Mois</th>
+                            <th>Trimestres</th>
                             <th class="text-lg-center">Actions</th>
                         </tr>
                     </thead>
                     <tbody class="bg-white">
 
-                        @foreach ($eleve->notes->unique('mois_bulletin') as $key => $note)
+                        @foreach ($eleve->notes->unique('evaluation.trimestre.num_trimestre') as $key => $note)
                         <tr>
 
                             <td class="v-align-middle text-nowrap">
-                                <p>{{ date('F Y', strtotime($note->mois_bulletin)) }}</p>
+                                <p>TRIMESTRE {{ $note->evaluation->trimestre->num_trimestre }}</p>
                             </td>
 
                             <td class="v-align-middle text-nowrap text-lg-center w-lg-15">
