@@ -56,7 +56,7 @@
                             <td class="v-align-middle text-nowrap text-lg-center w-lg-15">
 
                                 <a class="btn btn-sm btn-primary" href="{{ route('bulletins.show', $note->id) }}">
-                                    <span class="fa fa-eye" data-toggle="tooltip" data-placement="top" data-original-title="Afficher le bulletin de {{ date('F Y', strtotime($note->mois_bulletin)) }}"></span>
+                                    <span class="fa fa-eye" data-toggle="tooltip" data-placement="top" data-original-title="Afficher le bulletin du trimestre {{ $note->evaluation->trimestre->num_trimestre }}"></span>
                                 </a>
 
                             </td>
