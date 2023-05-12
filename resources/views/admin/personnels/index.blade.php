@@ -155,7 +155,6 @@
                             </td>
                         </tr>
 
-                        @if($personnel->users->first()->roles->first()->name == 'Enseignant d\'informatique')
                         <div class="modal fade slide-up disable-scroll" id="deletePersonnel{{ $personnel->id }}" tabindex="-1" role="dialog" aria-labelledby="deletePersonnel{{ $personnel->id }}" aria-hidden="false">
                             <div class="modal-dialog ">
                                 <div class="modal-content-wrapper">
@@ -184,7 +183,6 @@
                                 </div>
                             </div>
                         </div>
-                        @endif
 
                         @include('admin.personnels.edit')
 
