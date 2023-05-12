@@ -149,11 +149,9 @@
                                 </a>
                                 @endif
 
-                                @if($personnel->users->first()->roles->first()->name == 'Enseignant d\'informatique')
                                 <button id="show-modal" class="btn btn-sm btn-danger" data-target="#deletePersonnel{{ $personnel->id }}" data-toggle="modal">
                                     <span class="fa fa-trash" data-toogle="tooltip" data-placement="top" data-original-title="Supprimer cet employé"></span>
                                 </button>
-                                @endif
                             </td>
                         </tr>
 
